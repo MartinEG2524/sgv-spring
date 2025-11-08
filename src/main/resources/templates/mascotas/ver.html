@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalle de Mascota</title>
+</head>
+<body>
+    <h1>Detalle de Mascota</h1>
+    <p>ID: <span th:text="${mascota.id}"></span></p>
+    <p>Nombre: <span th:text="${mascota.nombre}"></span></p>
+    <p>Raza: <span th:text="${mascota.raza}"></span></p>
+    <a href="/mascotas">Volver al listado</a>
+</body>
+</html>

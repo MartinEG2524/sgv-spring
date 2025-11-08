@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalle de Servicio</title>
+</head>
+<body>
+    <h1>Detalle de Servicio</h1>
+    <p>ID: <span th:text="${servicio.id}"></span></p>
+    <p>Nombre: <span th:text="${servicio.nombre}"></span></p>
+    <p>Descripción: <span th:text="${servicio.descripcion}"></span></p>
+    <a href="/servicios">Volver al listado</a>
+</body>
+</html>

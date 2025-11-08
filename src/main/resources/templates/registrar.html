@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Cliente</title>
+    <link rel="stylesheet" href="/CSS/Estilos.css">
+</head>
+<body>
+    <div class="container">
+        <img src="Imagenes/logo.png" alt="Logo">
+        <h1>CREAR CUENTA CLIENTE</h1>
+        <p>Por favor, complete el formulario para crear su cuenta.</p>
+
+        <form id="registroForm" th:action="@{/registrar}" method="post">
+            <label for="codigo">CÓDIGO DE USUARIO:</label>
+            <input type="text" id="codigo" name="codigo" placeholder="Ingrese un código" required />
+
+            <label for="contrasena">CONTRASEÑA:</label>
+            <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese una contraseña" required />
+
+            <div class="buttons">
+                <button type="submit" class="btn-login">CREAR CUENTA</button>
+            </div>
+
+            <!-- Si el mensaje de error existe, se mostrará aquí -->
+            <div th:if="${errorMessage != null}" style="color: red;" >
+                <p th:text="${errorMessage}"></p>
+            </div>
+
+            <!-- Si se muestra un mensaje de éxito -->
+            <div th:if="${successMessage != null}" style="color: green;">
+                <p th:text="${successMessage}"></p>
+            </div>
+        </form>
+
+        <div>
+            <a href="/login">¿Ya tienes cuenta? Inicia sesión</a>
+        </div>
+    </div>
+</body>
+</html>

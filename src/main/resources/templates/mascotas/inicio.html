@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Veterinaria - Mascotas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+    }
+
+    nav {
+      background-color: #0077b6;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 20px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .contenido {
+      padding: 40px;
+      background-color: white;
+      margin: 40px auto;
+      width: 80%;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .contenido h2 {
+      color: #0077b6;
+      text-align: center;
+    }
+
+    .bloques {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .bloque {
+      width: 250px;
+      background-color: #f8f8f8;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .bloque img {
+      width: 60px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="mascotas/inicio">Mascotas</a>
+  </nav>
+
+  <div class="contenido">
+    <h2>🐾 Área de Mascotas</h2>
+    <p style="text-align:center;">Aquí puedes realizar las siguientes funciones:</p>
+    <div class="bloques">
+      <div class="bloque">
+        <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png">
+        <a href="mascotas/registrar">Registrar Mascota</a>
+      </div>
+      <div class="bloque">
+        <img src="https://cdn-icons-png.flaticon.com/512/616/616554.png">
+        <a href="mascotas/ver">Ver Historial Médico</a>
+      </div>
+      <div class="bloque">
+        <img src="https://cdn-icons-png.flaticon.com/512/2920/2920075.png">
+        <a href="mascotas/ver">Listado de Mascotas</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

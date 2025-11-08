@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <title>Editar Cita</title>
+</head>
+<body>
+    <h1>Editar Cita</h1>
+    <form action="#" th:action="@{/citas/editar/{id}(id=${cita.id})}" th:object="${cita}" method="post">
+        <label for="fecha">Fecha:</label>
+        <input type="datetime-local" id="fecha" th:field="*{fecha}" required /><br>
+
+        <label for="veterinario">Veterinario:</label>
+        <input type="text" id="veterinario" th:field="*{veterinario.nombre}" required /><br>
+
+        <label for="paciente">Paciente:</label>
+        <input type="text" id="paciente" th:field="*{paciente.nombre}" required /><br>
+
+        <button type="submit">Actualizar Cita</button>
+    </form>
+    <a href="/citas">Volver al listado</a>
+</body>
+</html>

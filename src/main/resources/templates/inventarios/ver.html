@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalle de Inventario</title>
+</head>
+<body>
+    <h1>Detalle de Inventario</h1>
+    <p>ID: <span th:text="${inventario.id}"></span></p>
+    <p>Producto: <span th:text="${inventario.producto}"></span></p>
+    <p>Cantidad: <span th:text="${inventario.cantidad}"></span></p>
+    <a href="/inventarios">Volver al listado</a>
+</body>
+</html>

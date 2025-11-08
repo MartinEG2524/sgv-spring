@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <title>Detalle de Historial Clínico</title>
+</head>
+<body>
+    <h1>Detalle de Historial Clínico</h1>
+    <p>ID: <span th:text="${historial.id}"></span></p>
+    <p>Paciente: <span th:text="${historial.paciente.nombre}"></span></p>
+    <p>Veterinario: <span th:text="${historial.veterinario.nombre}"></span></p>
+    <p>Fecha: <span th:text="${historial.fecha}"></span></p>
+    <a href="/historiales">Volver al listado</a>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Listado de Inventarios</title>
+</head>
+<body>
+    <h1>Listado de Inventarios</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="inventario : ${inventarios}">
+                <td th:text="${inventario.id}"></td>
+                <td th:text="${inventario.producto}"></td>
+                <td th:text="${inventario.cantidad}"></td>
+                <td>
+                    <a th:href="@{/inventarios/{id}(id=${inventario.id})}">Ver</a>
+                    <a th:href="@{/inventarios/editar/{id}(id=${inventario.id})}">Editar</a>
+                    <a th:href="@{/inventarios/eliminar/{id}(id=${inventario.id})}">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/inventarios/registrar">Agregar nuevo inventario</a>
+</body>
+</html>

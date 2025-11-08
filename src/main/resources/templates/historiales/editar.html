@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <title>Editar Historial Clínico</title>
+</head>
+<body>
+    <h1>Editar Historial Clínico</h1>
+    <form action="#" th:action="@{/historiales/editar/{id}(id=${historial.id})}" th:object="${historial}" method="post">
+        <label for="paciente">Paciente:</label>
+        <input type="text" id="paciente" th:field="*{paciente.nombre}" required /><br>
+
+        <label for="veterinario">Veterinario:</label>
+        <input type="text" id="veterinario" th:field="*{veterinario.nombre}" required /><br>
+
+        <label for="fecha">Fecha:</label>
+        <input type="datetime-local" id="fecha" th:field="*{fecha}" required /><br>
+
+        <button type="submit">Actualizar Historial</button>
+    </form>
+    <a href="/historiales">Volver al listado</a>
+</body>
+</html>

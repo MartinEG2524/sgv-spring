@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Cargo</title>
+</head>
+<body>
+    <h1>Editar Cargo</h1>
+    <form action="#" th:action="@{/cargos/editar/{id}(id=${cargo.id})}" th:object="${cargo}" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" th:field="*{nombre}" required /><br>
+
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" th:field="*{descripcion}" required /><br>
+
+        <button type="submit">Actualizar Cargo</button>
+    </form>
+    <a href="/cargos">Volver al listado</a>
+</body>
+</html>

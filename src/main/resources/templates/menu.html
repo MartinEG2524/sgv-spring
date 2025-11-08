@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Menú Garritas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            text-align: center;
+            margin: 10px;
+            padding-top: 10px;
+        }
+
+        h1 {
+            color: #2c5d92;
+            margin-top: 0px;
+            margin-bottom: 25px;
+        }
+
+        .menu {
+            display: inline-block;
+            text-align: left;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .menu a {
+            display: block;
+            text-align: center;
+            padding: 15px 15px;
+            margin: 10px 0;
+            text-decoration: none;
+            background-color: #568eca;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .menu a:hover {
+            background-color: #1a3d6c;
+        }
+    </style>
+</head>
+<body>
+    <h1>MENÚ PRINCIPAL</h1>
+    <div class="menu">
+        <div style="padding-bottom: 10px;">
+            <h1 style="text-align: center;">Bienvenido <span th:text="${codigo}"></span>!</h1>
+        
+            <p>INFORMACIÓN DE USUARIO:</p>
+            <a th:href="@{usuarios/perfil(IdRol=${IdRol}, IdUsuario=${IdUsuario})}">VER PERFIL</a>
+        </div>
+        <!-- Mostrar opciones según el rol -->
+        <div th:if="${rol == 'ROLE_ADMIN'}">
+            <p>MANTENIMIENTOS:</p>
+            <a href="usuarios/listar.html">USUARIOS</a>
+            <a href="cargos/listar.html">CARGOS DE PERSONAL</a>
+            <a href="clientes/listar.html">CLIENTES</a>
+            <a href="veterinarios/">VETERINARIOS</a>
+            <a href="servicios.html">SERVICIOS</a>
+            <a href="mascotas/listar">MASCOTAS</a>
+            <a href="citas/">CITAS</a>
+            <a href="historiales/">HISTORIAL CLINICOS</a>
+            <a href="inventarios/listar.html">INVENTARIOS</a>
+            <a href="detalles/">DETALLES HISTORIAL INVENTARIO</a>
+        </div>
+
+        <div th:if="${rol == 'ROLE_VETERINARIO'}">
+            <a href="mascotas/registro">REGISTRAR DE MASCOTA</a>
+            <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
+            <a href="citas/listar.html">LISTADO DE CITAS</a>
+        </div>
+
+        <div th:if="${rol == 'ROLE_RECEPCIONISTA'}">
+            <a href="clientes/registrar.html">REGISTRAR DE CLIENTE</a>
+            <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
+            <a href="citas/listar.html">LISTADO DE CITAS</a>
+            <a href="inventarios/listar.html">LISTADO DE INVENTARIO</a>
+        </div>
+
+        <div th:if="${rol == 'ROLE_CLIENTE'}">
+            <a href="citas/listar.html">LISTADO DE CITAS</a>
+            <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
+        </div>
+        <br>
+        <a href="/logout?logout=true">CERRAR SESIÓN</a>
+    </div>
+</body>
+</html>

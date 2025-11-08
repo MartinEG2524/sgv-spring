@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Agregar Nuevo Servicio</title>
+</head>
+<body>
+    <h1>Agregar Nuevo Servicio</h1>
+    <form action="#" th:action="@{/servicios}" th:object="${servicio}" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" th:field="*{nombre}" required /><br>
+
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" th:field="*{descripcion}" required /><br>
+
+        <button type="submit">Guardar Servicio</button>
+    </form>
+    <a href="/servicios">Volver al listado</a>
+</body>
+</html>

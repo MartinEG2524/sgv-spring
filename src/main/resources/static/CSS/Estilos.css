@@ -1,0 +1,132 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #e0e0e0;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #888;
+}
+
+header img {
+    height: 60px;
+}
+
+nav {
+    flex-grow: 1;
+    text-align: center;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    border-right: 1px solid #000;
+    padding-right: 10px;
+}
+
+nav a:last-child {
+    border-right: none;
+}
+
+.container {
+    text-align: center;
+    padding: 40px;
+}
+
+.container img {
+    width: 100px;
+}
+
+h2 {
+    color: #1f3f66;
+    margin-top: 10px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin: 15px auto 5px;
+    text-align: left;
+    width: 250px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 250px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+.buttons {
+    margin: 20px 0;
+}
+
+.buttons button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-login {
+    background-color: #2c5d92;
+    color: white;
+}
+
+.btn-cancel {
+    background-color: #bbb;
+    color: white;
+}
+
+.forgot-password {
+    font-size: 14px;
+}
+
+.forgot-password a {
+    color: red;
+    text-decoration: none;
+}
+
+.create-account {
+    font-size: 14px;
+}
+
+.create-account a {
+    color: blue;
+    text-decoration: none;
+}
+
+footer {
+    border-top: 1px solid #ccc;
+    margin-top: 5px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+
+.social-icons img {
+    width: 30px;
+    margin: 0 5px;
+}
+
+.address {
+    font-weight: bold;
+}

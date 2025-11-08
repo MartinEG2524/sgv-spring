@@ -1,0 +1,204 @@
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listado de Mascotas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+    .navbar {
+      background-color: #eee;
+      padding: 10px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #333;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #000;
+    }
+    nav .cerrar {
+      float: right;
+      background-color: #2166a5;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    .logo {
+      text-align: center;
+      margin: 20px 0;
+    }
+    h2 {
+      text-align: center;
+      color: #3e3e3e;
+    }
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 80%;
+    }
+    table, th, td {
+      border: 1px solid black;
+      text-align: center;
+      padding: 8px;
+    }
+    .botones {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .botones button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+    }
+    .buscar {
+      float: right;
+      margin-right: 10%;
+      background-color: #1d67a8;
+      color: white;
+    }
+    .editar {
+      background-color: #3172c1;
+      color: white;
+    }
+    .eliminar {
+      background-color: red;
+      color: white;
+    }
+    .guardar {
+      background-color: #2e5f8c;
+      color: white;
+    }
+    .cancelar {
+      background-color: #aaa;
+      color: white;
+    }
+    footer {
+      background-color: #fff;
+      border-top: 2px solid #333;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;    }
+    .social {
+      display: inline-block;
+      margin: 0 10px;
+    }
+    .direccion {
+      margin-top: 10px;
+      border: 1px solid #000;
+      padding: 5px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <img src="logo.png" alt="Logo" width="50">
+    <div class="nav-links">
+      <a href="#">Nosotros</a>
+      <a href="#">Mascotas</a>
+      <a href="#">Servicios</a>
+      <a href="#">Especialidades</a>
+      <a href="#">Contacto</a>
+    </div>
+    <button class="btn-salir">CERRAR SESIÓN</button>
+  </div>
+
+  <div class="logo">
+    <img src="logo.png" alt="Logo" width="80" />
+  </div>
+
+  <h2>LISTADO DE MASCOTAS</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Raza</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="mascota : ${mascotas}">
+                <td th:text="${mascota.id}"></td>
+                <td th:text="${mascota.nombre}"></td>
+                <td th:text="${mascota.raza}"></td>
+                <td>
+                    <a th:href="@{/mascotas/{id}(id=${mascota.id})}">Ver</a>
+                    <a th:href="@{/mascotas/editar/{id}(id=${mascota.id})}">Editar</a>
+                    <a th:href="@{/mascotas/eliminar/{id}(id=${mascota.id})}">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/mascotas/registrar">Agregar nueva mascota</a>
+
+  <div style="text-align: center;">
+    <button class="buscar">BUSCAR</button>
+  </div>
+
+  <table>
+    <tr>
+      <th>Nombre</th>
+      <th>Código</th>
+      <th>Especie</th>
+      <th>Sexo</th>
+      <th>Edad</th>
+      <th>Raza</th>
+      <th>✓</th>
+    </tr>
+    <tr>
+      <td>Brave</td>
+      <td>PT001</td>
+      <td>Perro</td>
+      <td>Macho</td>
+      <td>5 años</td>
+      <td>Pitbull</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>Pelusa</td>
+      <td>GT002</td>
+      <td>Gato</td>
+      <td>Hembra</td>
+      <td>2 años</td>
+      <td>Birmano</td>
+      <td>✓</td>
+    </tr>
+    <tr><td colspan="7">&nbsp;</td></tr>
+    <tr><td colspan="7">&nbsp;</td></tr>
+  </table>
+
+  <div class="botones">
+    <button class="editar">EDITAR</button>
+    <button class="eliminar">ELIMINAR</button>
+  </div>
+
+  <div class="botones">
+    <button class="guardar">GUARDAR</button>
+    <button class="cancelar">CANCELAR</button>
+  </div>
+
+  <footer>
+    <div>
+      <img src="facebook.png" alt="Facebook" class="social" width="30">
+      <img src="twitter.png" alt="X/Twitter" class="social" width="30">
+      <img src="instagram.png" alt="Instagram" class="social" width="30">
+    </div>
+    <div class="direccion">
+      Av. Crisantemos N° 221 – LIMA – PERÚ
+    </div>
+  </footer>
+</body>
+</html>

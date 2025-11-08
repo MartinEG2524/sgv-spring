@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <title>Listado de Historiales Clínicos</title>
+</head>
+<body>
+    <h1>Listado de Historiales Clínicos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Paciente</th>
+                <th>Veterinario</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="historial : ${historiales}">
+                <td th:text="${historial.id}"></td>
+                <td th:text="${historial.paciente.nombre}"></td>
+                <td th:text="${historial.veterinario.nombre}"></td>
+                <td th:text="${historial.fecha}"></td>
+                <td>
+                    <a th:href="@{/historiales/{id}(id=${historial.id})}">Ver</a>
+                    <a th:href="@{/historiales/editar/{id}(id=${historial.id})}">Editar</a>
+                    <a th:href="@{/historiales/eliminar/{id}(id=${historial.id})}">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/historiales/registar">Agregar nuevo historial clínico</a>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Veterinaria Garritas</title>
+    <link rel="stylesheet" href="/CSS/Estilos.css">
+</head>
+<body>
+    <div class="container">
+        <img src="/Imagenes/logo.png" alt="Logo">
+        <h1>Bienvenido al Sistema Veterinario de Garritas</h1>
+        <p>Por favor, inicia sesión para continuar.</p>
+        <form id="inicioForm" th:action="@{/login}" method="post">
+            <label for="codigo">CÓDIGO DE USUARIO:</label>
+            <input type="text" id="codigo" name="username" placeholder="Ingrese su código" required />
+            <label for="contrasena">CONTRASEÑA:</label>
+            <input type="password" id="contrasena" name="password" placeholder="Ingrese su contraseña" required />
+            <div class="buttons">
+                <button type="submit" class="btn-login">INICIAR SESIÓN</button>
+            </div>
+            <!-- Si la autenticación falla o si el mensaje de error existe, el mensaje se muestra aquí -->
+            <div th:if="${errorMessage != null}" style="color:red;">
+                <p th:text="${errorMessage}"></p>
+            </div>
+        </form>
+        <br>
+        <!-- Enlace para redirigir a la página de recuperación de contraseña -->
+        <div class="forgot-password">
+            <a href="/restablecer">¿Olvidaste tu contraseña? Clic aquí</a>
+        </div>
+        <br><br>
+        <div class="create-account">
+            <a href="/registrar">CREAR CUENTA</a>
+        </div>
+        <!-- Si el mensaje de cierre de sesión existe, se mostrará el mensaje -->
+        <div th:if="${logoutMessage != null}" style="color: green;">
+            <p th:text="${logoutMessage}"></p>
+        </div>
+        <br><br>
+        <div class="create-account">
+            <a href="/inicio">Volver a Inicio</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-icons">
+            <img src="Imagenes/facebook.png" alt="Facebook">
+            <img src="Imagenes/twitter.png" alt="Twitter">
+            <img src="Imagenes/instagram.png" alt="Instagram">
+        </div>
+        <div class="address">
+            Av. Crisantemos N° 221 – LIMA – PERÚ
+        </div>
+    </footer>
+</body>
+</html>    

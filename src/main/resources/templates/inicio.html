@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Veterinario - Inicio</title>
+    <style>
+        footer {
+            background-color: #fff;
+            border-top: 2px solid #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .social {
+            display: inline-block;
+            margin: 0 0px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado con Logo y navegación -->
+    <header>
+        <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
+            <img src="Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
+        </div>
+        <div class="header-container" style="display: flex; justify-content: center;">
+            <nav style="margin-top: 20px;">
+                <a href="contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
+                <a href="servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
+                <a href="nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
+                <a href="login" style="font-size: 24px; text-decoration: none; color: blue;">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenedor principal de la página de inicio -->
+    <main>
+        <div class="intro" style="display: flex; justify-content: center; margin-top: 20px;">
+            <h1>Bienvenidos a la Veterinaria Garritas</h1>
+        </div>
+        
+        <!-- Sección de servicios destacados -->
+        <section class="services">
+            <h2 style="text-align: center;">Servicios Especializados</h2>
+            <div class="service-cards" style="display: flex; justify-content: center;">
+                <div class="service-card">
+                    <img src="Imagenes/consulta.png" width="300" height="200" alt="Consulta Veterinaria">
+                    <h3 style="text-align: center;">Consulta Veterinaria</h3>
+                    <p style="text-align: center;">Atención médica para tu mascota.</p>
+                </div>
+                <div class="service-card">
+                    <img src="Imagenes/vacunacion.png" width="300" height="200" alt="Vacunación">
+                    <h3 style="text-align: center;">Vacunación</h3>
+                    <p style="text-align: center;">Protege a tu mascota con nuestras vacunas.</p>
+                </div>
+                <div class="service-card">
+                    <img src="Imagenes/cirugia.png" width="300" height="200" alt="Cirugía Veterinaria">
+                    <h3 style="text-align: center;">Cirugía Veterinaria</h3>
+                    <p style="text-align: center;">Procedimientos quirúrgicos de alta calidad.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <div class="footer-container" style="display: flex; justify-content: center;">
+            <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
+        </div>
+        <div class="social-media" style="display: flex; justify-content: center;">
+            <a href="https://facebook.com" target="_blank"><img src="Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
+        </div>
+    </footer>
+</body>
+</html>

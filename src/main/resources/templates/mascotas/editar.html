@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Mascota</title>
+</head>
+<body>
+    <h1>Editar Mascota</h1>
+    <form action="#" th:action="@{/mascotas/editar/{id}(id=${mascota.id})}" th:object="${mascota}" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" th:field="*{nombre}" required /><br>
+
+        <label for="raza">Raza:</label>
+        <input type="text" id="raza" th:field="*{raza}" required /><br>
+
+        <button type="submit">Actualizar Mascota</button>
+    </form>
+    <a href="/mascotas">Volver al listado</a>
+</body>
+</html>

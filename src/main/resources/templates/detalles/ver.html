@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <title>Detalle de Historial de Inventario</title>
+</head>
+<body>
+    <h1>Detalle del Historial de Inventario</h1>
+    <p>ID: <span th:text="${detalle.id}"></span></p>
+    <p>Producto: <span th:text="${detalle.producto}"></span></p>
+    <p>Cantidad: <span th:text="${detalle.cantidad}"></span></p>
+    <p>Fecha: <span th:text="${detalle.fecha}"></span></p>
+    <a href="/detalles">Volver al listado</a>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Perfil del Veterinario</title>
+</head>
+<body>
+    <h1>Perfil del Veterinario</h1>
+    <p>ID: <span th:text="${veterinario.id}"></span></p>
+    <p>Nombre: <span th:text="${veterinario.nombre}"></span></p>
+    <p>Especialidad: <span th:text="${veterinario.especialidad}"></span></p>
+    <a href="/veterinarios/citas">Ver Citas</a>
+</body>
+</html>

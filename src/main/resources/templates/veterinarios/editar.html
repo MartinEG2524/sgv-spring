@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Veterinario</title>
+</head>
+<body>
+    <h1>Editar Veterinario</h1>
+    <form action="#" th:action="@{/veterinario/editar/{id}(id=${veterinario.id})}" th:object="${veterinario}" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" th:field="*{nombre}" required /><br>
+
+        <label for="especialidad">Especialidad:</label>
+        <input type="text" id="especialidad" th:field="*{especialidad}" required /><br>
+
+        <button type="submit">Actualizar Veterinario</button>
+    </form>
+    <a href="/veterinarios">Volver al listado</a>
+</body>
+</html>

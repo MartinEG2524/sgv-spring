@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestión de Citas</title>
+</head>
+<body>
+    <h1>Gestión de Citas</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Paciente</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cita : ${citas}">
+                <td th:text="${cita.id}"></td>
+                <td th:text="${cita.fecha}"></td>
+                <td th:text="${cita.paciente.nombre}"></td>
+                <td>
+                    <a th:href="@{/citas/{id}(id=${cita.id})}">Ver</a>
+                    <a th:href="@{/citas/editar/{id}(id=${cita.id})}">Editar</a>
+                    <a th:href="@{/citas/eliminar/{id}(id=${cita.id})}">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/veterinarios">Volver al listado</a>
+</body>
+</html>

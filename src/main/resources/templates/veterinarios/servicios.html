@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Servicios Veterinarios</title>
+</head>
+<body>
+    <h1>Servicios Veterinarios</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="servicio : ${servicios}">
+                <td th:text="${servicio.id}"></td>
+                <td th:text="${servicio.nombre}"></td>
+                <td th:text="${servicio.descripcion}"></td>
+                <td>
+                    <a th:href="@{/servicios/{id}(id=${servicio.id})}">Ver</a>
+                    <a th:href="@{/servicios/editar/{id}(id=${servicio.id})}">Editar</a>
+                    <a th:href="@{/servicios/eliminar/{id}(id=${servicio.id})}">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/veterinarios">Volver al listado</a>
+</body>
+</html>

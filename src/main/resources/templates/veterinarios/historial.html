@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Historial Clínico</title>
+</head>
+<body>
+    <h1>Historial Clínico</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Paciente</th>
+                <th>Fecha de Consulta</th>
+                <th>Diagnóstico</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="historial : ${historial}">
+                <td th:text="${historial.id}"></td>
+                <td th:text="${historial.paciente.nombre}"></td>
+                <td th:text="${historial.fechaConsulta}"></td>
+                <td th:text="${historial.diagnostico}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/veterinarios/citas">Volver a Citas</a>
+</body>
+</html>

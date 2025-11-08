@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <title>Agregar Nuevo Detalle</title>
+</head>
+<body>
+    <h1>Agregar Nuevo Detalle</h1>
+    <form action="#" th:action="@{/detalles}" th:object="${detalle}" method="post">
+        <label for="producto">Producto:</label>
+        <input type="text" id="producto" th:field="*{producto}" required /><br>
+
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" id="cantidad" th:field="*{cantidad}" required /><br>
+
+        <label for="fecha">Fecha:</label>
+        <input type="datetime-local" id="fecha" th:field="*{fecha}" required /><br>
+
+        <button type="submit">Guardar Detalle</button>
+    </form>
+    <a href="/detalles">Volver al listado</a>
+</body>
+</html>

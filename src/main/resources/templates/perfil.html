@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Perfil Usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        h2 {
+            text-align: center;
+            color: #3e3e3e;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 8px;
+        }
+        footer {
+            background-color: #fff;
+            border-top: 2px solid #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+        .social {
+            display: inline-block;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="/Imagenes/logo.png" alt="Logo Veterinaria">
+    </div>
+
+    <div th:if="${rol == 'ROLE_ADMIN'}">
+        <h2>PERFIL DEL ADMIN</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Cargo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.idUsuario}"></td>
+                    <td th:text="${usuario.codigo}"></td>
+                    <td th:text="${usuario.idCargo.nombre}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${rol == 'ROLE_VETERINARIO'}">
+        <h2>PERFIL DEL VETERINARIO</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Cargo</th>
+                    <th>ID Veterinario</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>DNI</th>
+                    <th>Correo</th>
+                    <th>Especialidad</th>
+                    <th>Sexo</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Celular</th>
+                    <th>Pais</th>
+                    <th>Provincia</th>
+                    <th>Distrito</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.idUsuario}"></td>
+                    <td th:text="${usuario.codigo}"></td>
+                    <td th:text="${usuario.idCargo.nombre}"></td>
+                    <td th:text="${usuario.veterinario.idVeterinario}"></td>
+                    <td th:text="${usuario.veterinario.nombres}"></td>
+                    <td th:text="${usuario.veterinario.apellidos}"></td>
+                    <td th:text="${usuario.veterinario.dni}"></td>
+                    <td th:text="${usuario.veterinario.correo}"></td>
+                    <td th:text="${usuario.veterinario.especialidad}"></td>
+                    <td th:text="${usuario.veterinario.sexo}"></td>
+                    <td th:text="${usuario.veterinario.fechaNacimiento}"></td>
+                    <td th:text="${usuario.veterinario.celular}"></td>
+                    <td th:text="${usuario.veterinario.pais}"></td>
+                    <td th:text="${usuario.veterinario.provincia}"></td>
+                    <td th:text="${usuario.veterinario.distrito}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${rol == 'ROLE_RECEPCIONISTA'}">
+        <h2>PERFIL DEL RECEPCIONISTA</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Cargo</th>
+                    <th>ID Veterinario</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>DNI</th>
+                    <th>Correo</th>
+                    <th>Especialidad</th>
+                    <th>Sexo</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Celular</th>
+                    <th>Pais</th>
+                    <th>Provincia</th>
+                    <th>Distrito</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.idUsuario}"></td>
+                    <td th:text="${usuario.codigo}"></td>
+                    <td th:text="${usuario.idCargo.nombre}"></td>
+                    <td th:text="${usuario.veterinario.idVeterinario}"></td>
+                    <td th:text="${usuario.veterinario.nombres}"></td>
+                    <td th:text="${usuario.veterinario.apellidos}"></td>
+                    <td th:text="${usuario.veterinario.dni}"></td>
+                    <td th:text="${usuario.veterinario.correo}"></td>
+                    <td th:text="${usuario.veterinario.especialidad}"></td>
+                    <td th:text="${usuario.veterinario.sexo}"></td>
+                    <td th:text="${usuario.veterinario.fechaNacimiento}"></td>
+                    <td th:text="${usuario.veterinario.celular}"></td>
+                    <td th:text="${usuario.veterinario.pais}"></td>
+                    <td th:text="${usuario.veterinario.provincia}"></td>
+                    <td th:text="${usuario.veterinario.distrito}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${rol == 'ROLE_CLIENTE'}">
+        <h2>PERFIL DEL CLIENTE</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Cargo</th>
+                    <th>ID Cliente</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>DNI</th>
+                    <th>Correo</th>
+                    <th>Dirección</th>
+                    <th>Sexo</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Celular</th>
+                    <th>Pais</th>
+                    <th>Provincia</th>
+                    <th>Distrito</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.idUsuario}"></td>
+                    <td th:text="${usuario.codigo}"></td>
+                    <td th:text="${usuario.idCargo.nombre}"></td>
+                    <td th:text="${usuario.cliente.idCliente}"></td>
+                    <td th:text="${usuario.cliente.nombres}"></td>
+                    <td th:text="${usuario.cliente.apellidos}"></td>
+                    <td th:text="${usuario.cliente.dni}"></td>
+                    <td th:text="${usuario.cliente.correo}"></td>
+                    <td th:text="${usuario.cliente.direccion}"></td>
+                    <td th:text="${usuario.cliente.sexo}"></td>
+                    <td th:text="${usuario.cliente.fechaNacimiento}"></td>
+                    <td th:text="${usuario.cliente.celular}"></td>
+                    <td th:text="${usuario.cliente.pais}"></td>
+                    <td th:text="${usuario.cliente.provincia}"></td>
+                    <td th:text="${usuario.cliente.distrito}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center; margin-top: 25px;">
+        <a href="/menu">Volver al Menú</a>
+    </div>
+    <footer>
+        <div class="footer-container" style="display: flex; justify-content: center;">
+            <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
+        </div>
+        <div class="social-media" style="display: flex; justify-content: center;">
+            <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <title>Detalle de Cita</title>
+</head>
+<body>
+    <h1>Detalle de la Cita</h1>
+    <p>ID: <span th:text="${cita.id}"></span></p>
+    <p>Fecha: <span th:text="${cita.fecha}"></span></p>
+    <p>Veterinario: <span th:text="${cita.veterinario.nombre}"></span></p>
+    <p>Paciente: <span th:text="${cita.paciente.nombre}"></span></p>
+    <a href="/citas">Volver al listado</a>
+</body>
+</html>

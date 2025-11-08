@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Listado de Veterinarios</title>
+</head>
+<body>
+    <h1>Listado de Veterinarios</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Especialidad</th>
+                <th>Correo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="veterinario : ${veterinarios}">
+                <td th:text="${veterinario.id}"></td>
+                <td th:text="${veterinario.nombre}"></td>
+                <td th:text="${veterinario.especialidad}"></td>
+                <td th:text="${veterinario.correo}"></td>
+                <td>
+                    <a th:href="@{/veterinario/{id}(id=${veterinario.id})}">Ver</a>
+                    <a th:href="@{/veterinario/editar/{id}(id=${veterinario.id})}">Editar</a>
+                    <a th:href="@{/veterinario/eliminar/{id}(id=${veterinario.id})}">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/veterinarios/registrar">Agregar Nuevo Veterinario</a>
+</body>
+</html>
