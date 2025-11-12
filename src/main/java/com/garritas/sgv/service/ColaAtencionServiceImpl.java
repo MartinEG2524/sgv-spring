@@ -29,7 +29,7 @@ public class ColaAtencionServiceImpl implements ColaAtencionService {
     @Transactional(readOnly = true)
     @Override
     public List<ColaAtencion> listarPendientes() {
-        return repository.findByFechaRegistro();
+        return repository.findByFechaIngreso(null);
     }
 
     @Transactional(readOnly = true)

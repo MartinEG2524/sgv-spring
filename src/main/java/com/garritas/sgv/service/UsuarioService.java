@@ -9,6 +9,7 @@ public interface UsuarioService {
     Optional<Usuario> buscarPorId(Long id);
     Optional<Usuario> buscarPorCodigo(String codigo);
     Usuario guardar(Usuario usuario);
+    Usuario actualizar(Usuario usuario);
     void eliminar(Long id);
     boolean actualizarContrasena(String codigo, String nuevaContrasena);
     List<Usuario> buscarUsuario(Integer IdRol, Integer IdUsuario);

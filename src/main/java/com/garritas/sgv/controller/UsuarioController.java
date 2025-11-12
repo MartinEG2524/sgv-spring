@@ -1,15 +1,21 @@
 package com.garritas.sgv.controller;
 
+import com.garritas.sgv.model.Cargo;
 import com.garritas.sgv.model.Usuario;
+import com.garritas.sgv.service.CargoService;
 import com.garritas.sgv.service.UsuarioService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -17,15 +23,18 @@ import java.util.List;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
+    @Autowired
+    private UsuarioService usuarioService;
 
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
+    @Autowired
+    private CargoService cargoService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // Vista de todos los usuarios, solo accesible para ADMIN
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping
+    @GetMapping("listar")
     public String listar(Model model) {
         List<Usuario> usuarios = usuarioService.listar();
         model.addAttribute("usuarios", usuarios);
@@ -34,7 +43,7 @@ public class UsuarioController {
 
     // Vista para ver un usuario específico, solo accesible para ADMIN
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/{id}")
+    @GetMapping("ver/{id}")
     public String buscarUsuario(@PathVariable Long id, Model model) {
         Usuario usuario = usuarioService.buscarPorId(id).orElse(null);
         model.addAttribute("usuario", usuario);
@@ -45,24 +54,26 @@ public class UsuarioController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/registrar")
     public String registrarUsuario(Model model) {
-        model.addAttribute("usuario", new Usuario());
+        if (!model.containsAttribute("usuario")) {
+            model.addAttribute("usuario", new Usuario());
+        }
+        model.addAttribute("cargos", cargoService.listar());
         return "usuarios/registrar";
     }
 
     // Guardar un nuevo usuario, solo accesible para ADMIN
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping
-    public String guardarUsuario(@ModelAttribute Usuario usuario) {
+    @PostMapping("/registrar")
+    public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario, RedirectAttributes ra) {
+        if (usuarioService.buscarPorCodigo(usuario.getCodigo()).isPresent()) {
+            ra.addFlashAttribute("errorMessage", "El código '" + usuario.getCodigo() + "' ya está registrado.");
+            return "redirect:/usuarios/registrar";
+        }
+        usuario.getIdCargo().getIdRol();
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        usuario.setEstado("activo");
         usuarioService.guardar(usuario);
-        return "redirect:/usuarios";
-    }
-
-    // Eliminar un usuario, solo accesible para ADMIN
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/eliminar/{id}")
-    public String eliminarUsuario(@PathVariable Long id) {
-        usuarioService.eliminar(id);
-        return "redirect:/usuarios";
+        return "redirect:/usuarios/listar";
     }
 
     // Vista para editar un usuario existente, solo accesible para ADMIN
@@ -71,16 +82,32 @@ public class UsuarioController {
     public String editarUsuario(@PathVariable Long id, Model model) {
         Usuario usuario = usuarioService.buscarPorId(id).orElse(null);
         model.addAttribute("usuario", usuario);
+        model.addAttribute("cargos", cargoService.listar());
         return "usuarios/editar";
     }
 
     // Guardar los cambios de un usuario editado, solo accesible para ADMIN
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/editar/{id}")
-    public String actualizarUsuario(@PathVariable Long id, @ModelAttribute Usuario usuario) {
-        usuario.setIdUsuario(id);
-        usuarioService.guardar(usuario);
-        return "redirect:/usuarios";
+    public String actualizarUsuario(@PathVariable Long id, @ModelAttribute("usuario") Usuario usuario, @RequestParam("idCargo.idRol") Long idRol, @RequestParam("estado") String estado) {
+        Usuario usuarioActualizado = usuarioService.buscarPorId(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + id));
+        usuarioActualizado.setCodigo(usuario.getCodigo());
+        if (usuario.getContrasena() != null && !usuario.getContrasena().isBlank()) {
+        usuarioActualizado.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        }
+        Cargo cargo = cargoService.buscarPorId(idRol).orElseThrow(() -> new IllegalArgumentException("Cargo no existe: " + idRol));
+        usuarioActualizado.setIdCargo(cargo);
+        usuarioActualizado.setEstado(estado);
+        usuarioService.actualizar(usuarioActualizado);
+        return "redirect:/usuarios/listar";
+    }
+
+    // Eliminar un usuario, solo accesible para ADMIN
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/eliminar/{id}")
+    public String eliminarUsuario(@PathVariable Long id) {
+        usuarioService.eliminar(id);
+        return "redirect:/usuarios/listar";
     }
 
     @GetMapping("/perfil")
@@ -98,7 +125,6 @@ public class UsuarioController {
             model.addAttribute("usuarios", usuario);
 
             return "perfil";
-
         } else {
             return "redirect:/login";
         }

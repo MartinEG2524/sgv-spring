@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
+@Transactional
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
@@ -53,9 +54,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public Usuario actualizar(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
     @Override
+    @Transactional
     public void eliminar(Long id) {
-        usuarioRepository.deleteById(id);
+        int actualizar = usuarioRepository.actualizarEstado(id, "Inactivo");
+        if (actualizar == 0) throw new IllegalArgumentException("Usuario no encontrado: " + id);
     }
 
     public boolean actualizarContrasena(String codigo, String nuevaContrasena) {

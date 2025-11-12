@@ -65,9 +65,9 @@ public class ClienteController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/editar/{id}")
     public String editarCliente(@PathVariable Long id, Model model) {
-        Cliente cliente = clienteService.buscarPorId(id).orElse(null); // Obtener el cliente
-        model.addAttribute("cliente", cliente);  // Pasar los datos al frontend para el formulario
-        return "clientes/editar";  // Vista Thymeleaf: clientes/editar.html
+        Cliente cliente = clienteService.buscarPorId(id).orElse(null);
+        model.addAttribute("cliente", cliente);
+        return "clientes/editar";
     }
 
     // Guardar los cambios de un cliente editado

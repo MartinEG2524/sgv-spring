@@ -2,22 +2,70 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <title>Listado de Clientes</title>
+    <style>
+        footer {
+            background-color: #fff;
+            border-top: 2px solid #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .social {
+            display: inline-block;
+            margin: 0 0px;
+        }
+    </style>
 </head>
 <body>
+
+<header>
+        <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
+            <img src="Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
+        </div>
+        <div class="header-container" style="display: flex; justify-content: center;">
+            <nav style="margin-top: 20px;">
+                <a href="contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
+                <a href="servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
+                <a href="nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
+                <a href="login" style="font-size: 24px; text-decoration: none; color: blue;">Login</a>
+            </nav>
+        </div>
+</header>
+
+<div style="text-align: right; margin-right: 10%; margin-bottom: 30px; margin-top: 30px;">
+  <button class="buscar">BUSCAR</button>
+  <button class="exportar-excel">EXPORTAR A EXCEL</button>
+</div>
+
+<h2>LISTADO DE CLIENTES</h2>
+
     <h1>Listado de Clientes</h1>
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Email</th>
+                <th>Usuario</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th>Correo</th>
+                <th>Dirección</th>
+                <th>Sexo</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Celular</th>
+                <th>País</th>
+                <th>Provincia</th>
+                <th>Distrito</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="cliente : ${clientes}">
                 <td th:text="${cliente.id}"></td>
-                <td th:text="${cliente.nombre}"></td>
+                <td th:text="${cliente.nombres}"></td>
+                <td th:text="${cliente.apellidos}"></td>
                 <td th:text="${cliente.email}"></td>
                 <td>
                     <a th:href="@{/clientes/{id}(id=${cliente.id})}">Ver</a>

@@ -57,33 +57,33 @@
         <!-- Mostrar opciones según el rol -->
         <div th:if="${rol == 'ROLE_ADMIN'}">
             <p>MANTENIMIENTOS:</p>
-            <a href="usuarios/listar.html">USUARIOS</a>
-            <a href="cargos/listar.html">CARGOS DE PERSONAL</a>
-            <a href="clientes/listar.html">CLIENTES</a>
+            <a href="usuarios/listar">USUARIOS</a>
+            <a href="cargos/listar">CARGOS DE PERSONAL</a>
+            <a href="clientes/listar">CLIENTES</a>
             <a href="veterinarios/">VETERINARIOS</a>
-            <a href="servicios.html">SERVICIOS</a>
+            <a href="servicios">SERVICIOS</a>
             <a href="mascotas/listar">MASCOTAS</a>
             <a href="citas/">CITAS</a>
             <a href="historiales/">HISTORIAL CLINICOS</a>
-            <a href="inventarios/listar.html">INVENTARIOS</a>
+            <a href="inventarios/listar">INVENTARIOS</a>
             <a href="detalles/">DETALLES HISTORIAL INVENTARIO</a>
         </div>
 
         <div th:if="${rol == 'ROLE_VETERINARIO'}">
             <a href="mascotas/registro">REGISTRAR DE MASCOTA</a>
             <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
-            <a href="citas/listar.html">LISTADO DE CITAS</a>
+            <a href="citas/listar">LISTADO DE CITAS</a>
         </div>
 
         <div th:if="${rol == 'ROLE_RECEPCIONISTA'}">
-            <a href="clientes/registrar.html">REGISTRAR DE CLIENTE</a>
+            <a href="clientes/registrar">REGISTRAR DE CLIENTE</a>
             <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
-            <a href="citas/listar.html">LISTADO DE CITAS</a>
-            <a href="inventarios/listar.html">LISTADO DE INVENTARIO</a>
+            <a href="citas/listar">LISTADO DE CITAS</a>
+            <a href="inventarios/listar">LISTADO DE INVENTARIO</a>
         </div>
 
         <div th:if="${rol == 'ROLE_CLIENTE'}">
-            <a href="citas/listar.html">LISTADO DE CITAS</a>
+            <a href="citas/listar">LISTADO DE CITAS</a>
             <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
         </div>
         <br>

@@ -2,7 +2,7 @@
 <configuration scan="true" scanPeriod="30 seconds">
 
     <property name="LOG_PATH" value="sgv/logs" />
-    <property name="LOG_FILE" value="${LOG_PATH}/consultas.log" />
+    <property name="LOG_FILE" value="${LOG_PATH}/reporte.log" />
 
     <!-- Appender de archivo con rotación diaria -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
