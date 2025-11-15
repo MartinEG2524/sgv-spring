@@ -9,5 +9,7 @@ public interface ClienteService {
     List<Cliente> listar();
     Optional<Cliente> buscarPorId(Long id);
     Cliente guardar(Cliente cliente);
+    Cliente actualizar(Cliente cliente);
     void eliminar(Long id);
+    Optional<Cliente> buscarPorDni(Integer dni);
 }

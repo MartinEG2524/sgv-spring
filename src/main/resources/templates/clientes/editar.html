@@ -2,18 +2,180 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <title>Editar Cliente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        h1, label, button {
+            text-transform: uppercase;  /* Esto pondrá en mayúsculas los textos correspondientes */
+        }
+
+        h1 {
+            text-align: center;
+            color: #3e3e3e;
+        }
+
+        footer {
+            background-color: #fff;
+            border-top: 2px solid #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+        .social {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+        }
+        .container img {
+            width: 100px;
+        }
+        label {
+            display: block;
+            margin: 15px auto 5px;
+            text-align: left;
+            width: 250px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 250px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+        .buttons {
+            margin: 50px 0;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-login {
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid #2c5d92;
+            background: #2c5d92;
+            font-weight:600;
+            margin-top: 50px;
+            color: white;
+        }
+        .btn-primary{
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid red;
+            background:red;
+            font-weight:600;
+            margin-top: 50px;
+            color: white;
+            text-decoration:none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Editar Cliente</h1>
-    <form action="#" th:action="@{/clientes/editar/{id}(id=${cliente.id})}" th:object="${cliente}" method="post">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" th:field="*{nombre}" required /><br>
+    <header>
+        <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
+            <img src="/Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
+        </div>
+        <div class="header-container" style="display: flex; justify-content: center;">
+            <nav style="margin-top: 20px;">
+                <a href="/contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
+                <a href="/servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
+                <a href="/nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
+                <a href="/login" style="font-size: 24px; text-decoration: none; color: blue;">Login</a>
+            </nav>
+        </div>
+    </header>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{email}" required /><br>
+    <div class="container">
+        <h1>Editar Cliente</h1>
+        <p>Por favor, complete el formulario para editar los datos de usuario.</p>
 
-        <button type="submit">Actualizar Cliente</button>
-    </form>
-    <a href="/clientes">Volver al listado</a>
+        <form th:action="@{/clientes/editar/{id}(id=${cliente.idCliente})}" th:object="${cliente}" method="post">
+            <label for="idUsuario">Usuario:</label>
+            <input type="text" id="idUsuario" th:field="*{usuario.idUsuario}" required readonly /><br>
+            
+            <label for="nombres">Nombres:</label>
+            <input type="text" id="nombres" placeholder="Ingrese sus Nombres" th:field="*{nombres}" required /><br>
+
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" id="apellidos" placeholder="Ingrese sus Apellidos" th:field="*{apellidos}" required /><br>
+
+            <label for="dni">DNI:</label>
+            <input type="number" id="dni" placeholder="Ingrese su DNI" th:field="*{dni}" required /><br>
+
+            <label for="correo">Email:</label>
+            <input type="email" id="correo" placeholder="Ingrese su correo" th:field="*{correo}" required /><br>
+
+            <label for="direccion">Direccion:</label>
+            <input type="text" id="direccion" placeholder="Ingrese su Direccion" th:field="*{direccion}" required /><br>
+
+            <label for="sexo">Sexo:</label>
+            <select id="sexo" th:field="*{sexo}" required>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+            </select>
+
+            <label for="fechaNacimiento">Fecha Nacimiento:</label>
+            <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}" required /><br>
+
+            <label for="celular">Celular:</label>
+            <input type="number" id="celular" placeholder="Ingrese su Celular" th:field="*{celular}" required /><br>
+
+            <label for="pais">Pais:</label>
+            <input type="text" id="pais" placeholder="Ingrese su Pais" th:field="*{pais}" required /><br>
+
+            <label for="provincia">Provincia:</label>
+            <input type="text" id="provincia" placeholder="Ingrese su Provincia" th:field="*{provincia}" required /><br>
+
+            <label for="distrito">Distrito:</label>
+            <input type="text" id="distrito" placeholder="Ingrese su Distrito" th:field="*{distrito}" required /><br>
+
+            <label for="estado">ESTADO:</label>
+            <select id="estado" th:field="*{estado}" required>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+
+            <div>
+                <button type="submit" class="btn-login">Actualizar Cliente</button>
+            </div>
+        </form>
+        <a th:href="@{/clientes/listar}" class="btn-primary">Volver al listado de clientes</a>
+    </div>
+
+    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
+        <div class="footer-container" style="display: flex; justify-content: center;">
+            <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
+        </div>
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
+            <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;" width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
+        </div>
+    </footer>
 </body>
 </html>

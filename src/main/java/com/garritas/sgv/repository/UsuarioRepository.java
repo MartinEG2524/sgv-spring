@@ -16,7 +16,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("UPDATE Usuario u SET u.estado = :estado WHERE u.idUsuario = :id")
-    int actualizarEstado(@Param("id") Long id, @Param("estado") String estado);
+    Integer actualizarEstado(@Param("id") Long id, @Param("estado") String estado);
 
     @Procedure
     List<Object[]> sp_buscar_usuario(@Param("IdRol") Integer IdRol, @Param("IdUsuario") Integer IdUsuario);

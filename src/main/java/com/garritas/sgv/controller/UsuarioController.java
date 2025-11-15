@@ -5,6 +5,8 @@ import com.garritas.sgv.model.Usuario;
 import com.garritas.sgv.service.CargoService;
 import com.garritas.sgv.service.UsuarioService;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -17,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -128,5 +131,53 @@ public class UsuarioController {
         } else {
             return "redirect:/login";
         }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/export/excel")
+    public void exportUsuariosExcel(HttpServletResponse response) throws IOException {
+        String filename = "usuarios_" + java.time.LocalDate.now() + ".xlsx";
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+
+        List<Usuario> usuarios = usuarioService.listar();
+
+        try (var workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook()) {
+            var sheet = workbook.createSheet("Usuarios");
+
+            // Estilo header
+            var headerStyle = workbook.createCellStyle();
+            var font = workbook.createFont();
+            font.setBold(true);
+            headerStyle.setFont(font);
+
+            // Header
+            String[] headers = {"ID", "Código", "Estado", "Rol"};
+            var headerRow = sheet.createRow(0);
+            for (int i = 0; i < headers.length; i++) {
+                var cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+                cell.setCellStyle(headerStyle);
+            }
+
+            // Body
+            int rowIdx = 1;
+            for (Usuario u : usuarios) {
+                var row = sheet.createRow(rowIdx++);
+                row.createCell(0).setCellValue(u.getIdUsuario());
+                row.createCell(1).setCellValue(safe(u.getCodigo()));
+                row.createCell(2).setCellValue(safe(u.getEstado()));
+                row.createCell(3).setCellValue(u.getIdCargo()!=null ? safe(u.getIdCargo().getNombre()) : "");
+            }
+
+            // Autoajuste columnas
+            for (int i = 0; i < headers.length; i++) sheet.autoSizeColumn(i);
+
+            workbook.write(response.getOutputStream());
+        }
+    }
+
+    private String safe(String s) { 
+        return s == null ? "" : s; 
     }
 }

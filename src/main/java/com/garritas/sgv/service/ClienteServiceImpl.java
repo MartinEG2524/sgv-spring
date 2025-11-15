@@ -5,6 +5,7 @@ import com.garritas.sgv.repository.ClienteRepository;
 import com.garritas.sgv.util.ValidarEmail;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,18 +31,29 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     public Cliente guardar(Cliente cliente) {
-    if (StringUtils.isBlank(cliente.getNombres())) {
-        throw new IllegalArgumentException("El nombre no puede estar vacío");
-    }
-    if (!ValidarEmail.isValid(cliente.getCorreo())) {
-            throw new IllegalArgumentException("El email no es válido.");
+        if (StringUtils.isBlank(cliente.getNombres())) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío");
         }
+        if (!ValidarEmail.isValid(cliente.getCorreo())) {
+                throw new IllegalArgumentException("El email no es válido.");
+            }
 
         return clienteRepository.save(cliente);
     }
 
+    public Cliente actualizar(Cliente cliente) {
+        return clienteRepository.save(cliente);
+    }
+
     @Override
+    @Transactional
     public void eliminar(Long id) {
-        clienteRepository.deleteById(id);
+        int actualizar = clienteRepository.actualizarEstado(id, "Inactivo");
+        if (actualizar == 0) throw new IllegalArgumentException("Usuario no encontrado: " + id);
+    }
+
+    @Override
+    public Optional<Cliente> buscarPorDni(Integer dni) {
+        return clienteRepository.findByDni(dni);
     }
 }

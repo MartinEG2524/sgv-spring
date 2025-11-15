@@ -81,18 +81,6 @@
         color: white;
         }
 
-        table button.eliminar {
-        background-color: red;
-        border: red;
-        padding: 3px 10px;
-        color: white;
-        margin: 0 5px 0 0;
-        border-radius: 4px;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        }
-
         table button.ver {
         background-color: green;
         border: green;
@@ -106,7 +94,19 @@
         margin-left: 20px;
         }
 
-        button.exportar-excel {
+        table button.eliminar {
+        background-color: red;
+        border: red;
+        padding: 3px 10px;
+        color: white;
+        margin: 0 5px 0 0;
+        border-radius: 4px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        }
+
+        a.exportar-excel {
         background-color: #28a745;
         color: white;
         border: none;
@@ -114,11 +114,11 @@
         font-weight: bold;
         border-radius: 5px;
         cursor: pointer;
-        margin-left: 10px;
         transition: background-color 0.3s ease;
+        text-decoration:none;
         }
 
-        button.exportar-excel:hover {
+        a.exportar-excel:hover {
         background-color: #218838;
         }
     </style>
@@ -138,12 +138,12 @@
         </div>
     </header>
 
-    <div class="intro" style="display: flex; justify-content: center; margin-top: 10px;">
+    <div class="intro" style="display: flex; justify-content: center;">
         <h1>LISTADO DE USUARIOS</h1>
     </div>
 
-    <div style="text-align: right; margin-right: 10%; margin-bottom: 15px; margin-top: 10px;">
-        <button class="exportar-excel">EXPORTAR A EXCEL</button>
+    <div style="text-align: right; margin-right: 10%; margin-bottom: 20px; margin-top: 5px;">
+        <a class="exportar-excel" th:href="@{/usuarios/export/excel}">EXPORTAR A EXCEL</a>
     </div>
 
     <table>
