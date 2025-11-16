@@ -74,7 +74,7 @@ public class UsuarioController {
         }
         usuario.getIdCargo().getIdRol();
         usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
-        usuario.setEstado("activo");
+        usuario.setEstado("Activo");
         usuarioService.guardar(usuario);
         return "redirect:/usuarios/listar";
     }

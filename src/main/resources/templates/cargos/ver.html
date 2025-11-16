@@ -111,17 +111,17 @@
         </div>
     </header>
 
-   <div class="container">
+    <div class="container">
     <h1>Detalle del Cargo</h1>
     <!-- Detalles del cargo -->
     <form id="Form" th:action="@{/cargos/ver}" th:object="${cargo}" method="get">
-        <p><strong>ID:</strong> <span th:text="${cargo.id}"></span></p>
+        <p><strong>ID:</strong> <span th:text="${cargo.idRol}"></span></p>
         <p><strong>Nombre:</strong> <span th:text="${cargo.nombre}"></span></p>
         <p><strong>Descripción:</strong> <span th:text="${cargo.descripcion}"></span></p>
-
+        <p><strong>Estado:</strong> <span th:text="${cargo.estado}"></span></p>
         <!-- Botón para volver al listado de cargos -->
         <div>
-            <a th:href="@{/cargos}" class="btn-primary">Volver al listado de Cargos</a>
+            <a th:href="@{/cargos/listar}" class="btn-primary">Volver al listado de Cargos</a>
         </div>
     </form>
 </div>

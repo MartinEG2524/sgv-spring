@@ -49,7 +49,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional
     public void eliminar(Long id) {
         int actualizar = clienteRepository.actualizarEstado(id, "Inactivo");
-        if (actualizar == 0) throw new IllegalArgumentException("Usuario no encontrado: " + id);
+        if (actualizar == 0) throw new IllegalArgumentException("Cliente no encontrado: " + id);
     }
 
     @Override

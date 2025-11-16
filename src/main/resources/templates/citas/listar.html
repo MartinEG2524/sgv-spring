@@ -152,21 +152,26 @@
             <th>ID</th>
             <th>Fecha</th>
             <th>Veterinario</th>
+            <th>Mascota</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         <tr th:each="cita : ${citas}">
-            <td th:text="${cita.id}"></td>
-            <td th:text="${cita.fecha}"></td>
+            <td th:text="${cita.idCita}"></td>
+            <td th:text="${#dates.format(cita.fecha, 'dd-MM-yyyy')}"></td>
             <td th:text="${cita.veterinario.nombre}"></td>
+            <td th:text="${cita.mascota.nombre}"></td>
             <td>
                 <!-- Ver detalles de la cita -->
-                <a th:href="@{/citas/{id}(id=${cita.id})}" class="ver">Ver</a>
-
+                <a th:href="@{/citas/ver/{id}(id=${cita.idCita})}" class="ver">Ver</a>
+              
+                <!-- Editar cita -->
+                <a th:href="@{/citas/editar/{id}(id=${cita.idCita})}" class="editar">Editar</a>
+              
                 <!-- Eliminar cita con confirmación -->
-                <form th:action="@{/citas/eliminar/{id}(id=${cita.id})}" method="post" 
-                      onsubmit="return confirm('¿Estás seguro de eliminar esta Cita?');" style="display:inline">
+                <form th:action="@{/citas/eliminar/{id}(id=${cita.idCita})}" method="post" 
+                    onsubmit="return confirm('¿Estás seguro de eliminar esta Cita?');" style="display:inline">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     <button type="submit" class="eliminar">Eliminar</button>
                 </form>

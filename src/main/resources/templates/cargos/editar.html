@@ -33,84 +33,82 @@
             margin-top: 40px;
         }
 
-       form {
-    margin: 30px auto;
-    padding: 20px;
-    background-color: transparent;
-    width: 300px;
-    display: flex;
-    flex-direction: column; /* Organiza los elementos en columnas */
-    align-items: center;  /* Centra los elementos dentro del formulario */
-    gap: 15px; /* Espacio entre los elementos */
-}
+    form {
+        margin: 30px auto;
+        padding: 20px;
+        background-color: transparent;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
 
-label {
-    font-weight: bold;
-    color: #333;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-bottom: 8px;
-    text-align: center;  /* Centra el texto de las etiquetas */
-}
+    label {
+        font-weight: bold;
+        color: #333;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 8px;
+        text-align: center;
+    }
 
-input[type="text"] {
-    width: 100%;           /* Asegura que el campo de entrada ocupe todo el ancho disponible */
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #aaa;
-    border-radius: 5px;
-    font-size: 16px;
-    background-color: white;
-    box-shadow: none;
-    text-align: center;  /* Centra el texto dentro del campo de entrada */
-}
+    input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #aaa;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: white;
+        box-shadow: none;
+        text-align: center;
+    }
 
-button {
-    width: 100%;
-    padding: 8px;
-    background-color: #2c5d92;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-    max-width: 200px;  /* Limita el ancho máximo */
-    margin-left: auto;  /* Centra el botón */
-    margin-right: auto; 
-    display: block;
-}
+    button {
+        width: 100%;
+        padding: 8px;
+        background-color: #2c5d92;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        max-width: 200px;
+        margin-left: auto;
+        margin-right: auto; 
+        display: block;
+    }
 
-button:hover {
-    background-color: #1a4063;
-}
+    button:hover {
+        background-color: #1a4063;
+    }
 
-p {
-    text-align: center;  /* Centra el texto */
-    color: #333;         /* Puedes ajustar el color si es necesario */
-    font-size: 16px;     /* Ajusta el tamaño de la fuente si lo deseas */
-}
+    p {
+        text-align: center;
+        color: #333;
+        font-size: 16px;
+    }
 
-.btn-primary {
-    display: block;
-    text-align: center;
-    font-size: 16px;
-    padding: 12px 16px;
-    border-radius: 8px;
-    border: 1px solid red;
-    background: red;
-    font-weight: 600;
-    color: white;
-    text-decoration: none;
-    width: 100%;
-    max-width: 250px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    top: -20px;  /* Mueve el botón hacia arriba */
-}
-
-        
+    .btn-primary {
+        display: block;
+        text-align: center;
+        font-size: 16px;
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid red;
+        background: red;
+        font-weight: 600;
+        color: white;
+        text-decoration: none;
+        width: 100%;
+        max-width: 250px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        top: -20px;
+    }
     </style>
 </head>
 
@@ -128,21 +126,32 @@ p {
             </nav>
         </div>
     </header>
-  <div class="container">
-    <h1>Editar Cargo</h1>
-     <p>Por favor, complete el formulario para editar los datos de usuario.</p>
-    <form action="#" th:action="@{/cargos/editar/{id}(id=${cargo.id})}" th:object="${cargo}" method="post">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" placeholder="Ingrese su nombre" th:field="*{nombre}" required />
+    <div class="container">
+        <h1>EDITAR CARGO</h1>
+        <p>Por favor, complete el formulario para editar los datos de cargo.</p>
+        <form th:action="@{/cargos/editar/{id}(id=${cargo.idRol})}" th:object="${cargo}" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" th:value="${cargo.nombre}" th:field="*{nombre}" required />
 
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" placeholder="Coloque una descripcion" th:field="*{descripcion}" required />
+            <label for="descripcion">Descripción:</label>
+            <input type="text" id="descripcion" th:value="${cargo.descripcion}" th:field="*{descripcion}" required />
 
-        <button type="submit">Actualizar Cargo</button>
-    </form>
-    <a href="/cargos" class="btn-primary">Volver al listado</a>
-</div>
-     <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
+            <label for="estado">ESTADO:</label>
+            <select id="estado" th:field="*{estado}" required>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+            <br>
+            <div>
+                <button type="submit" class="btn-login">ACTUALIZAR CARGO</button>
+            </div>
+        </form>
+        <br>
+        <div>
+            <a th:href="@{/cargos/listar}" class="btn-primary">Volver al listado de cargos</a>
+        </div>
+    </div>
+    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
         <div class="footer-container" style="display: flex; justify-content: center;">
             <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
         </div>

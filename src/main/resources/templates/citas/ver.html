@@ -110,13 +110,13 @@
             </nav>
         </div>
     </header>
-     <div class="container">
-    <h1>Detalle de la Cita</h1>
-    <p>ID: <span th:text="${cita.id}"></span></p>
-    <p>Fecha: <span th:text="${cita.fecha}"></span></p>
-    <p>Veterinario: <span th:text="${cita.veterinario.nombre}"></span></p>
-    <p>Paciente: <span th:text="${cita.paciente.nombre}"></span></p>
-    <a href="/citas"class="btn-primary">Volver al listado</a>
+        <div class="container">
+        <h1>Detalle de la Cita</h1>
+        <p>ID: <span th:text="${cita.idCita}"></span></p>
+        <p>Fecha: <span th:text="${cita.fecha}"></span></p>
+        <p>Veterinario: <span th:text="${cita.veterinario.nombre}"></span></p>
+        <p>Mascota: <span th:text="${cita.mascota.nombre}"></span></p>
+        <a href="/citas" class="btn-primary">Volver al listado</a>
     </div>
     
     <script>

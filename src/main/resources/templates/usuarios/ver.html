@@ -113,16 +113,16 @@
     </header>
     <div class="container">
         <h1>Detalle de Usuario</h1>
-        <form id="Form" th:action="@{/usuarios/ver}" th:object="${usuario}" method="get"></form>
-            <p>ID: <span th:text="${usuario.idUsuario}"></span></p>
-            <p>Código: <span th:text="${usuario.codigo}"></span></p>
-            <p>Contraseña:
+        <form id="Form" th:action="@{/usuarios/ver}" th:object="${usuario}" method="get">
+            <p><strong>ID:</strong> <span th:text="${usuario.idUsuario}"></span></p>
+            <p><strong>Código:</strong> <span th:text="${usuario.codigo}"></span></p>
+            <p><strong>Contraseña:</strong>
                 <span class="masked">****************************************</span>
                 <span class="real" style="display:none" th:text="${usuario.contrasena}"></span>
                 <button type="button" class="ver">Ver</button>
             </p>
-            <p>Estado: <span th:text="${usuario.estado}"></span></p>
-            <p>Cargo: <span th:text="${usuario.idCargo.nombre}"></span></p>
+            <p><strong>Estado:</strong> <span th:text="${usuario.estado}"></span></p>
+            <p><strong>Cargo:</strong> <span th:text="${usuario.idCargo.nombre}"></span></p>
             <div>
                 <a th:href="@{/usuarios/listar}" class="btn-primary">Volver al listado de usuarios</a>
             </div>

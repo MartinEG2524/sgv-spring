@@ -9,5 +9,7 @@ public interface CargoService {
     List<Cargo> listar();
     Optional<Cargo> buscarPorId(Long id);
     Cargo guardar(Cargo cargo);
+    Cargo actualizar(Cargo cargo);
     void eliminar(Long id);
+    Optional<Cargo> buscarPorNombre(String nombre);
 }
