@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <title>Agregar Nueva Cita</title>
-      <style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
@@ -25,7 +25,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 40px;
         }
         .social {
             display: inline-block;
@@ -36,7 +35,7 @@
         }
         .container {
             text-align: center;
-            padding: 40px;
+            padding: 20px;
         }
         .container img {
             width: 100px;
@@ -78,15 +77,14 @@
             border:1px solid red;
             background:red;
             font-weight:600;
-            margin-top: 50px;
+            margin-top: 10px; 
             color: white;
             text-decoration:none;
         }
     </style>
 </head>
-
 <body>
-       <header>
+    <header>
         <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
             <img src="/Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
         </div>
@@ -97,34 +95,44 @@
                 <a href="/nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
                 <a href="/login" style="font-size: 24px; text-decoration: none; color: blue;">Login</a>
             </nav>
-       
+        </div>
     </header>
 
-      <div class="container">
+    <div class="container">
         <h1>AGREGAR NUEVA CITA </h1>
-        <p>Por favor, complete el formulario para crear un nuevo usuario.</p>
+        <p>Por favor, complete el formulario para crear una Cita.</p>
     
-    <form action="#" th:action="@{/citas}" th:object="${cita}" method="post">
-        <label for="fecha">FECHA:</label>
-        <input type="datetime-local" id="fecha" th:field="*{fecha}" required /><br>
-        <label for="veterinario">VETERINARIO:</label>
-        <input type="text" id="veterinario" placeholder="Ingrese el nombre del veterinario" th:field="*{veterinario.nombre}" required /><br>
-        <label for="paciente">PACIENTE:</label>
-        <input type="text" id="paciente" placeholder="Ingrese el nombre del paciente" th:field="*{paciente.nombre}" required /><br>
-        
-<div class="buttons">
+        <form id="registroForm" th:action="@{/citas/registrar}" th:object="${cita}" method="post">
+            <label for="idMascota">ID Mascota:</label>
+            <input type="number" id="idMascota" placeholder="Ingrese su ID Mascota" th:field="*{mascota.idMascota}" required />
+            
+            <label for="idVeterinario">ID Veterinario:</label>
+            <input type="number" id="idVeterinario" placeholder="Ingrese su ID Veterinario" th:field="*{veterinario.idVeterinario}" required />
+            
+            <label for="idServicio">ID Servicio:</label>
+            <input type="number" id="idServicio" placeholder="Ingrese su ID Servicio" th:field="*{servicio.idServicio}" required />
+
+            <label for="Fecha">Fecha:</label>
+            <input type="date" id="Fecha" th:field="*{Fecha}" required /><br>
+
+            <label for="Hora">Hora:</label>
+            <input type="time" id="Hora" th:field="*{Hora}" required /><br>
+
+            <input type="hidden" th:field="*{estado}" value="Activo" />
+
+            <div class="buttons">
                 <button type="submit" class="btn-login">GUARDAR CITA</button>
             </div>
+            
+            <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red"></div>
+        </form>
 
-        <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red"></div>
-    </form>
-    
-      <div>
-            <a th:href="/citas" class="btn-primary">Volver al listado de citas </a>
+        <div style="margin-top: 15px;">
+            <a th:href="@{/citas/listar}" class="btn-primary">VOLVER AL LISTADO DE CITAS</a>
         </div>
- </div>
+    </div>
 
-    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
+    <footer style="display: flex; bottom: 0; width: 99%;">
         <div class="footer-container" style="display: flex; justify-content: center;">
             <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
         </div>

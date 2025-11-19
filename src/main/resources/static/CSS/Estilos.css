@@ -130,3 +130,33 @@ footer {
 .address {
     font-weight: bold;
 }
+
+a.primary{
+    display:inline-block;
+    padding:10px 16px;
+    border-radius:8px;
+    border:1px solid #2563eb;
+    background:#2563eb;
+    color:#fff;
+    font-weight:600;
+}
+
+a.second{
+    display:inline-block;
+    padding:10px 16px;
+    border-radius:8px;
+    border:1px solid red;
+    background:red;
+    color:#fff;
+    font-weight:600;
+}
+
+a.iniciar{
+    display:inline-block;
+    padding:10px 16px;
+    border-radius:8px;
+    border:1px solid green;
+    background:green;
+    color:#fff;
+    font-weight:600;
+}

@@ -1,32 +1,23 @@
 package com.garritas.sgv.service;
 
 import com.garritas.sgv.model.Veterinario;
-import com.garritas.sgv.model.Cita;
-import com.garritas.sgv.model.HistorialClinico;
-import com.garritas.sgv.model.Servicio;
 import com.garritas.sgv.repository.VeterinarioRepository;
-import com.garritas.sgv.repository.CitaRepository;
-import com.garritas.sgv.repository.HistorialClinicoRepository;
-import com.garritas.sgv.repository.ServicioRepository;
+import com.garritas.sgv.util.ValidarEmail;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 
 @Service
 public class VeterinarioServiceImpl implements VeterinarioService {
 
     private final VeterinarioRepository veterinarioRepository;
-    private final CitaRepository citaRepository;
-    private final HistorialClinicoRepository historialClinicoRepository;
-    private final ServicioRepository servicioRepository;
 
-    public VeterinarioServiceImpl(VeterinarioRepository veterinarioRepository, CitaRepository citaRepository,
-        HistorialClinicoRepository historialClinicoRepository, ServicioRepository servicioRepository) {
+    public VeterinarioServiceImpl(VeterinarioRepository veterinarioRepository) {
         this.veterinarioRepository = veterinarioRepository;
-        this.citaRepository = citaRepository;
-        this.historialClinicoRepository = historialClinicoRepository;
-        this.servicioRepository = servicioRepository;
     }
 
     @Override
@@ -39,29 +30,31 @@ public class VeterinarioServiceImpl implements VeterinarioService {
         return veterinarioRepository.findById(id);
     }
 
-    @Override
-    public Veterinario guardar(Veterinario veterinario) {
+    public Veterinario guardar(Veterinario cliente) {
+        if (StringUtils.isEmpty(cliente.getNombres())) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío");
+        }
+        
+        if (!ValidarEmail.isValid(cliente.getCorreo())) {
+            throw new IllegalArgumentException("El email no es válido.");
+        }
+
+        return veterinarioRepository.save(cliente);
+    }
+
+    public Veterinario actualizar(Veterinario veterinario) {
         return veterinarioRepository.save(veterinario);
     }
 
     @Override
+    @Transactional
     public void eliminar(Long id) {
-        veterinarioRepository.deleteById(id);
-    }
-
-    // Implementación de los métodos de citas, historial y servicios
-    @Override
-    public List<Cita> obtenerCitas() {
-        return citaRepository.findAll();
+        int actualizar = veterinarioRepository.actualizarEstado(id, "Inactivo");
+        if (actualizar == 0) throw new IllegalArgumentException("veterinario no encontrado: " + id);
     }
 
     @Override
-    public List<HistorialClinico> obtenerHistorial() {
-        return historialClinicoRepository.findAll();
-    }
-
-    @Override
-    public List<Servicio> obtenerServicios() {
-        return servicioRepository.findAll();
+    public Optional<Veterinario> buscarPorDni(Integer dni) {
+        return veterinarioRepository.findByDni(dni);
     }
 }

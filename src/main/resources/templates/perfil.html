@@ -39,6 +39,40 @@
             display: inline-block;
             margin: 0 10px;
         }
+        table button.ver {
+        background-color: green;
+        border: green;
+        padding: 3px 10px;
+        color: white;
+        margin: 0 5px 0 0;
+        border-radius: 4px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-left: 20px;
+        }
+        .btn-primary{
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid #2563eb;
+            background:#2563eb;
+            color:#fff;
+            font-weight:600;
+            margin-left: 50px;
+            text-decoration:none;
+        }
+        .btn-second{
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid red;
+            background:red;
+            color:#fff;
+            font-weight:600;
+            margin-left: 50px;
+            text-decoration:none;
+        }
     </style>
 </head>
 <body>
@@ -53,6 +87,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Código</th>
+                    <th>Contraseña</th>
                     <th>Cargo</th>
                 </tr>
             </thead>
@@ -60,6 +95,11 @@
                 <tr th:each="usuario : ${usuarios}">
                     <td th:text="${usuario.idUsuario}"></td>
                     <td th:text="${usuario.codigo}"></td>
+                    <td>
+                        <span class="masked">****************************************</span>
+                        <span class="real" style="display:none" th:text="${usuario.contrasena}"></span>
+                        <button type="button" class="ver">Ver</button>
+                    </td>
                     <td th:text="${usuario.idCargo.nombre}"></td>
                 </tr>
             </tbody>
@@ -194,14 +234,39 @@
             </tbody>
         </table>
     </div>
+
     <div style="text-align: center; margin-top: 25px;">
-        <a href="/menu">Volver al Menú</a>
+        <a th:href="@{/editar-perfil}" class="btn-primary">EDITAR DATOS</a>
+        <a th:href="@{/menu}" class="btn-second">REGRESAR A MENÚ</a>
     </div>
-    <footer>
-        <div class="footer-container" style="display: flex; justify-content: center;">
+
+    <script>
+    document.addEventListener('click', function (e) {
+        const btn = e.target.closest('.ver');
+        if (!btn) return;
+
+        const td = btn.closest('td');
+        const masked = td.querySelector('.masked');
+        const real = td.querySelector('.real');
+
+        const showing = real.style.display !== 'none';
+        if (showing) {
+            real.style.display = 'none';
+            masked.style.display = 'inline';
+            btn.textContent = 'Ver';
+        } else {
+            masked.style.display = 'none';
+            real.style.display = 'inline';
+            btn.textContent = 'Ocultar';
+        }
+    });
+    </script>
+
+    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
+        <div class="footer-container" style="display: flex; justify-content: center; margin-right: 0px;">
             <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
         </div>
-        <div class="social-media" style="display: flex; justify-content: center;">
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 12px;">
             <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
             <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
             <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>

@@ -2,6 +2,9 @@ package com.garritas.sgv.model;
 
 import jakarta.persistence.*;
 import java.time.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,8 +31,10 @@ public class Cita {
     @JoinColumn(name = "id_servicio", nullable = false)
     private Servicio servicio;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime hora;
 
     private String estado;

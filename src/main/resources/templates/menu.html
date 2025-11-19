@@ -43,51 +43,61 @@
         .menu a:hover {
             background-color: #1a3d6c;
         }
+
+        .mantenimientos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>MENÚ PRINCIPAL</h1>
     <div class="menu">
         <div style="padding-bottom: 10px;">
-            <h1 style="text-align: center;">Bienvenido <span th:text="${codigo}"></span>!</h1>
+            <h1 style="text-align: center;">Bienvenido '<span th:text="${codigo}"></span>'!</h1>
         
             <p>INFORMACIÓN DE USUARIO:</p>
-            <a th:href="@{usuarios/perfil(IdRol=${IdRol}, IdUsuario=${IdUsuario})}">VER PERFIL</a>
+            <a th:href="@{usuarios/perfil(IdRol=${IdRol}, IdUsuario=${IdUsuario})}" style="background-color: green;">VER PERFIL</a>
         </div>
+        <div>
+        <p>MANTENIMIENTOS:</p>
         <!-- Mostrar opciones según el rol -->
-        <div th:if="${rol == 'ROLE_ADMIN'}">
-            <p>MANTENIMIENTOS:</p>
-            <a href="usuarios/listar">USUARIOS</a>
-            <a href="cargos/listar">CARGOS DE PERSONAL</a>
-            <a href="clientes/listar">CLIENTES</a>
-            <a href="veterinarios/">VETERINARIOS</a>
-            <a href="servicios">SERVICIOS</a>
-            <a href="mascotas/listar">MASCOTAS</a>
-            <a href="citas/">CITAS</a>
-            <a href="historiales/">HISTORIAL CLINICOS</a>
-            <a href="inventarios/listar">INVENTARIOS</a>
-            <a href="detalles/">DETALLES HISTORIAL INVENTARIO</a>
-        </div>
+            <div th:if="${rol == 'ROLE_ADMIN'}" class="mantenimientos-grid">
+                <a href="usuarios/listar">USUARIOS</a>
+                <a href="cargos/listar">CARGOS DE PERSONAL</a>
+                <a href="veterinarios/listar">VETERINARIOS</a>
+                <a href="clientes/listar">CLIENTES</a>
+                <a href="servicios/listar">SERVICIOS</a>
+                <a href="mascotas/listar">MASCOTAS</a>
+                <a href="citas/listar">CITAS</a>
+                <a href="colas/listar">COLAS ATENCIÓN</a>
+                <a href="historiales/listar">HISTORIAL CLINICOS</a>
+                <a href="inventarios/listar">INVENTARIOS</a>
+                <a href="detalles/listar">DETALLES HISTORIAL INVENTARIO</a>
+            </div>
 
-        <div th:if="${rol == 'ROLE_VETERINARIO'}">
-            <a href="mascotas/registro">REGISTRAR DE MASCOTA</a>
-            <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
-            <a href="citas/listar">LISTADO DE CITAS</a>
-        </div>
+            <div th:if="${rol == 'ROLE_VETERINARIO'}" class="mantenimientos-grid">
+                <a href="veterinarios/editar">EDITAR DATOS</a>
+                <a href="mascotas/registro">REGISTRAR DE MASCOTA</a>
+                <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
+                <a href="citas/listar">LISTADO DE CITAS</a>
+            </div>
 
-        <div th:if="${rol == 'ROLE_RECEPCIONISTA'}">
-            <a href="clientes/registrar">REGISTRAR DE CLIENTE</a>
-            <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
-            <a href="citas/listar">LISTADO DE CITAS</a>
-            <a href="inventarios/listar">LISTADO DE INVENTARIO</a>
-        </div>
+            <div th:if="${rol == 'ROLE_RECEPCIONISTA'}" class="mantenimientos-grid">
+                <a href="clientes/registrar">REGISTRAR DE CLIENTE</a>
+                <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
+                <a href="citas/listar">LISTADO DE CITAS</a>
+                <a href="inventarios/listar">LISTADO DE INVENTARIO</a>
+            </div>
 
-        <div th:if="${rol == 'ROLE_CLIENTE'}">
-            <a href="citas/listar">LISTADO DE CITAS</a>
-            <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
+            <div th:if="${rol == 'ROLE_CLIENTE'}" class="mantenimientos-grid">
+                <a href="citas/listar">LISTADO DE CITAS</a>
+                <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
+            </div>
         </div>
         <br>
-        <a href="/logout?logout=true">CERRAR SESIÓN</a>
+        <a href="/logout?logout=true" style="background-color: red;">CERRAR SESIÓN</a>
     </div>
 </body>
 </html>

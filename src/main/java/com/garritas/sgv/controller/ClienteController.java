@@ -64,16 +64,8 @@ public class ClienteController {
             return "redirect:/clientes/registrar";
         }
         cliente.getUsuario().getIdUsuario();
-        cliente.setEstado("activo");
+        cliente.setEstado("Activo");
         clienteService.guardar(cliente);
-        return "redirect:/clientes/listar";
-    }
-
-    // Eliminar un cliente, solo accesible para ADMIN
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/eliminar/{id}")
-    public String eliminarCliente(@PathVariable Long id) {
-        clienteService.eliminar(id);
         return "redirect:/clientes/listar";
     }
 
@@ -106,6 +98,14 @@ public class ClienteController {
         Usuario usuario = usuarioService.buscarPorId(idUsuario).orElseThrow(() -> new IllegalArgumentException("Usuario no existe: " + idUsuario));
         clienteActualizado.setUsuario(usuario);
         clienteService.actualizar(clienteActualizado);
+        return "redirect:/clientes/listar";
+    }
+
+    // Eliminar un cliente, solo accesible para ADMIN
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/eliminar/{id}")
+    public String eliminarCliente(@PathVariable Long id) {
+        clienteService.eliminar(id);
         return "redirect:/clientes/listar";
     }
 

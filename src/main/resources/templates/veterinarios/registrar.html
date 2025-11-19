@@ -1,175 +1,191 @@
-    <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Agregar Nuevo Veterinario</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f5f5f5;
-                margin: 0;
-                padding: 0;
-            }
-            .logo {
-                text-align: center;
-                margin: 20px 0;
-            }
-            
-            h2 {
-                text-align: center;
-                color: #3e3e3e;
-            }
-            footer {
-                background-color: #fff;
-                border-top: 2px solid #333;
-                padding: 15px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-top: 40px;
-            }
-            .social {
-                display: inline-block;
-                margin: 0 10px;
-            }
-            form {
-                margin-top: 20px;
-            }
-            .container {
-                text-align: center;
-                padding: 40px;
-            }
-            .container img {
-                width: 100px;
-            }
-            label {
-                display: block;
-                margin: 15px auto 5px;
-                text-align: left;
-                width: 250px;
-                font-weight: bold;
-            }
-            input[type="text"],
-            input[type="password"] {
-                width: 250px;
-                padding: 8px;
-                margin-bottom: 10px;
-                border: 1px solid #aaa;
-                border-radius: 5px;
-            }
-            .buttons {
-                margin: 50px 0;
-            }
-            .buttons button {
-                padding: 10px 20px;
-                margin: 0 10px;
-                border: none;
-                border-radius: 5px;
-                font-weight: bold;
-                cursor: pointer;
-            }
-            .btn-login {
-                background-color: #2c5d92;
-                color: white;
-            }
-            .btn-primary{
-                display:inline-block;
-                padding:10px 16px;
-                border-radius:8px;
-                border:1px solid red;
-                background:red;
-                font-weight:600;
-                margin-top: 50px;
-                color: white;
-                text-decoration:none;
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
-                <img src="/Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
-            </div>
-            <div class="header-container" style="display: flex; justify-content: center;">
-                <nav style="margin-top: 20px;">
-                    <a href="/contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
-                    <a href="/servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
-                    <a href="/nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
-                    <a href="/login" style="font-size: 24px; text-decoration: none; color: blue;">Login</a>
-                </nav>
-            </div>
-        </header>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Agregar Nuevo Veterinario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .logo {
+            text-align: center;
+            margin: 20px 0;
+        }
 
-        <div class="container">
+        h2 {
+            text-align: center;
+            color: #3e3e3e;
+        }
+        footer {
+            background-color: #fff;
+            border-top: 2px solid #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .social {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .container {
+            text-align: center;
+            padding: 10px;
+        }
+        .container img {
+            width: 100px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"],
+        input[type="time"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .buttons {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .buttons button,
+        .buttons a {
+            padding: 10px 16px;
+            margin: 0;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            width: auto;
+        }
+        .btn-login {
+            background-color: #2c5d92;
+            color: white;
+        }
+        .btn-primary {
+            background-color: #f50808;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
+            <img src="/Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
+        </div>
+        <div class="header-container" style="display: flex; justify-content: center;">
+            <nav style="margin-top: 20px;">
+                <a href="/contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
+                <a href="/servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
+                <a href="/nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
+                <a href="/login" style="font-size: 24px; text-decoration: none; color: blue;">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
         <h1>AGREGAR NUEVO VETERINARIO</h1>
         <p>Por favor, complete el formulario para crear un nuevo veterinario.</p>
 
-        <form action="#" th:action="@{/veterinarios/registrar}" th:object="${veterinario}" method="post">
-            <label for="nombres">Nombres:</label>
-            <input type="text" id="nombres" th:field="*{nombres}" required /><br>
+        
+        <form id="registroForm" th:action="@{/veterinarios/registrar}" th:object="${veterinario}" method="post">
+            <div class="form-grid">
+                <div>
+                    <label for="idUsuario">ID Usuario:</label>
+                    <input type="number" id="idUsuario" placeholder="Ingrese su ID Usuario" th:field="*{usuario.idUsuario}" required />
 
-            <label for="apellidos">Apellidos:</label>
-            <input type="text" id="apellidos" th:field="*{apellidos}" required /><br>
+                    <label for="nombres">NOMBRES:</label>
+                    <input type="text" id="nombres" placeholder="Ingrese sus Nombres" th:field="*{nombres}" required />
 
-            <label for="dni">DNI:</label>
-            <input type="number" id="dni" th:field="*{dni}" required /><br>
+                    <label for="apellidos">APELLIDOS:</label>
+                    <input type="text" id="apellidos" placeholder="Ingrese sus Apellidos" th:field="*{apellidos}" required />
 
-            <label for="correo">Correo:</label>
-            <input type="email" id="correo" th:field="*{correo}" required /><br>
+                    <label for="dni">DNI:</label>
+                    <input type="text" id="dni" placeholder="Ingrese su DNI" th:field="*{dni}" required />
 
-            <label for="especialidad">Especialidad:</label>
-            <input type="text" id="especialidad" th:field="*{especialidad}" required /><br>
-
-            <label for="sexo">Sexo:</label>
-            <select id="sexo" th:field="*{sexo}" required>
-                <option value="">Seleccione...</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Femenino">Femenino</option>
-                <option value="Otro">Otro</option>
-            </select><br>
-
-            <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-            <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}" required /><br>
-
-            <label for="celular">Celular:</label>
-            <input type="number" id="celular" th:field="*{celular}" required /><br>
-
-            <label for="pais">País:</label>
-            <input type="text" id="pais" th:field="*{pais}" required /><br>
-
-            <label for="provincia">Provincia:</label>
-            <input type="text" id="provincia" th:field="*{provincia}" required /><br>
-
-            <label for="distrito">Distrito:</label>
-            <input type="text" id="distrito" th:field="*{distrito}" required /><br>
-
-            <label for="estado">Estado:</label>
-            <select id="estado" th:field="*{estado}" required>
-                <option value="ACTIVO">ACTIVO</option>
-                <option value="INACTIVO">INACTIVO</option>
-            </select><br>
-            <!-- Botones de acción -->
-                <div class="buttons">
-                    <button type="submit" class="btn-login">GUARDAR VETERINARIO</button>
-                </div>
+                    <label for="correo">EMAIL:</label>
+                    <input type="email" id="correo" placeholder="Ingrese su Correo" th:field="*{correo}" required />
                 
-                <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red"></div>
-            </form>
+                    <label for="especialidad">ESPECIALIDAD:</label>
+                    <input type="text" id="especialidad" placeholder="Ingrese su Especialidad" th:field="*{especialidad}" required />
+                </div>
+                <div>
+                    <label for="sexo">Sexo:</label>
+                    <select id="sexo" th:field="*{sexo}" required>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
 
-            <div>
-                <a th:href="@{/veterinarios/listar}" class="btn-primary">Volver al listado de veterinarios</a>
+                    <label for="fechaNacimiento">Fecha Nacimiento:</label>
+                    <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}" required />
+
+                    <label for="celular">Celular:</label>
+                    <input type="number" id="celular" placeholder="Ingrese su Celular" th:field="*{celular}" required />
+
+                    <label for="pais">Pais:</label>
+                    <input type="text" id="pais" placeholder="Ingrese su Pais" th:field="*{pais}" required />
+
+                    <label for="provincia">Provincia:</label>
+                    <input type="text" id="provincia" placeholder="Ingrese su Provincia" th:field="*{provincia}" required />
+
+                    <label for="distrito">Distrito:</label>
+                    <input type="text" id="distrito" placeholder="Ingrese su Distrito" th:field="*{distrito}" required />
+                    <input type="hidden" th:field="*{estado}" value="Activo" />
+                </div>
             </div>
 
+            <div class="buttons">
+                <button type="submit" class="btn-login">GUARDAR VETERINARIO</button>
+                <a th:href="@{/veterinarios/listar}" class="btn-primary">VOLVER AL LISTADO DE VETERINARIOS</a>
+            </div>
+
+            <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red"></div>
+        </form>
+    </div>
+
+    <footer style="display: flex; bottom: 0; width: 100%;">
+        <div class="footer-container" style="display: flex; justify-content: center;">
+            <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
         </div>
-
-        <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
-            <div class="footer-container" style="display: flex; justify-content: center;">
-                <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
-            </div>
-            <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
-                <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
-                <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
-                <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
-            </div>
-        </footer>
-    </body>
-    </html>
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
+            <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;" width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
+        </div>
+    </footer>
+</body>
+</html>

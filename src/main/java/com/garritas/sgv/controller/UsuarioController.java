@@ -96,7 +96,7 @@ public class UsuarioController {
         Usuario usuarioActualizado = usuarioService.buscarPorId(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + id));
         usuarioActualizado.setCodigo(usuario.getCodigo());
         if (usuario.getContrasena() != null && !usuario.getContrasena().isBlank()) {
-        usuarioActualizado.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+            usuarioActualizado.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
         }
         Cargo cargo = cargoService.buscarPorId(idRol).orElseThrow(() -> new IllegalArgumentException("Cargo no existe: " + idRol));
         usuarioActualizado.setIdCargo(cargo);
@@ -126,7 +126,9 @@ public class UsuarioController {
 
             List<Usuario> usuario = usuarioService.buscarUsuario(IdRol, IdUsuario);
             model.addAttribute("usuarios", usuario);
-
+            
+            Usuario usuarioPerfil = usuarioService.buscarPorId(IdUsuario.longValue()).orElse(null);
+            model.addAttribute("usuarios", usuarioPerfil);
             return "perfil";
         } else {
             return "redirect:/login";

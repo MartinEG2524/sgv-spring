@@ -27,14 +27,14 @@
                 <p th:text="${errorMessage}"></p>
             </div>
 
-            <!-- Si se muestra un mensaje de éxito -->
+            <!-- Si se muestra un mensaje de éxito, se mostrará aquí -->
             <div th:if="${successMessage != null}" style="color: green;">
                 <p th:text="${successMessage}"></p>
             </div>
         </form>
 
-        <div>
-            <a href="/login">¿Ya tienes cuenta? Inicia sesión</a>
+        <div class="create-account">
+            <a href="/login" class="iniciar">¿Ya tienes cuenta? Iniciar sesión</a>
         </div>
     </div>
 </body>

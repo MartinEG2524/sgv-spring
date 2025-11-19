@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <title>Listado de Clientes</title>
- <style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -182,11 +182,10 @@
                 <td th:text="${cliente.distrito}"></td>
                 <td th:text="${cliente.estado}"></td>
                 <td>
-                    <a style="margin-top: 10px;" th:href="@{/clientes/ver/{id}(id=${cliente.idCliente})}" class="ver">Ver</a>
+                    <a th:href="@{/clientes/ver/{id}(id=${cliente.idCliente})}" class="ver">Ver</a>
                     <br><br>
                     <a th:href="@{/clientes/editar/{id}(id=${cliente.idCliente})}" class="editar">Editar</a>
                     <br><br>
-                    <!-- Eliminar cliente con confirmación -->
                     <form th:action="@{/clientes/eliminar/{id}(id=${cliente.idCliente})}" method="post" 
                         onsubmit="return confirm('¿Estas seguro de Inactivar este Cliente?');" style="display:inline">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">

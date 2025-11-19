@@ -52,7 +52,6 @@ public class InicioController {
         if (logout != null) {
             model.addAttribute("logoutMessage", "¡Sesión cerrada correctamente!");
         }
-        // Limpiar la sesión
         request.getSession().invalidate();
         return "login";
     }

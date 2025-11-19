@@ -26,7 +26,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 40px;
         }
 
         .social {
@@ -40,7 +39,7 @@
 
         .container {
             text-align: center;
-            padding: 40px;
+            padding: 20px;
         }
 
         .container img {
@@ -89,7 +88,6 @@
             border: 1px solid red;
             background: red;
             font-weight: 600;
-            margin-top: 50px;
             color: white;
             text-decoration: none;
         }
@@ -108,7 +106,6 @@
         }
     </style>
 </head>
-
 <body>
     <header>
         <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
@@ -125,15 +122,35 @@
     </header>
 
     <div class="container">
-    <h1>Perfil del Veterinario</h1>
-    <p>ID: <span th:text="${veterinario.idVeterinario}"></span></p>
-    <p>Nombre: <span th:text="${veterinario.nombres} + ' ' + ${veterinario.apellidos}"></span></p>
-    <p>Especialidad: <span th:text="${veterinario.especialidad}"></span></p>
-
-     <div>
-            <a href="/veterinarios/citas" class="btn-primary">Ver citas</a>
+        <h1>Detalle de Veterinario</h1>
+        <p><strong>ID:</strong> <span th:text="${veterinario.idVeterinario}"></span></p>
+        <p><strong>Usuario:</strong> <span th:text="${veterinario.usuario.idUsuario}"></span></p>
+        <p><strong>Nombres:</strong> <span th:text="${veterinario.nombres}"></span></p>
+        <p><strong>Apellidos:</strong> <span th:text="${veterinario.apellidos}"></span></p>
+        <p><strong>DNI:</strong> <span th:text="${veterinario.dni}"></span></p>
+        <p><strong>Email: </strong><span th:text="${veterinario.correo}"></span></p>
+        <p><strong>Especialidad:</strong> <span th:text="${veterinario.especialidad}"></span></p>
+        <p><strong>Sexo:</strong> <span th:text="${veterinario.sexo}"></span></p>
+        <p><strong>Fecha Nacimiento:</strong> <span th:text="${#dates.format(veterinario.fechaNacimiento, 'dd-MM-yyyy')}"></span></p>
+        <p><strong>Celular: </strong><span th:text="${veterinario.celular}"></span></p>
+        <p><strong>País:</strong> <span th:text="${veterinario.pais}"></span></p>
+        <p><strong>Provincia:</strong> <span th:text="${veterinario.provincia}"></span></p>
+        <p><strong>Distrito:</strong> <span th:text="${veterinario.distrito}"></span></p>
+        <p><strong>Estado:</strong> <span th:text="${veterinario.estado}"></span></p>
+        <div>
+            <a th:href="@{/veterinarios/listar}" class="btn-primary">VOLVER AL LISTADO DE VETERINARIOS</a>
         </div>
-
     </div>
+
+    <footer style="display: flex; bottom: 0; width: 99%;">
+        <div class="footer-container" style="display: flex; justify-content: center;">
+            <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
+        </div>
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
+            <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
+        </div>
+    </footer>
 </body>
 </html>

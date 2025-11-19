@@ -110,36 +110,21 @@
             </nav>
         </div>
     </header>
-        <div class="container">
-        <h1>Detalle de la Cita</h1>
-        <p>ID: <span th:text="${cita.idCita}"></span></p>
-        <p>Fecha: <span th:text="${cita.fecha}"></span></p>
-        <p>Veterinario: <span th:text="${cita.veterinario.nombre}"></span></p>
-        <p>Mascota: <span th:text="${cita.mascota.nombre}"></span></p>
-        <a href="/citas" class="btn-primary">Volver al listado</a>
+
+    <div class="container">
+        <h1>Detalle de Cita</h1>
+        <p><strong>ID:</strong> <span th:text="${cita.idCita}"></span></p>
+        <p><strong>Veterinario: </strong><span th:text="${cita.veterinario.idVeterinario}"></span></p>
+        <p><strong>Mascota:</strong> <span th:text="${cita.mascota.idMascota}"></span></p>
+        <p><strong>Servicio:</strong> <span th:text="${cita.servicio.idServicio}"></span></p>
+
+        <p><strong>Fecha:</strong> <span th:text="${#dates.format(cita.fecha, 'dd-MM-yyyy')}"></span></p>
+        <p><strong>Hora: </strong><span th:text="${#dates.format(cita.hora, 'HH:mm')}"></span></p>
+
+        <div>
+            <a th:href="@{/citas/listar}" class="btn-primary">Volver al listado de citas</a>
+        </div>
     </div>
-    
-    <script>
-    document.addEventListener('click', function (e) {
-        const btn = e.target.closest('.ver');
-        if (!btn) return;
-
-        const td = btn.closest('p');
-        const masked = td.querySelector('.masked');
-        const real = td.querySelector('.real');
-
-        const showing = real.style.display !== 'none';
-        if (showing) {
-            real.style.display = 'none';
-            masked.style.display = 'inline';
-            btn.textContent = 'Ver';
-        } else {
-            masked.style.display = 'none';
-            real.style.display = 'inline';
-            btn.textContent = 'Ocultar';
-        }
-    });
-    </script>
 
     <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
         <div class="footer-container" style="display: flex; justify-content: center;">

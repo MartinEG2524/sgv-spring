@@ -15,7 +15,7 @@
         }
         
         h1, label, button {
-            text-transform: uppercase;  /* Esto pone los textos en mayúsculas */
+            text-transform: uppercase;  
         }
 
         h1 {
@@ -113,19 +113,32 @@
     <div class="container">
         <h1>Editar Cita</h1>
         <p>Por favor, complete el formulario para editar los datos de usuario.</p>
-        <form action="#" th:action="@{/citas/editar/{id}(id=${cita.id})}" th:object="${cita}" method="post">
+
+        <form th:action="@{/citas/editar/{id}(id=${cita.idCita})}" th:object="${cita}" method="post">
+            <label for="idMascota">Mascota:</label>
+            <input type="text" id="idMascota" th:field="*{mascota.idMascota}" required readonly /><br>
+            
+            <label for="idVeterinario">Veterinario:</label>
+            <input type="text" id="idVeterinario" th:field="*{veterinario.idVeterinario}" required readonly /><br>
+
+            <label for="idServicio">Servicio:</label>
+            <input type="text" id="idServicio" th:field="*{servicio.idServicio}" required readonly /><br>
+
             <label for="fecha">Fecha:</label>
-            <input type="datetime-local" id="fecha" th:field="*{fecha}" required /><br>
+            <input type="date" id="fecha" th:field="*{fecha}" required /><br>
 
-            <label for="veterinario">Veterinario:</label>
-            <input type="text" id="veterinario" placeholder="Ingrese un veterinario" th:field="*{veterinario.nombre}" required /><br>
+            <label for="hora">Hora:</label>
+            <input type="time" id="hora" th:field="*{hora}" required /><br>
 
-            <label for="paciente">Paciente:</label>
-            <input type="text" id="paciente" placeholder="Ingrese un paciente " th:field="*{paciente.nombre}" required /><br>
+            <label for="estado">Estado:</label>
+            <select id="estado" th:field="*{estado}" required>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select><br>
+        <button type="submit" class="btn-login">Actualizar Cita</button>
+    </form>
 
-            <button type="submit" class="btn-login">Actualizar Cita</button>
-        </form>
-        <a href="/citas" class="btn-primary">Volver al listado</a>
+        <a th:href="@{/citas/listar}" class="btn-primary">Volver al listado de citas</a>
     </div>
 
     <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">

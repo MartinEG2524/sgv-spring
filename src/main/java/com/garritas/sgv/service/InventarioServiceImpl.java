@@ -27,7 +27,16 @@ public class InventarioServiceImpl implements InventarioService {
     }
 
     @Override
+    public Optional<Inventario> buscarPorNombre(String nombre) {
+        return inventarioRepository.findByNombre(nombre);
+    }
+
+    @Override
     public Inventario guardar(Inventario inventario) {
+        return inventarioRepository.save(inventario);
+    }
+
+    public Inventario actualizar(Inventario inventario) {
         return inventarioRepository.save(inventario);
     }
 

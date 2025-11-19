@@ -1,13 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
-    <title>Detalle de Inventario</title>
+    <meta charset="UTF-8">
+    <title>Detalles del Producto</title>
+
+    <style>
+        body { font-family: Arial; background: #fafafa; padding: 20px; }
+        .card {
+            background: white; width: 350px; margin: auto; padding: 20px;
+            border-radius: 10px; box-shadow: 0 0 10px #ccc;
+        }
+        .titulo { font-size: 22px; color: #333; text-align: center; }
+        .dato { font-size: 18px; margin: 10px 0; }
+        a { display: block; margin-top: 20px; text-align: center;
+            background: #007bff; color: white; padding: 10px; border-radius: 6px; text-decoration: none; }
+    </style>
 </head>
+
 <body>
-    <h1>Detalle de Inventario</h1>
-    <p>ID: <span th:text="${inventario.id}"></span></p>
-    <p>Producto: <span th:text="${inventario.producto}"></span></p>
-    <p>Cantidad: <span th:text="${inventario.cantidad}"></span></p>
-    <a href="/inventarios">Volver al listado</a>
+
+<div class="card">
+    <div class="titulo">Detalles del Producto</div>
+
+    <div class="dato"><b>Producto:</b> <span th:text="${inventario.nombreProducto}"></span></div>
+    <div class="dato"><b>Cantidad:</b> <span th:text="${inventario.cantidad}"></span></div>
+    <div class="dato"><b>Precio:</b> S/ <span th:text="${inventario.precio}"></span></div>
+    <div class="dato"><b>Categoría:</b> <span th:text="${inventario.categoria}"></span></div>
+
+    <a href="/inventario/listar">Regresar</a>
+</div>
+
 </body>
 </html>

@@ -90,12 +90,10 @@ public class SgvApplication {
             if (usuarioRepository.findByCodigo("cliente").isEmpty()) {
                 Usuario cliUser = new Usuario();
                 cliUser.setCodigo("cliente");
-                //cliUser.setContrasena(passwordEncoder.encode("clipass"));
-                String cliPassword = passwordEncoder.encode("clipass");
-                cliUser.setContrasena(cliPassword);
+                cliUser.setContrasena(passwordEncoder.encode("clipass"));
                 cliUser.setIdCargo(cargoCliente);
                 usuarioRepository.save(cliUser);
-                System.out.println("Usuario 'cliente' creado. Contraseña encriptada: " + cliPassword);
+                System.out.println("Usuario 'cliente' creado.");
             }
         };
     }

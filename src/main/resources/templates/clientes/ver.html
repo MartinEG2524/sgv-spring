@@ -25,7 +25,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 40px;
         }
         .social {
             display: inline-block;
@@ -36,7 +35,7 @@
         }
         .container {
             text-align: center;
-            padding: 40px;
+            padding: 20px;
         }
         .container img {
             width: 100px;
@@ -78,7 +77,6 @@
             border:1px solid red;
             background:red;
             font-weight:600;
-            margin-top: 50px;
             color: white;
             text-decoration:none;
         }
@@ -110,41 +108,28 @@
             </nav>
         </div>
     </header>
-        <div class="container">
+    <div class="container">
         <h1>Detalle de Cliente</h1>
-        <p>ID: <span th:text="${cliente.idCliente}"></span></p>
-        <p>Usuario: <span th:text="${cliente.usuario.idUsuario}"></span></p>
-        <p>Nombres: <span th:text="${cliente.nombres}"></span></p>
-        <p>Email: <span th:text="${cliente.correo}"></span></p>
+        <p><strong>ID:</strong> <span th:text="${cliente.idCliente}"></span></p>
+        <p><strong>Usuario:</strong> <span th:text="${cliente.usuario.idUsuario}"></span></p>
+        <p><strong>Nombres:</strong> <span th:text="${cliente.nombres}"></span></p>
+        <p><strong>Apellidos:</strong> <span th:text="${cliente.apellidos}"></span></p>
+        <p><strong>DNI:</strong> <span th:text="${cliente.dni}"></span></p>
+        <p><strong>Email: </strong><span th:text="${cliente.correo}"></span></p>
+        <p><strong>Dirección:</strong> <span th:text="${cliente.direccion}"></span></p>
+        <p><strong>Sexo:</strong> <span th:text="${cliente.sexo}"></span></p>
+        <p><strong>Fecha Nacimiento:</strong> <span th:text="${#dates.format(cliente.fechaNacimiento, 'dd-MM-yyyy')}"></span></p>
+        <p><strong>Celular: </strong><span th:text="${cliente.celular}"></span></p>
+        <p><strong>País:</strong> <span th:text="${cliente.pais}"></span></p>
+        <p><strong>Provincia:</strong> <span th:text="${cliente.provincia}"></span></p>
+        <p><strong>Distrito:</strong> <span th:text="${cliente.distrito}"></span></p>
+        <p><strong>Estado:</strong> <span th:text="${cliente.estado}"></span></p>
         <div>
-            <a th:href="@{/clientes/listar}" class="btn-primary">Volver al listado de clientes</a>
+            <a th:href="@{/clientes/listar}" class="btn-primary">VOLVER AL LISTADO DE CLIENTES</a>
         </div>
     </div>
 
-    
-    <script>
-    document.addEventListener('click', function (e) {
-        const btn = e.target.closest('.ver');
-        if (!btn) return;
-
-        const td = btn.closest('p');
-        const masked = td.querySelector('.masked');
-        const real = td.querySelector('.real');
-
-        const showing = real.style.display !== 'none';
-        if (showing) {
-            real.style.display = 'none';
-            masked.style.display = 'inline';
-            btn.textContent = 'Ver';
-        } else {
-            masked.style.display = 'none';
-            real.style.display = 'inline';
-            btn.textContent = 'Ocultar';
-        }
-    });
-    </script>
-
-    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
+    <footer style="display: flex; bottom: 0; width: 99%;">
         <div class="footer-container" style="display: flex; justify-content: center;">
             <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
         </div>

@@ -20,7 +20,7 @@
         h1 {
             text-align: center;
             color: #3e3e3e;
-              text-transform: uppercase; /* Transforma el texto a mayúsculas */
+            text-transform: uppercase;
         }
 
         footer {
@@ -128,7 +128,7 @@
     </header>
     <div class="container">
         <h1>EDITAR CARGO</h1>
-        <p>Por favor, complete el formulario para editar los datos de cargo.</p>
+        <p>Por favor, complete el formulario para editar los datos de Cargo.</p>
         <form th:action="@{/cargos/editar/{id}(id=${cargo.idRol})}" th:object="${cargo}" method="post">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" th:value="${cargo.nombre}" th:field="*{nombre}" required />
@@ -148,7 +148,7 @@
         </form>
         <br>
         <div>
-            <a th:href="@{/cargos/listar}" class="btn-primary">Volver al listado de cargos</a>
+            <a th:href="@{/cargos/listar}" class="btn-primary">VOLVER AL LISTADO DE CARGOS</a>
         </div>
     </div>
     <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">

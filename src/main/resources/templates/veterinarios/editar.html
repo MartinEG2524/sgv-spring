@@ -17,10 +17,11 @@
             text-align: center;
             color: #3e3e3e;
             margin-top: 0;
+            margin-bottom: 0;
         }
         .container {
             text-align: center;
-            padding: 20px;
+            padding: 10px;
         }
         .form-grid {
             display: grid;
@@ -93,21 +94,21 @@
 
 <body>
     <header>
-        <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
+        <div class="header-container" style="display: flex; justify-content: center;">
             <img th:src="@{/Imagenes/logo.png}" alt="Logo Veterinaria" class="logo">
         </div>
     </header>
 
     <div class="container">
         <h1>EDITAR VETERINARIO</h1>
-        <p>Editando datos de: <span th:text="${veterinario.nombres} + ' ' + ${veterinario.apellidos}"></span></p>
+        <p>Por favor, complete el formulario para editar los datos del Veterinario.</p>
 
         <form action="#" th:action="@{/veterinarios/editar/{id}(id=${veterinario.idVeterinario})}" th:object="${veterinario}" method="post">
-            <input type="hidden" th:field="*{idVeterinario}" />
-            <input type="hidden" th:field="*{usuario}" />
-
             <div class="form-grid">
                 <div>
+                    <label for="idUsuario">Usuario:</label>
+                    <input type="text" id="idUsuario" th:field="*{usuario.idUsuario}" required readonly /><br>
+            
                     <label for="nombres">Nombres:</label>
                     <input type="text" id="nombres" th:field="*{nombres}" required />
                     
@@ -122,12 +123,12 @@
                     
                     <label for="celular">Celular:</label>
                     <input type="number" id="celular" th:field="*{celular}" required />
+
+                    <label for="especialidad">Especialidad:</label>
+                    <input type="text" id="especialidad" th:field="*{especialidad}" required />
                 </div>
 
                 <div>
-                    <label for="especialidad">Especialidad:</label>
-                    <input type="text" id="especialidad" th:field="*{especialidad}" required />
-
                     <label for="sexo">Sexo:</label>
                     <select id="sexo" th:field="*{sexo}" required>
                         <option value="">Seleccione...</option>
@@ -150,28 +151,27 @@
                     
                     <label for="estado">Estado:</label>
                     <select id="estado" th:field="*{estado}" required>
-                        <option value="ACTIVO">ACTIVO</option>
-                        <option value="INACTIVO">INACTIVO</option>
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
                     </select>
                 </div>
             </div>
 
-            <div class="buttons">
-                <button type="submit" class="btn-login">ACTUALIZAR VETERINARIO</button>
+            <div>
+                <button type="submit" class="btn-login">ACTUALIZAR VETERINARIOS</button>
+                <a th:href="@{/veterinarios/listar}" class="btn-primary">VOLVER AL LISTADO DE VETERINARIOS</a>
             </div>
         </form>
-
-        <a th:href="@{/veterinarios}" class="btn-primary">Volver al listado de veterinarios</a>
     </div>
 
-    <footer>
+    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
         <div class="footer-container" style="display: flex; justify-content: center;">
             <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
         </div>
-        <div class="social-media" style="display: flex; justify-content: flex-end; margin-right: 10px;">
-            <a href="https://facebook.com" target="_blank"><img th:src="@{/Imagenes/facebook.png}" style="margin-right: 10px;" width="30" height="30" alt="Facebook"></a>
-            <a href="https://twitter.com" target="_blank"><img th:src="@{/Imagenes/twitter.png}" style="margin-right: 10px;" width="30" height="30" alt="Twitter"></a>
-            <a href="https://instagram.com" target="_blank"><img th:src="@{/Imagenes/instagram.png}" width="30" height="30" alt="Instagram"></a>
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
+            <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;" width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
         </div>
     </footer>
 </body>

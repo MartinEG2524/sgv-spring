@@ -19,26 +19,24 @@
                 <button type="submit" class="btn-login">INICIAR SESIÓN</button>
             </div>
             <!-- Si la autenticación falla o si el mensaje de error existe, el mensaje se muestra aquí -->
-            <div th:if="${errorMessage != null}" style="color:red;">
+            <div th:if="${errorMessage != null}" style="color:red; margin-top: 50px;">
                 <p th:text="${errorMessage}"></p>
             </div>
+            <br>
         </form>
-        <br>
         <!-- Enlace para redirigir a la página de recuperación de contraseña -->
-        <div class="forgot-password">
-            <a href="/restablecer">¿Olvidaste tu contraseña? Clic aquí</a>
+        <div class="forgot-password" style="margin-top: 25px;">
+            <a href="/restablecer"><strong>¿Olvidaste tu contraseña? Clic aquí</strong></a>
         </div>
-        <br><br>
-        <div class="create-account">
-            <a href="/registrar">CREAR CUENTA</a>
+        <div class="create-account" style="margin-top: 50px;">
+            <a href="/registrar" class="primary">CREAR CUENTA</a>
         </div>
         <!-- Si el mensaje de cierre de sesión existe, se mostrará el mensaje -->
-        <div th:if="${logoutMessage != null}" style="color: green;">
+        <div th:if="${logoutMessage != null}" style="color: green; margin-top: 25px;">
             <p th:text="${logoutMessage}"></p>
         </div>
-        <br><br>
-        <div class="create-account">
-            <a href="/inicio">Volver a Inicio</a>
+        <div class="create-account" style="margin-top: 50px;">
+            <a href="/inicio" class="second">Volver a Inicio</a>
         </div>
     </div>
 

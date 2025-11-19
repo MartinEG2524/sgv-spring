@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface HistorialClinicoService {
     List<HistorialClinico> listar();
     Optional<HistorialClinico> buscarPorId(Long id);
+    Optional<HistorialClinico> buscarPorCodigo(String codigo);
     HistorialClinico guardar(HistorialClinico historial);
+    HistorialClinico actualizar(HistorialClinico historial);
     void eliminar(Long id);
 }

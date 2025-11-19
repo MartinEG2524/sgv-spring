@@ -127,6 +127,14 @@
         <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
             <img th:src="@{/Imagenes/logo.png}" alt="Logo Veterinaria" class="logo">
         </div>
+        <div class="header-container" style="display: flex; justify-content: center;">
+                <nav style="margin-top: 10px;">
+                <a href="/contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
+                <a href="/servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
+                <a href="/nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
+                <a href="/logout?logout=true" style="font-size: 24px; text-decoration: none; color: blue;">Cerrar Sesión</a>
+            </nav>
+        </div>
     </header>
 
     <div class="intro" style="display: flex; justify-content: center; margin-top: 10px;">
@@ -141,23 +149,45 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th>Especialidad</th>
+                <th>Usuario</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
                 <th>Correo</th>
+                <th>Especialidad</th>
+                <th>Sexo</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Celular</th>
+                <th>País</th>
+                <th>Provincia</th>
+                <th>Distrito</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="veterinario : ${veterinarios}">
-                <td th:text="${veterinario.id}"></td>
-                <td th:text="${veterinario.nombre}"></td>
-                <td th:text="${veterinario.especialidad}"></td>
+                <td th:text="${veterinario.idVeterinario}"></td>
+                <td th:text="${veterinario.usuario.idUsuario}"></td>
+                <td th:text="${veterinario.nombres}"></td>
+                <td th:text="${veterinario.apellidos}"></td>
+                <td th:text="${veterinario.dni}"></td>
                 <td th:text="${veterinario.correo}"></td>
+                <td th:text="${veterinario.especialidad}"></td>
+                <td th:text="${veterinario.sexo}"></td>
+                <td th:text="${#dates.format(veterinario.fechaNacimiento, 'dd-MM-yyyy')}"></td>
+                <td th:text="${veterinario.celular}"></td>
+                <td th:text="${veterinario.pais}"></td>
+                <td th:text="${veterinario.provincia}"></td>
+                <td th:text="${veterinario.distrito}"></td>
+                <td th:text="${veterinario.estado}"></td>
                 <td>
-                    <a style="margin-top: 10px;" th:href="@{/veterinarios/ver/{id}(id=${veterinario.id})}" class="ver">Ver</a>
-                    <a th:href="@{/veterinarios/editar/{id}(id=${veterinario.id})}" class="editar">Editar</a>
-                    <form th:action="@{/veterinarios/eliminar/{id}(id=${veterinario.id})}" method="post" 
-                          onsubmit="return confirm('¿Estás seguro de eliminar este veterinario?');" style="display:inline;">
+                    <a style="margin-top: 10px;" th:href="@{/veterinarios/ver/{id}(id=${veterinario.idVeterinario})}" class="ver">Ver</a>
+                    <br><br>
+                    <a th:href="@{/veterinarios/editar/{id}(id=${veterinario.idVeterinario})}" class="editar">Editar</a>
+                    <br><br>
+                    <form th:action="@{/veterinarios/eliminar/{id}(id=${veterinario.idVeterinario})}" method="post" 
+                        onsubmit="return confirm('¿Estás seguro de Inactivar este veterinario?');" style="display:inline;">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         <button type="submit" class="eliminar">Eliminar</button>
                     </form>

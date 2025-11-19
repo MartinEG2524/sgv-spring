@@ -3,50 +3,49 @@ package com.garritas.sgv.controller;
 import com.garritas.sgv.model.Veterinario;
 import com.garritas.sgv.model.Usuario;
 import com.garritas.sgv.service.VeterinarioService;
-import com.garritas.sgv.service.UsuarioService;
 
+import jakarta.servlet.http.HttpServletResponse;
+
+import com.garritas.sgv.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequestMapping("/veterinarios")
 public class VeterinarioController {
 
-    private final VeterinarioService veterinarioService;
-    private final UsuarioService usuarioService;
+    @Autowired
+    private VeterinarioService veterinarioService;
 
-    public VeterinarioController(VeterinarioService veterinarioService, UsuarioService usuarioService) {
-        this.veterinarioService = veterinarioService;
-        this.usuarioService = usuarioService;
-    }
+    @Autowired
+    private UsuarioService usuarioService;
 
-    // LISTAR VETERINARIOS
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/listar")
+    @GetMapping("listar")
     public String listar(Model model) {
         List<Veterinario> veterinarios = veterinarioService.listar();
         model.addAttribute("veterinarios", veterinarios);
         return "veterinarios/listar";
     }
 
-    // VER PERFIL DE UN VETERINARIO
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/ver/{id}")
-    public String verVeterinario(@PathVariable Long id, Model model) {
+    @GetMapping("ver/{id}")
+    public String buscarVeterinario(@PathVariable Long id, Model model) {
         Veterinario veterinario = veterinarioService.buscarPorId(id).orElse(null);
         model.addAttribute("veterinario", veterinario);
         return "veterinarios/ver";
     }
 
-    // REGISTRAR VETERINARIO
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/registrar")
-    public String registrar(Model model) {
+    public String registrarVeterinario(Model model) {
         if (!model.containsAttribute("veterinario")) {
             model.addAttribute("veterinario", new Veterinario());
         }
@@ -55,63 +54,117 @@ public class VeterinarioController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/registrar")
-    public String guardar(@ModelAttribute Veterinario veterinario, RedirectAttributes ra) {
-
-        veterinario.setEstado("activo");
-
+    public String guardarVeterinario(@ModelAttribute("veterinario") Veterinario veterinario, RedirectAttributes ra) {
+        if (veterinarioService.buscarPorDni(veterinario.getDni()).isPresent()) {
+            ra.addFlashAttribute("errorMessage", "El DNI '" + veterinario.getDni() + "' ya está registrado.");
+            return "redirect:/veterinarios/registrar";
+        }
+        veterinario.getUsuario().getIdUsuario();  
+        veterinario.setEstado("Activo");
         veterinarioService.guardar(veterinario);
         return "redirect:/veterinarios/listar";
     }
 
-    // EDITAR VETERINARIO
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/eliminar/{id}")
+    public String eliminarVeterinario(@PathVariable Long id) {
+        veterinarioService.eliminar(id);
+        return "redirect:/veterinarios/listar";
+    }
+    
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/editar/{id}")
-    public String editar(@PathVariable Long id, Model model) {
-
+    public String editarVeterinario(@PathVariable Long id, Model model) {
         Veterinario veterinario = veterinarioService.buscarPorId(id).orElse(null);
         model.addAttribute("veterinario", veterinario);
-
         return "veterinarios/editar";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/editar/{id}")
-    public String actualizar(@PathVariable Long id,
-                             @ModelAttribute Veterinario veterinario,
-                             @RequestParam("usuario.idUsuario") Long idUsuario) {
-
-        Veterinario vetActual = veterinarioService.buscarPorId(id)
-                .orElseThrow(() -> new IllegalArgumentException("Veterinario no encontrado: " + id));
-
-        // ACTUALIZAR CAMPOS
-        vetActual.setNombres(veterinario.getNombres());
-        vetActual.setApellidos(veterinario.getApellidos());
-        vetActual.setDni(veterinario.getDni());
-        vetActual.setCorreo(veterinario.getCorreo());
-        vetActual.setEspecialidad(veterinario.getEspecialidad());
-        vetActual.setSexo(veterinario.getSexo());
-        vetActual.setFechaNacimiento(veterinario.getFechaNacimiento());
-        vetActual.setCelular(veterinario.getCelular());
-        vetActual.setPais(veterinario.getPais());
-        vetActual.setProvincia(veterinario.getProvincia());
-        vetActual.setDistrito(veterinario.getDistrito());
-        vetActual.setEstado(veterinario.getEstado());
-
-        Usuario usuario = usuarioService.buscarPorId(idUsuario)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no existe: " + idUsuario));
-
-        vetActual.setUsuario(usuario);
-
-        veterinarioService.guardar(vetActual);
-
+    public String actualizarVeterinario(@PathVariable Long id, @ModelAttribute("veterinario") Veterinario veterinario, @RequestParam("usuario.idUsuario") Long idUsuario, @RequestParam("estado") String estado) {
+        Veterinario veterinarioActualizado = veterinarioService.buscarPorId(id).orElseThrow(() -> new IllegalArgumentException("Veterinario no encontrado: " + id));
+        veterinarioActualizado.setNombres(veterinario.getNombres());
+        veterinarioActualizado.setApellidos(veterinario.getApellidos());
+        veterinarioActualizado.setEspecialidad(veterinario.getEspecialidad());
+        veterinarioActualizado.setDni(veterinario.getDni());
+        veterinarioActualizado.setCorreo(veterinario.getCorreo());
+        veterinarioActualizado.setSexo(veterinario.getSexo());
+        veterinarioActualizado.setFechaNacimiento(veterinario.getFechaNacimiento());
+        veterinarioActualizado.setCelular(veterinario.getCelular());
+        veterinarioActualizado.setPais(veterinario.getPais());
+        veterinarioActualizado.setProvincia(veterinario.getProvincia());
+        veterinarioActualizado.setDistrito(veterinario.getDistrito());
+        veterinarioActualizado.setEstado(estado);
+        Usuario usuario = usuarioService.buscarPorId(idUsuario).orElseThrow(() -> new IllegalArgumentException("Usuario no existe: " + idUsuario));
+        veterinarioActualizado.setUsuario(usuario);
+        veterinarioService.actualizar(veterinarioActualizado);
         return "redirect:/veterinarios/listar";
     }
 
-    // ELIMINAR VETERINARIO
+    
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
-        veterinarioService.eliminar(id);
-        return "redirect:/veterinarios/listar";
+    @GetMapping("/export/excel")
+    public void exportVeterinarioExcel(HttpServletResponse response) throws IOException {
+        String filename = "veterinarios_" + java.time.LocalDate.now() + ".xlsx";
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+
+        List<Veterinario> veterinarios = veterinarioService.listar();
+
+        try (var workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook()) {
+            var sheet = workbook.createSheet("Veterinarios");
+
+            var headerStyle = workbook.createCellStyle();
+            var font = workbook.createFont();
+            font.setBold(true);
+            headerStyle.setFont(font);
+
+            var createHelper = workbook.getCreationHelper();
+            var dateCellStyle = workbook.createCellStyle();
+            short dateFormat = createHelper.createDataFormat().getFormat("dd-MM-yyyy");
+            dateCellStyle.setDataFormat(dateFormat);
+
+            String[] headers = {"ID", "Usuario", "Nombres", "Apellidos", "DNI", "Correo", "Especialidad", "Sexo", "Fecha Nacimiento", "Celular", "Pais", "Provincia", "Distrito", "Estado"};
+            var headerRow = sheet.createRow(0);
+            for (int i = 0; i < headers.length; i++) {
+                var cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+                cell.setCellStyle(headerStyle);
+            }
+
+            int rowIdx = 1;
+            for (Veterinario v : veterinarios) {
+                var row = sheet.createRow(rowIdx++);
+                row.createCell(0).setCellValue(v.getIdVeterinario());
+                row.createCell(1).setCellValue(v.getUsuario() != null ? String.valueOf(v.getUsuario().getIdUsuario()) : "");
+                row.createCell(2).setCellValue(safe(v.getNombres()));
+                row.createCell(3).setCellValue(safe(v.getApellidos()));
+                row.createCell(4).setCellValue(v.getDni());
+                row.createCell(5).setCellValue(safe(v.getCorreo()));
+                row.createCell(6).setCellValue(safe(v.getEspecialidad()));
+                row.createCell(7).setCellValue(safe(v.getSexo()));
+                var fechaCell = row.createCell(8);
+                if (v.getFechaNacimiento() != null) {
+                    fechaCell.setCellValue(v.getFechaNacimiento());
+                    fechaCell.setCellStyle(dateCellStyle);
+                } else {
+                    fechaCell.setBlank();
+                }
+                row.createCell(9).setCellValue(v.getCelular());
+                row.createCell(10).setCellValue(safe(v.getPais()));
+                row.createCell(11).setCellValue(safe(v.getProvincia()));
+                row.createCell(12).setCellValue(safe(v.getDistrito()));
+                row.createCell(13).setCellValue(safe(v.getEstado()));
+            }
+
+            for (int i = 0; i < headers.length; i++) sheet.autoSizeColumn(i);
+
+            workbook.write(response.getOutputStream());
+        }
+    }
+
+    private String safe(String s) {
+        return s == null ? "" : s;
     }
 }

@@ -1,19 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
-    <title>Editar Inventario</title>
+    <meta charset="UTF-8">
+    <title>Editar Producto</title>
+
+    <style>
+        body { font-family: Arial; background: #fff8e1; padding: 20px; }
+        form {
+            width: 350px; margin: auto; background: white; padding: 20px;
+            border-radius: 10px; box-shadow: 0 0 10px #ccc;
+        }
+        input { width: 100%; padding: 10px; margin: 10px 0; }
+        button {
+            width: 100%; padding: 10px; background: #ffa000;
+            color: white; border: none; border-radius: 6px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Editar Inventario</h1>
-    <form action="#" th:action="@{/inventarios/editar/{id}(id=${inventario.id})}" th:object="${inventario}" method="post">
-        <label for="producto">Producto:</label>
-        <input type="text" id="producto" th:field="*{producto}" required /><br>
 
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" id="cantidad" th:field="*{cantidad}" required /><br>
+<form th:action="@{/inventario/guardar}" method="post" th:object="${inventario}">
+    <h2>Editar Producto</h2>
 
-        <button type="submit">Actualizar Inventario</button>
-    </form>
-    <a href="/inventarios">Volver al listado</a>
+    <input type="hidden" th:field="*{id}">
+
+    <input type="text" th:field="*{nombreProducto}">
+    <input type="number" th:field="*{cantidad}">
+    <input type="number" step="0.01" th:field="*{precio}">
+    <input type="text" th:field="*{categoria}">
+
+    <button type="submit">Actualizar</button>
+</form>
+
 </body>
 </html>

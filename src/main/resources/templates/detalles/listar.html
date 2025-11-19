@@ -1,34 +1,195 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Listado de Detalles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        h2 {
+            text-align: center;
+            color: #3e3e3e;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 95%;
+        }
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 8px;
+        }
+        footer {
+            background-color: #fff;
+            border-top: 2px solid #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+        .social {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        .btn-primary{
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid #2563eb;
+            background:#2563eb;
+            color:#fff;
+            font-weight:600;
+            text-decoration:none;
+        }
+        .btn-second{
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid red;
+            background:red;
+            color:#fff;
+            font-weight:600;
+            margin-left: 50px;
+            text-decoration:none;
+        }
+        
+        table a.ver, 
+        table a.editar {
+        padding: 5px 10px;
+        margin: 0 5px 0 0;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration:none;
+        }
+
+        table a.ver {
+        background-color: green;
+        color: white;
+        }
+
+        table a.editar {
+        background-color: #3172c1;
+        color: white;
+        }
+
+        table button.eliminar {
+        background-color: red;
+        border: red;
+        padding: 3px 10px;
+        color: white;
+        margin: 0 5px 0 0;
+        border-radius: 4px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        }
+
+        table button.ver {
+        background-color: green;
+        border: green;
+        padding: 3px 10px;
+        color: white;
+        margin: 0 5px 0 0;
+        border-radius: 4px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-left: 20px;
+        }
+
+        a.exportar-excel {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration:none;
+        }
+
+        a.exportar-excel:hover {
+        background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-    <h1>Listado de Detalles</h1>
+    <header>
+        <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
+            <img src="/Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
+        </div>
+        <div class="header-container" style="display: flex; justify-content: center;">
+            <nav style="margin-top: 10px;">
+                <a href="/contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
+                <a href="/servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
+                <a href="/nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
+                <a href="/logout?logout=true" style="font-size: 24px; text-decoration: none; color: blue;">Cerrar Sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="intro" style="display: flex; justify-content: center; margin-top: 10px;">
+        <h1>LISTADO DE DETALLES HISTORIAL INVENTARIOS</h1>
+    </div>
+
+    <div style="text-align: right; margin-right: 2.5%; margin-bottom: 20px; margin-top: 5px;">
+        <a class="exportar-excel" th:href="@{/detalles/export/excel}">EXPORTAR A EXCEL</a>
+    </div>
+
     <table>
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Historial</th>
                 <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Fecha</th>
+                <th>Cantidad Utilizada</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="detalle : ${detalles}">
-                <td th:text="${detalle.id}"></td>
-                <td th:text="${detalle.producto}"></td>
-                <td th:text="${detalle.cantidad}"></td>
-                <td th:text="${detalle.fecha}"></td>
+                <td th:text="${detalle.idDetalle}"></td>
+                <td th:text="${detalle.historial.idHistorial}"></td>
+                <td th:text="${detalle.producto.idProducto}"></td>
+                <td th:text="${detalle.cantidadUtilizada}"></td>
                 <td>
-                    <a th:href="@{/detalles/{id}(id=${detalle.id})}">Ver</a>
-                    <a th:href="@{/detalles/editar/{id}(id=${detalle.id})}">Editar</a>
-                    <a th:href="@{/detalles/eliminar/{id}(id=${detalle.id})}">Eliminar</a>
+                    <a th:href="@{/detalles/ver/{id}(id=${detalle.idDetalle})}" class="ver">Ver</a>
+                    <br><br>
+                    <a th:href="@{/detalles/editar/{id}(id=${detalle.idDetalle})}" class="editar">Editar</a>
+                    <br><br>
+                    <form th:action="@{/detalles/eliminar/{id}(id=${detalle.idDetalle})}" method="post" 
+                        onsubmit="return confirm('¿Estas seguro de Inactivar este Detalle Historial Inventario?');" style="display:inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="eliminar">Eliminar</button>
+                    </form>
                 </td>
             </tr>
         </tbody>
     </table>
-    <a href="/detalles/registar">Agregar nuevo detalle</a>
+    <div style="margin-top: 30px; margin-bottom: 25px; display: flex; justify-content: center;">
+        <a th:href="@{/detalles/registrar}" class="btn-primary">Agregar Nuevo Detalle Historial Inventario</a>
+        <a th:href="@{/menu}" class="btn-second">Regresar a Menú</a>
+    </div>
+
+    <footer style="display: flex; position: fixed; bottom: 0; width: 100%;">
+        <div class="footer-container" style="display: flex; justify-content: center;">
+            <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
+        </div>
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 30px;">
+            <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
+        </div>
+    </footer>
 </body>
 </html>
