@@ -56,21 +56,21 @@ public class DetalleHistorialInventarioController {
 
     // Vista para agregar un nuevo detalle
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/registar")
+    @GetMapping("/registrar")
     public String registarDetalle(Model model) {
         model.addAttribute("detalle", new DetalleHistorialInventario());
-        return "detalles/registar";
+        return "detalles/registrar";
     }
 
     // Guardar un nuevo detalle
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/registrar")
     public String guardarDetalle(@ModelAttribute("detalle") DetalleHistorialInventario detalle, RedirectAttributes ra) {
-        if (detalleHistorialInventarioService.buscarPorIdHistorial(detalle.getHistorial().getIdHistorial()).isPresent()) {
+        if (!detalleHistorialInventarioService.buscarPorIdHistorial(detalle.getHistorial().getIdHistorial())) {
             ra.addFlashAttribute("errorMessage", "El Historial '" + detalle.getHistorial().getIdHistorial() + "' no existe.");
             return "redirect:/detalles/registrar";
         }
-        if (detalleHistorialInventarioService.buscarPorIdProducto(detalle.getProducto().getIdProducto()).isPresent()) {
+        if (!detalleHistorialInventarioService.buscarPorIdProducto(detalle.getProducto().getIdProducto())) {
             ra.addFlashAttribute("errorMessage", "El Producto '" + detalle.getProducto().getIdProducto() + "' no existe.");
             return "redirect:/detalles/registrar";
         }
@@ -94,15 +94,15 @@ public class DetalleHistorialInventarioController {
     // Guardar los cambios de un detalle editado, solo accesible para ADMIN
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/editar/{id}")
-    public String actualizarDetalle(@PathVariable Long id, @ModelAttribute("detalle") DetalleHistorialInventario detalle, @RequestParam("historial.idHistorial") Long idHistorial, @RequestParam("inventario.idProducto") Long idProducto) {
+    public String actualizarDetalle(@PathVariable Long id, @ModelAttribute("detalle") DetalleHistorialInventario detalle, @RequestParam("historial.idHistorial") Long idHistorial, @RequestParam("producto.idProducto") Long idProducto) {
         DetalleHistorialInventario detalleActualizado = detalleHistorialInventarioService.buscarPorId(id).orElseThrow(() -> new IllegalArgumentException("Detalle no encontrado: " + id));
         detalleActualizado.setCantidadUtilizada(detalle.getCantidadUtilizada());
         HistorialClinico historialClinico = historialClinicoService.buscarPorId(idHistorial).orElseThrow(() -> new IllegalArgumentException("Historial no existe: " + idHistorial));
         detalleActualizado.setHistorial(historialClinico);
         Inventario inventario = inventarioService.buscarPorId(idProducto).orElseThrow(() -> new IllegalArgumentException("Producto no existe: " + idProducto));
         detalleActualizado.setProducto(inventario);
-        detalleHistorialInventarioService.actualizar(detalle);
-        return "redirect:/detalles";
+        detalleHistorialInventarioService.actualizar(detalleActualizado);
+        return "redirect:/detalles/listar";
     }
 
     // Eliminar un detalle, solo accesible para ADMIN
@@ -132,7 +132,7 @@ public class DetalleHistorialInventarioController {
             headerStyle.setFont(font);
 
             // Header
-            String[] headers = {"ID", "Cantidad Utilizada", "Historial", "Producto"};
+            String[] headers = {"ID", "Historial", "Producto", "Cantidad Utilizada",};
             var headerRow = sheet.createRow(0);
             for (int i = 0; i < headers.length; i++) {
                 var cell = headerRow.createCell(i);
@@ -145,9 +145,9 @@ public class DetalleHistorialInventarioController {
             for (DetalleHistorialInventario d : detalleHistorialInventarios) {
                 var row = sheet.createRow(rowIdx++);
                 row.createCell(0).setCellValue(d.getIdDetalle());
-                row.createCell(1).setCellValue(d.getCantidadUtilizada());
-                row.createCell(2).setCellValue(d.getHistorial() != null ? String.valueOf(d.getHistorial().getIdHistorial()) : "");
+                row.createCell(1).setCellValue(d.getHistorial() != null ? String.valueOf(d.getHistorial().getIdHistorial()) : "");
                 row.createCell(2).setCellValue(d.getProducto() != null ? String.valueOf(d.getProducto().getIdProducto()) : "");
+                row.createCell(3).setCellValue(d.getCantidadUtilizada());
             }
 
             // Autoajuste columnas

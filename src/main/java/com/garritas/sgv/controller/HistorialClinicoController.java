@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -72,6 +73,9 @@ public class HistorialClinicoController {
         }
         historial.getMascota().getIdMascota();
         historial.getVeterinario().getIdVeterinario();
+        if (historial.getFecha() == null) {
+            historial.setFecha(LocalDateTime.now());
+        }
         historial.setEstado("Activo");
         historialClinicoService.guardar(historial);
         return "redirect:/historiales/listar";
@@ -102,19 +106,15 @@ public class HistorialClinicoController {
     public String actualizarHistorial(@PathVariable Long id, @ModelAttribute("historial") HistorialClinico historial, @RequestParam("mascota.idMascota") Long idMascota, @RequestParam("veterinario.idVeterinario") Long idVeterinario, @RequestParam("estado") String estado) {
         HistorialClinico historialActualizado = historialClinicoService.buscarPorId(id).orElseThrow(() -> new IllegalArgumentException("Historial Clinico no encontrado: " + id));
         historialActualizado.setCodigo(historial.getCodigo());
-        historialActualizado.setEstado(historial.getEstado());
-        historialActualizado.setDiagnostico(historial.getDiagnostico());
         historialActualizado.setFecha(historial.getFecha());
-        historialActualizado.setIdHistorial(historial.getIdHistorial());
-        historialActualizado.setMascota(historial.getMascota());
+        historialActualizado.setDiagnostico(historial.getDiagnostico());
         historialActualizado.setTratamiento(historial.getTratamiento());
-        historialActualizado.setVeterinario(historial.getVeterinario());
+        historialActualizado.setEstado(historial.getEstado());
         Mascota mascota = mascotaService.buscarPorId(idMascota).orElseThrow(() -> new IllegalArgumentException("Mascota no existe: " + idMascota));
         historialActualizado.setMascota(mascota);
-        Veterinario veterinario = veterinarioService.buscarPorId(idMascota).orElseThrow(() -> new IllegalArgumentException("Veterinario no existe: " + idVeterinario));
+        Veterinario veterinario = veterinarioService.buscarPorId(idVeterinario).orElseThrow(() -> new IllegalArgumentException("Veterinario no existe: " + idVeterinario));
         historialActualizado.setVeterinario(veterinario);
-        historialActualizado.setEstado(estado);
-        historialClinicoService.actualizar(historial);
+        historialClinicoService.actualizar(historialActualizado);
         return "redirect:/historiales/listar";
     }
 

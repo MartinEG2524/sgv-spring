@@ -1,22 +1,164 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Editar Historial Clínico</title>
+    <title>Editar Historial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #3e3e3e;
+        }
+        footer {
+            background-color: #fff;
+            border-top: 2px solid #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+        .social {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .container {
+            text-align: center;
+            padding: 20px 0 100px 0;
+        }
+        label {
+            display: block;
+            margin: 15px auto 5px;
+            text-align: left;
+            width: 250px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="datetime-local"] {
+            width: 250px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+        select {
+            width: 270px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+        .buttons {
+            margin: 20px 0;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-login {
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid #2c5d92;
+            background: #2c5d92;
+            font-weight:600;
+            margin-top: 20px;
+            color: white;
+        }
+        .btn-primary{
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid red;
+            background:red;
+            font-weight:600;
+            margin-top: 20px;
+            color: white;
+            text-decoration:none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Editar Historial Clínico</h1>
-    <form action="#" th:action="@{/historiales/editar/{id}(id=${historial.id})}" th:object="${historial}" method="post">
-        <label for="paciente">Paciente:</label>
-        <input type="text" id="paciente" th:field="*{paciente.nombre}" required /><br>
+    <header>
+        <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
+            <img src="/Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
+        </div>
+        <div class="header-container" style="display: flex; justify-content: center;">
+            <nav style="margin-top: 20px;">
+                <a href="/contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
+                <a href="/servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
+                <a href="/nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
+                <a href="/login" style="font-size: 24px; text-decoration: none; color: blue;">Login</a>
+            </nav>
+        </div>
+    </header>
 
-        <label for="veterinario">Veterinario:</label>
-        <input type="text" id="veterinario" th:field="*{veterinario.nombre}" required /><br>
+    <div class="container">
+        <h1>EDITAR REGISTRO HISTORIAL CLINICO</h1>
+        <p>Por favor, complete el formulario para editar los datos del registro del historial clinico.</p>
 
-        <label for="fecha">Fecha:</label>
-        <input type="datetime-local" id="fecha" th:field="*{fecha}" required /><br>
+        <form th:action="@{/historiales/editar/{id}(id=${historial.idHistorial})}" th:object="${historial}" method="post">
 
-        <button type="submit">Actualizar Historial</button>
-    </form>
-    <a href="/historiales">Volver al listado</a>
+            <label for="idMascota">Mascota:</label>
+            <input type="number" id="idMascota" name="idMascota" placeholder="Ingrese ID" th:field="*{mascota.idMascota}" required />
+
+            <label for="idVeterinario">Veterinario:</label>
+            <input type="number" id="idVeterinario" name="idVeterinario" placeholder="Ingrese ID" th:field="*{veterinario.idVeterinario}" required />
+
+            <label for="codigo">Código:</label>
+            <input type="text" id="codigo" th:field="*{codigo}" required />
+
+            <label for="fecha">Fecha:</label>
+            <input type="datetime-local" id="fecha" th:field="*{fecha}" /><br>
+
+            <label for="diagnostico">Diagnóstico:</label>
+            <input type="text" id="diagnostico" th:field="*{diagnostico}" required />
+
+            <label for="tratamiento">Tratamiento:</label>
+            <input type="text" id="tratamiento" th:field="*{tratamiento}" required />
+
+            <label for="estado">Estado:</label>
+            <select id="estado" th:field="*{estado}" required>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+
+            <div>
+                <button type="submit" class="btn-login">ACTUALIZAR HISTORIAL CLINICO</button>
+            </div>
+        </form>
+    
+        <div>
+            <a th:href="@{/historiales/listar}" class="btn-primary">Volver al listado de historiales clinicos</a>
+        </div>
+    </div>
+
+    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
+        <div class="footer-container" style="display: flex; justify-content: center;">
+            <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
+        </div>
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
+            <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
+        </div>
+    </footer>
 </body>
 </html>

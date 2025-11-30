@@ -29,19 +29,16 @@ public class DetalleHistorialInventarioServiceImpl implements DetalleHistorialIn
         return detalleHistorialInventarioRepository.findById(id);
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public Optional<DetalleHistorialInventario> buscarPorIdHistorial(Long idHistorial) {
-        return detalleHistorialInventarioRepository.findByHistorial_IdHistorial(idHistorial);
+    public boolean buscarPorIdHistorial(Long idHistorial) {
+        return detalleHistorialInventarioRepository.existsByHistorial_IdHistorial(idHistorial);
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public Optional<DetalleHistorialInventario> buscarPorIdProducto(Long idProducto) {
-        return detalleHistorialInventarioRepository.findByProducto_IdProducto(idProducto);
+    public boolean buscarPorIdProducto(Long idProducto) {
+        return detalleHistorialInventarioRepository.existsByProducto_IdProducto(idProducto);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public DetalleHistorialInventario guardar(DetalleHistorialInventario detalle) {
         return detalleHistorialInventarioRepository.save(detalle);

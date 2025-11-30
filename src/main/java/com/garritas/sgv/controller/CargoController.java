@@ -5,6 +5,7 @@ import com.garritas.sgv.service.CargoService;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +19,8 @@ import java.util.List;
 @RequestMapping("/cargos")
 public class CargoController {
 
-    private final CargoService cargoService;
-
-    public CargoController(CargoService cargoService) {
-        this.cargoService = cargoService;
-    }
+    @Autowired
+    private CargoService cargoService;
 
     // Vista de listado de cargos, solo accesible para ADMIN
     @PreAuthorize("hasRole('ROLE_ADMIN')")

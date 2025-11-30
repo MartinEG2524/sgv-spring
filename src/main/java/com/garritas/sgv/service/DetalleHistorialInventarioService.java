@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface DetalleHistorialInventarioService {
     List<DetalleHistorialInventario> listar();
     Optional<DetalleHistorialInventario> buscarPorId(Long id);
-    Optional<DetalleHistorialInventario> buscarPorIdHistorial(Long idHistorial);
-    Optional<DetalleHistorialInventario> buscarPorIdProducto(Long idProducto);
+    boolean buscarPorIdHistorial(Long idHistorial);
+    boolean buscarPorIdProducto(Long idProducto);
     DetalleHistorialInventario guardar(DetalleHistorialInventario detalle);
     DetalleHistorialInventario actualizar(DetalleHistorialInventario detalle);
     void eliminar(Long id);

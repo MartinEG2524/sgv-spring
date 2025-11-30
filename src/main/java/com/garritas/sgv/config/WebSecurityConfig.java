@@ -47,9 +47,9 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
                     // Rutas públicas (Accesibles por todos los usuarios)
-                    .requestMatchers("/", "/inicio", "/login", "/registrar", "/restablecer", "error", "contacto", "servicios-info", "nosotros").permitAll()
-                    .requestMatchers("/usuarios/**").authenticated()
-                    .requestMatchers("/admin/**").hasRole("ADMIN")  // Solo ADMIN puede acceder
+                    .requestMatchers("/", "inicio", "login", "registrar", "restablecer", "error", "contacto", "servicios-info", "nosotros").permitAll()
+                    .requestMatchers("/usuarios/perfil").authenticated()
+                    .requestMatchers("/usuarios/**", "/cargos/**", "/citas/**").hasRole("ADMIN")  // Solo ADMIN puede acceder
                     .requestMatchers("/veterinario/**").hasRole("VETERINARIO")  // Solo VETERINARIO puede acceder
                     .requestMatchers("/recepcionista/**").hasRole("RECEPCIONISTA")  // Solo RECEPCIONISTA puede acceder
                     .requestMatchers("/cliente/**").hasRole("CLIENTE")  // Solo CLIENTE puede acceder

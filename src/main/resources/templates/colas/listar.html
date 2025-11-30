@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Listado Usuarios</title>
+    <title>Listado Colas</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -122,7 +122,7 @@
         cursor: pointer;
         transition: background-color 0.3s ease;
         text-decoration:none;
-        margin-right: 2%;
+        margin-right: 1%;
         }
         a.exportar-excel:hover {
         background-color: #218838;
@@ -166,14 +166,14 @@
     </header>
 
     <div class="intro" style="display: flex; justify-content: center; margin-top: 10px;">
-        <h1>LISTADO DE USUARIOS</h1>
+        <h1>LISTADO DE COLAS DE ATENCIÓN</h1>
     </div>
 
     <div class="toolbar-usuarios">
         <div class="centro-busqueda">
-            <input id="buscar-usuario" type="text" class="input-busqueda" placeholder="Buscar usuario..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <input id="buscar-usuario" type="text" class="input-busqueda" placeholder="Buscar registro..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         </div>
-        <a class="exportar-excel" th:href="@{/usuarios/export/excel}">EXPORTAR A EXCEL</a>
+        <a class="exportar-excel" th:href="@{/colas/export/excel}">EXPORTAR A EXCEL</a>
     </div>
 
     <div class="tabla-contenedor">
@@ -181,31 +181,27 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Código</th>
-                <th>Contraseña</th>
+                <th>Mascota</th>
+                <th>Fecha Ingreso</th>
+                <th>Atendido</th>
                 <th>Estado</th>
-                <th>Cargo</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="usuario : ${usuarios}">
-                <td th:text="${usuario.idUsuario}"></td>
-                <td th:text="${usuario.codigo}"></td>
+            <tr th:each="cola : ${colas}">
+                <td th:text="${cola.idCola}"></td>
+                <td th:text="${cola.mascota.idMascota}"></td>
+                <td th:text="${#temporals.format(cola.fechaIngreso, 'dd-MM-yyyy hh:mm a')}"></td>
+                <td th:text="${cola.atendido} ? 'Sí' : 'No'"></td>
+                <td th:text="${cola.estado}"></td>
                 <td>
-                    <span class="masked">****************************************</span>
-                    <span class="real" style="display:none" th:text="${usuario.contrasena}"></span>
-                    <button type="button" class="ver">Ver</button>
-                </td>
-                <td th:text="${usuario.estado}"></td>
-                <td th:text="${usuario.idCargo.nombre}"></td>
-                <td>
-                    <a th:href="@{/usuarios/ver/{id}(id=${usuario.idUsuario})}" class="ver">Ver</a>
-                    <a th:href="@{/usuarios/editar/{id}(id=${usuario.idUsuario})}" class="editar">Editar</a>
-                    <form th:action="@{/usuarios/eliminar/{id}(id=${usuario.idUsuario})}" method="post"
-                        onsubmit="return confirm('¿Estas seguro de Inactivar este Usuario?');" style="display:inline">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                        <button type="submit" class="eliminar">Eliminar</button>
+                    <a th:href="@{/colas/ver/{id}(id=${cola.idCola})}" class="ver">Ver</a>
+                    <a th:href="@{/colas/editar/{id}(id=${cola.idCola})}" class="editar">Editar</a>
+                    <form th:action="@{/colas/eliminar/{id}(id=${cola.idCola})}" method="post"
+                        onsubmit="return confirm('¿Estas seguro de Inactivar este Registro?');" style="display:inline">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <button type="submit" class="eliminar">Eliminar</button>
                     </form>
                 </td>
             </tr>
@@ -214,7 +210,7 @@
     </div>
 
     <div style="margin-top: 30px; margin-bottom: 25px; display: flex; justify-content: center;">
-        <a th:href="@{/usuarios/registrar}" class="btn-primary">Agregar Nuevo Usuario</a>
+        <a th:href="@{/colas/registrar}" class="btn-primary">Agregar Nuevo Registro</a>
         <a th:href="@{/menu}" class="btn-second">Regresar a Menú</a>
     </div>
 

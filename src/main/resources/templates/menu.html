@@ -64,8 +64,8 @@
         <p>MANTENIMIENTOS:</p>
         <!-- Mostrar opciones según el rol -->
             <div th:if="${rol == 'ROLE_ADMIN'}" class="mantenimientos-grid">
-                <a href="usuarios/listar">USUARIOS</a>
                 <a href="cargos/listar">CARGOS DE PERSONAL</a>
+                <a href="usuarios/listar">USUARIOS</a>
                 <a href="veterinarios/listar">VETERINARIOS</a>
                 <a href="clientes/listar">CLIENTES</a>
                 <a href="servicios/listar">SERVICIOS</a>
@@ -85,15 +85,20 @@
             </div>
 
             <div th:if="${rol == 'ROLE_RECEPCIONISTA'}" class="mantenimientos-grid">
-                <a href="clientes/registrar">REGISTRAR DE CLIENTE</a>
+                <a href="clientes/registrar">REGISTRAR CLIENTE</a>
+                <a href="citas/registrar">REGISTRAR CITA</a>
                 <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
                 <a href="citas/listar">LISTADO DE CITAS</a>
                 <a href="inventarios/listar">LISTADO DE INVENTARIO</a>
             </div>
 
             <div th:if="${rol == 'ROLE_CLIENTE'}" class="mantenimientos-grid">
-                <a href="citas/listar">LISTADO DE CITAS</a>
-                <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
+                <a href="citas/registrar">REGISTRAR CITA</a>
+                <a href="citas/listar-registro">VER CITAS</a>
+                <a href="mascotas/listar-registro">LISTADO MASCOTAS</a>
+                <a href="mascotas/listar-registro">LISTADO DE MASCOTAS</a>
+                <a href="mascotas/listar-registro">LISTADO DE MASCOTAS</a>
+                <a href="mascotas/listar-registro">LISTADO DE MASCOTAS</a>
             </div>
         </div>
         <br>

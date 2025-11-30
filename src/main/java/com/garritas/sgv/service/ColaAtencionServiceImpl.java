@@ -14,28 +14,40 @@ import java.util.Optional;
 @Transactional
 public class ColaAtencionServiceImpl implements ColaAtencionService {
 
-    private final ColaAtencionRepository repository;
+    private final ColaAtencionRepository colaAtencionRepository;
 
-    public ColaAtencionServiceImpl(ColaAtencionRepository repository) {
-        this.repository = repository;
+    public ColaAtencionServiceImpl(ColaAtencionRepository colaAtencionRepository) {
+        this.colaAtencionRepository = colaAtencionRepository;
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<ColaAtencion> listar() {
-        return repository.findAll();
+        return colaAtencionRepository.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<ColaAtencion> listarPendientes() {
-        return repository.findByFechaIngreso(null);
+        return colaAtencionRepository.findByFechaIngreso(null);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ColaAtencion> listarPorFechaNoAtendidas() {
+        return colaAtencionRepository.findByFechaIngresoAndAtendidoFalse(null);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Optional<ColaAtencion> buscarPorId(Long id) {
-        return repository.findById(id);
+        return colaAtencionRepository.findById(id);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<ColaAtencion> buscarPorFechaIngreso(LocalDateTime fechaIngreso) {
+        return colaAtencionRepository.findFirstByFechaIngreso(fechaIngreso);
     }
 
     @Override
@@ -46,22 +58,24 @@ public class ColaAtencionServiceImpl implements ColaAtencionService {
         if (item.getAtendido() == null) {
             item.setAtendido(false);
         }
-        return repository.save(item);
+        return colaAtencionRepository.save(item);
     }
 
     @Override
+    @Transactional
     public void eliminar(Long id) {
-        repository.deleteById(id);
+        int actualizar = colaAtencionRepository.actualizarEstado(id, "Inactivo");
+        if (actualizar == 0) throw new IllegalArgumentException("Cola Atención no encontrado: " + id);
     }
 
     @Override
     public void marcarAtendido(Long id) {
-        int updated = repository.marcarAtendido(id);
-        if (updated == 0) {
-            ColaAtencion c = repository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("ColaAtencion no encontrada: " + id));
-            c.setAtendido(true);
-            repository.save(c);
+        int actualizar = colaAtencionRepository.marcarAtendido(id);
+        if (actualizar == 0) {
+            ColaAtencion colaAtencion = colaAtencionRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Cola Atención no encontrado: " + id));
+            colaAtencion.setAtendido(true);
+            colaAtencionRepository.save(colaAtencion);
         }
     }
 }

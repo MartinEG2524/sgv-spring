@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Detalle Registro</title>
+    <title>Nuevo Registro</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -83,18 +83,6 @@
             color: white;
             text-decoration:none;
         }
-        button.ver {
-        background-color: green;
-        border: green;
-        padding: 3px 10px;
-        color: white;
-        margin: 0 5px 0 0;
-        border-radius: 4px;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        margin-left: 10px;
-        }
     </style>
 </head>
 <body>
@@ -111,23 +99,32 @@
             </nav>
         </div>
     </header>
-<head>
-<body>
+
     <div class="container">
-        <h1>Detalle del Historial Clinico</h1>
-        <form id="Form" th:action="@{/historiales/ver}" th:object="${historial}" method="get">
-            <p><strong>ID:</strong> <span th:text="${historial.idHistorial}"></span></p>
-            <p><strong>Historial:</strong> <span th:text="${historial.mascota.idMascota}"></span></p>
-            <p><strong>Veterinario:</strong> <span th:text="${historial.veterinario.idVeterinario}"></span></p>
-            <p><strong>Código:</strong> <span th:text="${historial.codigo}"></span></p>
-            <p><strong>Fecha:</strong> <span th:text="${#temporals.format(historial.fecha, 'dd-MM-yyyy hh:mm a')}"></span></p>
-            <p><strong>Diagnóstico:</strong> <span th:text="${historial.diagnostico}"></span></p>
-            <p><strong>Tratamiento:</strong> <span th:text="${historial.tratamiento}"></span></p>
-            <p><strong>Estado:</strong> <span th:text="${historial.estado}"></span></p>
-            <div>
-                <a th:href="@{/historiales/listar}" class="btn-primary">Volver al listado de historiales clinicos</a>
+        <h1>AGREGAR NUEVO REGISTRO</h1>
+        <p>Por favor, complete el formulario para crear un nuevo registro atención.</p>
+
+        <form id="registroForm" th:action="@{/colas/registrar}" th:object="${cola}" method="post">
+            <label for="mascota">ID Mascota:</label>
+            <input type="number" id="mascota" name="mascota" placeholder="Ingrese ID" th:field="*{mascota}" required />
+
+            <label for="fechaIngreso">Fecha Ingreso:</label>
+            <input type="datetime-local" id="fechaIngreso" th:field="*{fechaIngreso}" required /><br>
+
+            <input type="hidden" th:field="*{atendido}" value="false"/>
+            
+            <input type="hidden" th:field="*{estado}" value="Activo" />
+
+            <div class="buttons">
+                <button type="submit" class="btn-login">GUARDAR REGISTRO ATENCIÓN</button>
             </div>
+
+            <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red"></div>
         </form>
+
+        <div>
+            <a th:href="@{/colas/listar}" class="btn-primary">Volver al listado de colas atención</a>
+        </div>
     </div>
 
     <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">

@@ -1,22 +1,141 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Editar Detalle</title>
+    <title>Editar Detalle Historial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #3e3e3e;
+        }
+        footer {
+            background-color: #fff;
+            border-top: 2px solid #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+        .social {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+        }
+        label {
+            display: block;
+            margin: 15px auto 5px;
+            text-align: left;
+            width: 250px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 250px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+        .buttons {
+            margin: 50px 0;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-login {
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid #2c5d92;
+            background: #2c5d92;
+            font-weight:600;
+            margin-top: 50px;
+            color: white;
+        }
+        .btn-primary{
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid red;
+            background:red;
+            font-weight:600;
+            margin-top: 50px;
+            color: white;
+            text-decoration:none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Editar Detalle</h1>
-    <form action="#" th:action="@{/detalles/editar/{id}(id=${detalle.id})}" th:object="${detalle}" method="post">
-        <label for="producto">Producto:</label>
-        <input type="text" id="producto" th:field="*{producto}" required /><br>
+    <header>
+        <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
+            <img src="/Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
+        </div>
+        <div class="header-container" style="display: flex; justify-content: center;">
+            <nav style="margin-top: 20px;">
+                <a href="/contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
+                <a href="/servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
+                <a href="/nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
+                <a href="/login" style="font-size: 24px; text-decoration: none; color: blue;">Login</a>
+            </nav>
+        </div>
+    </header>
 
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" id="cantidad" th:field="*{cantidad}" required /><br>
+    <div class="container">
+        <h1>EDITAR REGISTRO DETALLE HISTORIAL INVENTARIO</h1>
+        <p>Por favor, complete el formulario para editar los datos del registro de detalle historial inventario.</p>
 
-        <label for="fecha">Fecha:</label>
-        <input type="datetime-local" id="fecha" th:field="*{fecha}" required /><br>
+        <form th:action="@{/detalles/editar/{id}(id=${detalle.idDetalle})}" th:object="${detalle}" method="post">
 
-        <button type="submit">Actualizar Detalle</button>
-    </form>
-    <a href="/detalles">Volver al listado</a>
+            <label for="idHistorial">Historial:</label>
+            <input type="number" id="idHistorial" name="idHistorial" placeholder="Ingrese ID" th:field="*{historial.idHistorial}" required />
+
+            <label for="idProducto">Producto:</label>
+            <input type="number" id="idProducto" name="idProducto" placeholder="Ingrese ID" th:field="*{producto.idProducto}" required />
+
+            <label for="cantidadUtilizada">Cantidad Utilizada:</label>
+            <input type="number" id="cantidadUtilizada" th:field="*{cantidadUtilizada}" required />
+
+            <div>
+                <button type="submit" class="btn-login">ACTUALIZAR DETALLE HISTORIAL</button>
+            </div>
+        </form>
+    
+        <div>
+            <a th:href="@{/detalles/listar}" class="btn-primary">Volver al listado de detalles historiales</a>
+        </div>
+    </div>
+
+    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
+        <div class="footer-container" style="display: flex; justify-content: center;">
+            <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
+        </div>
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
+            <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
+        </div>
+    </footer>
 </body>
 </html>

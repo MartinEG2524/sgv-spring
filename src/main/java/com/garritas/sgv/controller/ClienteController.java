@@ -70,7 +70,7 @@ public class ClienteController {
     }
 
     // Vista para editar un cliente existente
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RECEPCIONISTA') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RECEPCIONISTA') or hasRole('ROLE_CLIENTE')")
     @GetMapping("/editar/{id}")
     public String editarCliente(@PathVariable Long id, Model model) {
         Cliente cliente = clienteService.buscarPorId(id).orElse(null);
@@ -79,7 +79,7 @@ public class ClienteController {
     }
 
     // Guardar los cambios de un cliente editado
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RECEPCIONISTA') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RECEPCIONISTA') or hasRole('ROLE_CLIENTE')")
     @PostMapping("/editar/{id}")
     public String actualizarCliente(@PathVariable Long id, @ModelAttribute("cliente") Cliente cliente, @RequestParam("usuario.idUsuario") Long idUsuario, @RequestParam("estado") String estado) {
         Cliente clienteActualizado = clienteService.buscarPorId(id).orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado: " + id));

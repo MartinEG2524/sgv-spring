@@ -2,6 +2,9 @@ package com.garritas.sgv.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +30,7 @@ public class HistorialClinico {
     @Column(unique = true)
     private String codigo;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime fecha;
 
     private String diagnostico;

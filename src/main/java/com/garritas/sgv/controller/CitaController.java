@@ -36,7 +36,6 @@ public class CitaController {
 
     @Autowired
     private VeterinarioService veterinarioService;
-
     
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RECEPCIONISTA') or hasRole('ROLE_VETERINARIO')")
     @GetMapping("listar")

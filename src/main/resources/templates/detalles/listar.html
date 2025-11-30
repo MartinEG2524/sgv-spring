@@ -61,6 +61,20 @@
             text-decoration:none;
         }
         
+        .tabla-contenedor {
+            max-height: 400px;
+            overflow-y: auto;
+            overflow-x: auto;
+            margin-top: 10px;
+            margin-bottom: 10px; 
+        }
+        .tabla-contenedor thead th {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 2;
+        }
+
         table a.ver, 
         table a.editar {
         padding: 5px 10px;
@@ -121,6 +135,28 @@
         a.exportar-excel:hover {
         background-color: #218838;
         }
+
+        .toolbar-usuarios {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            margin-bottom: 20px;
+            margin-top: 5px;
+        }
+        .centro-busqueda {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .input-busqueda {
+            padding: 8px 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            max-width: 750px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -142,44 +178,74 @@
         <h1>LISTADO DE DETALLES HISTORIAL INVENTARIOS</h1>
     </div>
 
-    <div style="text-align: right; margin-right: 2.5%; margin-bottom: 20px; margin-top: 5px;">
+    <div class="toolbar-usuarios">
+        <div class="centro-busqueda">
+            <input id="buscar-usuario" type="text" class="input-busqueda" placeholder="Buscar usuario..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </div>
         <a class="exportar-excel" th:href="@{/detalles/export/excel}">EXPORTAR A EXCEL</a>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Historial</th>
-                <th>Producto</th>
-                <th>Cantidad Utilizada</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="detalle : ${detalles}">
-                <td th:text="${detalle.idDetalle}"></td>
-                <td th:text="${detalle.historial.idHistorial}"></td>
-                <td th:text="${detalle.producto.idProducto}"></td>
-                <td th:text="${detalle.cantidadUtilizada}"></td>
-                <td>
-                    <a th:href="@{/detalles/ver/{id}(id=${detalle.idDetalle})}" class="ver">Ver</a>
-                    <br><br>
-                    <a th:href="@{/detalles/editar/{id}(id=${detalle.idDetalle})}" class="editar">Editar</a>
-                    <br><br>
-                    <form th:action="@{/detalles/eliminar/{id}(id=${detalle.idDetalle})}" method="post" 
-                        onsubmit="return confirm('¿Estas seguro de Inactivar este Detalle Historial Inventario?');" style="display:inline">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                        <button type="submit" class="eliminar">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="tabla-contenedor">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Historial</th>
+                    <th>Producto</th>
+                    <th>Cantidad Utilizada</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="detalle : ${detalles}">
+                    <td th:text="${detalle.idDetalle}"></td>
+                    <td th:text="${detalle.historial.idHistorial}"></td>
+                    <td th:text="${detalle.producto.idProducto}"></td>
+                    <td th:text="${detalle.cantidadUtilizada}"></td>
+                    <td>
+                        <a th:href="@{/detalles/ver/{id}(id=${detalle.idDetalle})}" class="ver">Ver</a>
+                        <br><br>
+                        <a th:href="@{/detalles/editar/{id}(id=${detalle.idDetalle})}" class="editar">Editar</a>
+                        <br><br>
+                        <form th:action="@{/detalles/eliminar/{id}(id=${detalle.idDetalle})}" method="post" 
+                            onsubmit="return confirm('¿Estas seguro de Eliminar este Detalle Historial Inventario?');" style="display:inline">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <button type="submit" class="eliminar">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
     <div style="margin-top: 30px; margin-bottom: 25px; display: flex; justify-content: center;">
         <a th:href="@{/detalles/registrar}" class="btn-primary">Agregar Nuevo Detalle Historial Inventario</a>
         <a th:href="@{/menu}" class="btn-second">Regresar a Menú</a>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputBusqueda = document.getElementById('buscar-usuario');
+        if (!inputBusqueda) return;
+
+        inputBusqueda.addEventListener('input', function () {
+            const termino = this.value.toLowerCase().trim();
+            const filas = document.querySelectorAll('table tbody tr');
+
+            filas.forEach(function (fila) {
+
+                const columnas = fila.querySelectorAll('td');
+                let textoFila = '';
+
+                [0, 1, 3, 4].forEach(i => {
+                    if (columnas[i]) textoFila += columnas[i].textContent.toLowerCase() + ' ';
+                });
+
+                fila.style.display = textoFila.includes(termino) ? '' : 'none';
+            });
+        });
+    });
+    </script>
 
     <footer style="display: flex; position: fixed; bottom: 0; width: 100%;">
         <div class="footer-container" style="display: flex; justify-content: center;">

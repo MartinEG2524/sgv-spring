@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Getter
 @Setter
 @Entity
@@ -20,6 +22,7 @@ public class ColaAtencion {
     @JoinColumn(name = "id_mascota", nullable = false)
     private Mascota mascota;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @Column(name = "fecha_ingreso", nullable = false)
     private LocalDateTime fechaIngreso;
 
