@@ -1,19 +1,190 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Editar Mascota</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #3e3e3e;
+        }
+        footer {
+            background-color: #fff;
+            border-top: 2px solid #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .social {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .container {
+            text-align: center;
+            padding: 20px 0 100px 0;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin: 15px auto 5px;
+            text-align: left;
+            width: 250px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 250px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            margin-left: 50px;
+        }
+        select {
+            width: 270px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            margin-left: 50px;
+        }
+        .buttons {
+            margin: 20px 0;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-login {
+            background-color: #2c5d92;
+            color: white;
+        }
+        .btn-primary{
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid red;
+            background:red;
+            font-weight:600;
+            margin-top: 20px;
+            color: white;
+            text-decoration:none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Editar Mascota</h1>
-    <form action="#" th:action="@{/mascotas/editar/{id}(id=${mascota.id})}" th:object="${mascota}" method="post">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" th:field="*{nombre}" required /><br>
+    <header>
+        <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
+        <img src="/Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
+        </div>
+        <div class="header-container" style="display: flex; justify-content: center;">
+        <nav style="margin-top: 20px;">
+            <a href="/contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
+            <a href="/servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
+            <a href="/nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
+            <a href="/login" style="font-size: 24px; text-decoration: none; color: blue;">Login</a>
+        </nav>
+        </div>
+    </header>
 
-        <label for="raza">Raza:</label>
-        <input type="text" id="raza" th:field="*{raza}" required /><br>
+    <div class="container">
+        <h1>EDITAR MASCOTA</h1>
+        <p>Por favor, complete el formulario para editar los datos de la mascota.</p>
 
-        <button type="submit">Actualizar Mascota</button>
-    </form>
-    <a href="/mascotas">Volver al listado</a>
+        <form th:action="@{/mascotas/editar/{id}(id=${mascota.idMascota})}" th:object="${mascota}" method="post">
+            <div class="form-grid">
+                <div>
+                    <label for="idCliente">ID Cliente:</label>
+                    <input type="number" id="idCliente" placeholder="Ingrese ID Cliente" th:field="*{cliente.idCliente}" required />
+                        
+                    <label for="dni">DNI:</label>
+                    <input type="number" id="dni" name="dni" placeholder="Ingrese DNI" th:field="*{dni}" required />
+                        
+                    <label for="codigo">Código:</label>
+                    <input type="text" id="codigo" name="codigo" placeholder="Ingrese Código" th:field="*{codigo}" required />
+
+                    <label for="nombres">Nombres:</label>
+                    <input type="text" id="nombres" name="nombres" placeholder="Ingrese Nombres" th:field="*{nombres}" required />
+
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" id="apellidos" name="apellidos" placeholder="Ingrese Apellidos" th:field="*{apellidos}" required />
+
+                    <label for="edad">Edad:</label>
+                    <input type="number" id="edad" name="edad" placeholder="Ingrese Edad" th:field="*{edad}" step="0.01" required />
+                </div>
+                <div>
+                    <label for="sexo">Sexo:</label>
+                    <input type="text" id="sexo" name="sexo" placeholder="Ingrese Sexo" th:field="*{sexo}" required />
+
+                    <label for="raza">Raza:</label>
+                    <input type="text" id="raza" name="raza" placeholder="Ingrese Raza" th:field="*{raza}" /><br>
+
+                    <label for="carnetVacunas">Carnet de Vacunas:</label>
+                    <input type="text" id="carnetVacunas" name="carnetVacunas" placeholder="Ingrese Carnet Vacunas" th:field="*{carnetVacunas}" /><br>
+
+                    <label for="estadoClinico">Estado Clinico:</label>
+                    <input type="text" id="estadoClinico" name="estadoClinico" placeholder="Ingrese Estado Clinico" th:field="*{estadoClinico}" /><br>
+
+                    <label for="estado">Estado:</label>
+                    <select id="estado" th:field="*{estado}" required>
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button type="submit" class="btn-login">ACTUALIZAR MASCOTA</button>
+            </div>
+
+            <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red"></div>
+        </form>
+        
+        <div>
+            <a th:href="@{/mascotas/listar}" class="btn-primary">VOLVER AL LISTADO DE MASCOTAS</a>
+        </div>
+    </div>
+
+    <footer style="display: flex; position: fixed; bottom: 0; width: 99%; margin-top: 20px;">
+        <div class="footer-container" style="display: flex; justify-content: center;">
+            <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
+        </div>
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
+            <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;" width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
+        </div>
+    </footer>
 </body>
 </html>

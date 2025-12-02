@@ -172,9 +172,7 @@
                 <td th:text="${historial.estado}"></td>
                 <td>
                     <a th:href="@{/historiales/ver/{id}(id=${historial.idHistorial})}" class="ver">Ver</a>
-                    <br><br>
                     <a th:href="@{/historiales/editar/{id}(id=${historial.idHistorial})}" class="editar">Editar</a>
-                    <br><br>
                     <form th:action="@{/historiales/eliminar/{id}(id=${historial.idHistorial})}" method="post" 
                         onsubmit="return confirm('¿Estas seguro de Inactivar este Historial?');" style="display:inline">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">

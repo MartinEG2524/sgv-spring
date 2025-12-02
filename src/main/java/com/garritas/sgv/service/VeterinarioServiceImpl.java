@@ -30,6 +30,7 @@ public class VeterinarioServiceImpl implements VeterinarioService {
         return veterinarioRepository.findById(id);
     }
 
+    @Override
     public Veterinario guardar(Veterinario cliente) {
         if (StringUtils.isEmpty(cliente.getNombres())) {
             throw new IllegalArgumentException("El nombre no puede estar vacío");
@@ -42,6 +43,7 @@ public class VeterinarioServiceImpl implements VeterinarioService {
         return veterinarioRepository.save(cliente);
     }
 
+    @Override
     public Veterinario actualizar(Veterinario veterinario) {
         return veterinarioRepository.save(veterinario);
     }

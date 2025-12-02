@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface ClienteService {
     List<Cliente> listar();
     Optional<Cliente> buscarPorId(Long id);
+    Optional<Cliente> buscarPorDni(Integer dni);
     Cliente guardar(Cliente cliente);
     Cliente actualizar(Cliente cliente);
     void eliminar(Long id);
-    Optional<Cliente> buscarPorDni(Integer dni);
 }

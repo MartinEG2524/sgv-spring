@@ -37,7 +37,7 @@ public class InventarioController {
 
     // Vista para ver un inventario específico, solo accesible para ADMIN y RECEPCIONISTA
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RECEPCIONISTA')")
-    @GetMapping("/ver/{id}")
+    @GetMapping("ver/{id}")
     public String buscarInventario(@PathVariable Long id, Model model) {
         Inventario inventario = inventarioService.buscarPorId(id).orElse(null);
         model.addAttribute("inventario", inventario);
@@ -80,8 +80,14 @@ public class InventarioController {
     @PostMapping("/editar/{id}")
     public String actualizarInventario(@PathVariable Long id, @ModelAttribute("inventario") Inventario inventario) {
         Inventario inventarioActualizado = inventarioService.buscarPorId(id).orElse(null);
+        inventarioActualizado.setNombre(inventario.getNombre());
+        inventarioActualizado.setDescripcion(inventario.getDescripcion());
+        inventarioActualizado.setCategoria(inventario.getCategoria());
+        inventarioActualizado.setProveedor(inventario.getProveedor());
+        inventarioActualizado.setPrecio(inventario.getPrecio());
+        inventarioActualizado.setCantidad(inventario.getCantidad());
         inventarioService.guardar(inventarioActualizado);
-        return "redirect:/inventarios";
+        return "redirect:/inventarios/listar";
     }
 
     // Eliminar un inventario, solo accesible para ADMIN
@@ -89,7 +95,7 @@ public class InventarioController {
     @PostMapping("/eliminar/{id}")
     public String eliminarInventario(@PathVariable Long id) {
         inventarioService.eliminar(id);
-        return "redirect:/inventarios";
+        return "redirect:/inventarios/listar";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -123,12 +129,13 @@ public class InventarioController {
             int rowIdx = 1;
             for (Inventario i : inventarios) {
                 var row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue(safe(i.getNombre()));
-                row.createCell(1).setCellValue(safe(i.getDescripcion()));
-                row.createCell(2).setCellValue(safe(i.getCategoria()));
-                row.createCell(3).setCellValue(safe(i.getProveedor()));
-                row.createCell(4).setCellValue(i.getPrecio());
-                row.createCell(4).setCellValue(i.getCantidad());;
+                row.createCell(0).setCellValue(i.getIdProducto());
+                row.createCell(1).setCellValue(safe(i.getNombre()));
+                row.createCell(2).setCellValue(safe(i.getDescripcion()));
+                row.createCell(3).setCellValue(safe(i.getCategoria()));
+                row.createCell(4).setCellValue(safe(i.getProveedor()));
+                row.createCell(5).setCellValue(i.getPrecio());
+                row.createCell(6).setCellValue(i.getCantidad());;
             }
 
             // Autoajuste columnas

@@ -29,14 +29,18 @@ public class InicioController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping({"/", "/inicio"})
-    public String Inicio() {
+    public String Inicio(Authentication authentication) {
+        // Si está autenticado y no es anónimo, redirigir a menu
+        if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/menu";
+        }
+        // Si NO está logueado, mostrar la página de inicio normal
         return "inicio";
     }
 
     @GetMapping("/login")
     public String Login(String error, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        
         if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/menu";
         }

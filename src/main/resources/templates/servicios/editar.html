@@ -1,19 +1,162 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Editar Servicio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #3e3e3e;
+        }
+        footer {
+            background-color: #fff;
+            border-top: 2px solid #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .social {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .container {
+            text-align: center;
+            padding: 20px 0 100px 0;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin: 15px auto 5px;
+            text-align: left;
+            width: 250px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 250px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+        select {
+            width: 270px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+        .buttons {
+            margin: 20px 0;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-login {
+            background-color: #2c5d92;
+            color: white;
+        }
+        .btn-primary{
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid red;
+            background:red;
+            font-weight:600;
+            margin-top: 20px;
+            color: white;
+            text-decoration:none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Editar Servicio</h1>
-    <form action="#" th:action="@{/servicios/editar/{id}(id=${servicio.id})}" th:object="${servicio}" method="post">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" th:field="*{nombre}" required /><br>
+    <header>
+        <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
+        <img src="/Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
+        </div>
+        <div class="header-container" style="display: flex; justify-content: center;">
+        <nav style="margin-top: 20px;">
+            <a href="/contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
+            <a href="/servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
+            <a href="/nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
+            <a href="/login" style="font-size: 24px; text-decoration: none; color: blue;">Login</a>
+        </nav>
+        </div>
+    </header>
 
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" th:field="*{descripcion}" required /><br>
+    <div class="container">
+        <h1>EDITAR SERVICIO</h1>
+        <p>Por favor, complete el formulario para editar los datos del servicio.</p>
 
-        <button type="submit">Actualizar Servicio</button>
-    </form>
-    <a href="/servicios">Volver al listado</a>
+        <form th:action="@{/servicios/editar/{id}(id=${servicio.idServicio})}" th:object="${servicio}" method="post">
+            <label for="tipo">Tipo:</label>
+            <input type="text" id="tipo" name="tipo" placeholder="Ingrese Tipo" th:field="*{tipo}" required />
+            
+            <label for="descripcion">Descripción:</label>
+            <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese Descripción" th:field="*{descripcion}" required />
+
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" name="precio" placeholder="Ingrese Precio" th:field="*{precio}" step="0.01" required />
+
+            <label for="estado">Estado:</label>
+            <select id="estado" th:field="*{estado}" required>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+
+            <div class="buttons">
+                <button type="submit" class="btn-login">ACTUALIZAR SERVICIO</button>
+            </div>
+
+            <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red"></div>
+        </form>
+        
+        <div>
+            <a th:href="@{/servicios/listar}" class="btn-primary">VOLVER AL LISTADO DE SERVICIOS</a>
+        </div>
+    </div>
+
+    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
+        <div class="footer-container" style="display: flex; justify-content: center;">
+            <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
+        </div>
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
+        <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+        <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
+        <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
+        </div>
+    </footer>
 </body>
 </html>

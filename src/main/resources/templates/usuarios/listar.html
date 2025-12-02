@@ -195,7 +195,7 @@
                 <td>
                     <span class="masked">****************************************</span>
                     <span class="real" style="display:none" th:text="${usuario.contrasena}"></span>
-                    <button type="button" class="ver">Ver</button>
+                    <button type="button" class="ver">Mostrar</button>
                 </td>
                 <td th:text="${usuario.estado}"></td>
                 <td th:text="${usuario.idCargo.nombre}"></td>
@@ -231,7 +231,7 @@
         if (showing) {
             real.style.display = 'none';
             masked.style.display = 'inline';
-            btn.textContent = 'Ver';
+            btn.textContent = 'Mostrar';
         } else {
             masked.style.display = 'none';
             real.style.display = 'inline';

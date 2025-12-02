@@ -1,7 +1,6 @@
 package com.garritas.sgv.model;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +19,7 @@ public class Servicio {
 
     private String descripcion;
 
-    private BigDecimal precio;
+    private Double precio;
 
     private String estado;
 }

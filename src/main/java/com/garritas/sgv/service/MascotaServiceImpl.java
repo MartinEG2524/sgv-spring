@@ -2,7 +2,9 @@ package com.garritas.sgv.service;
 
 import com.garritas.sgv.model.Mascota;
 import com.garritas.sgv.repository.MascotaRepository;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +34,24 @@ public class MascotaServiceImpl implements MascotaService {
     }
 
     @Override
+    public Mascota actualizar(Mascota mascota) {
+        return mascotaRepository.save(mascota);
+    }
+
+    @Override
+    @Transactional
     public void eliminar(Long id) {
-        mascotaRepository.deleteById(id);
+        int actualizar = mascotaRepository.actualizarEstado(id, "Inactivo");
+        if (actualizar == 0) throw new IllegalArgumentException("Mascota no encontrado: " + id);
+    }
+
+    @Override
+    public Optional<Mascota> buscarPorDni(Integer dni) {
+        return mascotaRepository.findByDni(dni);
+    }
+
+    @Override
+    public Optional<Mascota> buscarPorCodigo(String codigo) {
+        return mascotaRepository.findByCodigo(codigo);
     }
 }

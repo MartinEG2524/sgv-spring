@@ -115,8 +115,8 @@
         <p>Por favor, complete el formulario para editar los datos del Cliente.</p>
 
         <form th:action="@{/clientes/editar/{id}(id=${cliente.idCliente})}" th:object="${cliente}" method="post">
-            <label for="idUsuario">Usuario:</label>
-            <input type="text" id="idUsuario" th:field="*{usuario.idUsuario}" required readonly /><br>
+            <label for="idUsuario">ID Usuario:</label>
+            <input type="text" id="idUsuario" th:field="*{usuario.idUsuario}" placeholder="Ingrese ID Usuario" required readonly /><br>
             
             <label for="nombres">Nombres:</label>
             <input type="text" id="nombres" placeholder="Ingrese sus Nombres" th:field="*{nombres}" required /><br>

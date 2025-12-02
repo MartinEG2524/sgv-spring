@@ -28,6 +28,7 @@
         <div class="forgot-password" style="margin-top: 25px;">
             <a href="/restablecer"><strong>¿Olvidaste tu contraseña? Clic aquí</strong></a>
         </div>
+        <!-- Enlace para redirigir a la página de crear usuario -->
         <div class="create-account" style="margin-top: 50px;">
             <a href="/registrar" class="primary">CREAR CUENTA</a>
         </div>
@@ -35,19 +36,19 @@
         <div th:if="${logoutMessage != null}" style="color: green; margin-top: 25px;">
             <p th:text="${logoutMessage}"></p>
         </div>
-        <div class="create-account" style="margin-top: 50px;">
-            <a href="/inicio" class="second">Volver a Inicio</a>
+        <div class="create-account" style="margin-top: 30px;">
+            <a href="/inicio" class="second">VOLVER A INICIO</a>
         </div>
     </div>
 
-    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
-        <div class="social-icons">
-            <img src="Imagenes/facebook.png" alt="Facebook">
-            <img src="Imagenes/twitter.png" alt="Twitter">
-            <img src="Imagenes/instagram.png" alt="Instagram">
+    <footer style="display: flex; position: fixed; bottom: 0; width: 97.5%;">
+        <div class="footer-container" style="display: flex; justify-content: center; margin-right: 0px;">
+            <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
         </div>
-        <div class="address" style="margin-right: 15px;">
-            Av. Crisantemos N° 221 – LIMA – PERÚ
+        <div class="social-media" style="display: flex; justify-content: center;">
+            <a href="https://facebook.com" target="_blank"><img src="Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
         </div>
     </footer>
 </body>

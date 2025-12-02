@@ -1,37 +1,151 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Producto</title>
-
+    <title>Editar Inventario</title>
     <style>
-        body { font-family: Arial; background: #fff8e1; padding: 20px; }
-        form {
-            width: 350px; margin: auto; background: white; padding: 20px;
-            border-radius: 10px; box-shadow: 0 0 10px #ccc;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
         }
-        input { width: 100%; padding: 10px; margin: 10px 0; }
-        button {
-            width: 100%; padding: 10px; background: #ffa000;
-            color: white; border: none; border-radius: 6px;
+        .logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #3e3e3e;
+        }
+        footer {
+            background-color: #fff;
+            border-top: 2px solid #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .social {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .container {
+            text-align: center;
+            padding: 20px 0 100px 0;
+        }
+        label {
+            display: block;
+            margin: 15px auto 5px;
+            text-align: left;
+            width: 250px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 250px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+        .buttons {
+            margin: 20px 0;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-login {
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid #2c5d92;
+            background: #2c5d92;
+            font-weight:600;
+            margin-top: 20px;
+            color: white;
+        }
+        .btn-primary{
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:8px;
+            border:1px solid red;
+            background:red;
+            font-weight:600;
+            margin-top: 20px;
+            color: white;
+            text-decoration:none;
         }
     </style>
 </head>
-
 <body>
+    <header>
+        <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
+            <img src="/Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
+        </div>
+        <div class="header-container" style="display: flex; justify-content: center;">
+            <nav style="margin-top: 20px;">
+                <a href="/contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
+                <a href="/servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
+                <a href="/nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
+                <a href="/login" style="font-size: 24px; text-decoration: none; color: blue;">Login</a>
+            </nav>
+        </div>
+    </header>
 
-<form th:action="@{/inventario/guardar}" method="post" th:object="${inventario}">
-    <h2>Editar Producto</h2>
+    <div class="container">
+        <h1>EDITAR REGISTRO INVENTARIO</h1>
+        <p>Por favor, complete el formulario para editar los datos del registro de inventario.</p>
 
-    <input type="hidden" th:field="*{id}">
+        <form th:action="@{/inventarios/editar/{id}(id=${inventario.idProducto})}" th:object="${inventario}" method="post">
 
-    <input type="text" th:field="*{nombreProducto}">
-    <input type="number" th:field="*{cantidad}">
-    <input type="number" step="0.01" th:field="*{precio}">
-    <input type="text" th:field="*{categoria}">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ingrese Nombre" th:field="*{nombre}" required />
 
-    <button type="submit">Actualizar</button>
-</form>
+            <label for="descripcion">Descripción:</label>
+            <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese Descripción" th:field="*{descripcion}" required />
 
+            <label for="categoria">Categoría:</label>
+            <input type="text" id="categoria" name="categoria" placeholder="Ingrese Categoría" th:field="*{categoria}" required />
+
+            <label for="proveedor">Proveedor:</label>
+            <input type="text" id="proveedor" name="proveedor" placeholder="Ingrese Proveedor" th:field="*{proveedor}" /><br>
+
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" name="precio" placeholder="Ingrese Precio" th:field="*{precio}" step="0.01" required />
+
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" name="cantidad" placeholder="Ingrese Cantidad" th:field="*{cantidad}" required />
+
+            <div>
+                <button type="submit" class="btn-login">ACTUALIZAR INVENTARIO</button>
+            </div>
+        </form>
+    
+        <div>
+            <a th:href="@{/inventarios/listar}" class="btn-primary">VOLVER AL LISTADO DE INVENTARIOS</a>
+        </div>
+    </div>
+
+    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
+        <div class="footer-container" style="display: flex; justify-content: center;">
+            <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
+        </div>
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
+            <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
+        </div>
+    </footer>
 </body>
 </html>
