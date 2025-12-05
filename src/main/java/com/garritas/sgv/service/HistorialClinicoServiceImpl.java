@@ -34,6 +34,7 @@ public class HistorialClinicoServiceImpl implements HistorialClinicoService {
 
     @Override
     public HistorialClinico guardar(HistorialClinico historial) {
+        historial.setEstado("Activo");
         return historialRepository.save(historial);
     }
 

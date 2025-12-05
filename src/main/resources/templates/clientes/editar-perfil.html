@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <title>Editar Cliente</title>
+    <title>EDITAR DATOS DEL CLIENTE</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -135,7 +135,7 @@
     </header>
 
     <div class="container">
-        <h1>Editar Cliente</h1>
+        <h1>EDITAR DATOS DEL CLIENTE</h1>
         <p>Por favor, complete el formulario para editar los datos del Cliente.</p>
 
         <form th:action="@{/clientes/editar/{id}(id=${cliente.idCliente})}" th:object="${cliente}" method="post">
@@ -188,19 +188,19 @@
                     <input type="text" id="distrito" placeholder="Ingrese su Distrito" th:field="*{distrito}" required /><br>
                 </div>
             </div>
-
+                
             <div>
                 <button type="submit" class="btn-login">Actualizar Cliente</button>
             </div>
         </form>
-        <a th:href="@{/clientes/listar}" class="btn-primary">Volver al listado de clientes</a>
+        <a th:href="@{/menu}" class="btn-primary">Volver al Menú</a>
     </div>
 
-    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
+    <footer style="display: flex; bottom: 0;">
         <div class="footer-container" style="display: flex; justify-content: center;">
             <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
         </div>
-        <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 5px;">
             <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
             <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;" width="50" height="50" alt="Twitter"></a>
             <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>

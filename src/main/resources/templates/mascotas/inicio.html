@@ -72,14 +72,14 @@
     <!-- Encabezado con Logo y navegación -->
     <header>
         <div class="header-container" style="display: flex; justify-content: center; padding-top: 10px;">
-            <img src="Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
+            <img src="/Imagenes/logo.png" alt="Logo Veterinaria" class="logo">
         </div>
         <div class="header-container" style="display: flex; justify-content: center;">
             <nav style="margin-top: 20px;">
-                <a href="contacto" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
-                <a href="servicios-info" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
-                <a href="nosotros" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
-                <a href="menu" style="font-size: 24px; text-decoration: none; color: blue;">Menu</a>
+                <a th:href="@{/contacto}" style="font-size: 24px; text-decoration: none; color: blue;">Contacto | </a>
+                <a th:href="@{/servicios-info}" style="font-size: 24px; text-decoration: none; color: blue;">Servicios | </a>
+                <a th:href="@{/nosotros}" style="font-size: 24px; text-decoration: none; color: blue;">Nosotros | </a>
+                <a th:href="@{/menu}"style="font-size: 24px; text-decoration: none; color: blue;">Menu</a>
             </nav>
         </div>
     </header>
@@ -92,32 +92,32 @@
           <div>
             <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png">
           </div>
-          <a href="mascotas/registrar">Registrar Mascota</a>
+          <a href="registrar">Registrar Mascota</a>
         </div>
         <div class="bloque">
         <div>
           <img src="https://cdn-icons-png.flaticon.com/512/2920/2920075.png">
         </div>
-          <a href="mascotas/ver">Ver Historial Médico</a>
+          <a th:href="@{/historiales/listar-mascota}">Ver Historial Médico</a>
         </div>
         <div class="bloque">
           <div>
           <img src="https://cdn-icons-png.flaticon.com/512/616/616554.png">
           </div>
-          <a href="mascotas/ver">Listado de Mascotas</a>
+          <a href="listar-cliente">Listado de Mascotas</a>
         </div>
       </div>
     </div>
 
     <!-- Pie de página -->
-    <footer style="display: flex; position: fixed; bottom: 0; width: 97.5%;">
+    <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
         <div class="footer-container" style="display: flex; justify-content: center; margin-right: 0px;">
             <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
         </div>
-        <div class="social-media" style="display: flex; justify-content: center;">
-            <a href="https://facebook.com" target="_blank"><img src="Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
-            <a href="https://twitter.com" target="_blank"><img src="Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
-            <a href="https://instagram.com" target="_blank"><img src="Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
+        <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
+            <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
+            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
+            <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
         </div>
     </footer>
 </body>

@@ -31,6 +31,12 @@ public class MascotaController {
         this.mascotaService = mascotaService;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RECEPCIONISTA') or hasRole('ROLE_CLIENTE') or hasRole('ROLE_VETERINARIO')")
+    @GetMapping("/inicio")
+    public String inicioMascota() {
+        return "mascotas/inicio";
+    }
+
     // Vista de todos las mascotas, solo accesible para ADMIN y RECEPCIONISTA
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RECEPCIONISTA')")
     @GetMapping("listar")
@@ -61,7 +67,7 @@ public class MascotaController {
 
     // Guardar una nueva mascota, solo accesible para ADMIN
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping
+    @PostMapping("/registrar")
     public String guardarMascota(@ModelAttribute("mascota") Mascota mascota, RedirectAttributes ra) {
         if (mascotaService.buscarPorDni(mascota.getDni()).isPresent()) {
             ra.addFlashAttribute("errorMessage", "El DNI '" + mascota.getDni() + "' ya está registrado.");

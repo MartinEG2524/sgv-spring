@@ -12,7 +12,7 @@ public interface ColaAtencionService {
     List<ColaAtencion> listarPorFechaNoAtendidas();
     Optional<ColaAtencion> buscarPorId(Long id);
     Optional<ColaAtencion> buscarPorFechaIngreso(LocalDateTime fechaIngreso);
-    ColaAtencion guardar(ColaAtencion item);
+    ColaAtencion guardar(ColaAtencion colaAtencion);
     void eliminar(Long id);
     void marcarAtendido(Long id);
 }

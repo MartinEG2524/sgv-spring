@@ -48,7 +48,9 @@
             font-weight: bold;
         }
         input[type="text"],
-        input[type="password"] {
+        input[type="number"],
+        input[type="date"],
+        input[type="time"] {
             width: 250px;
             padding: 8px;
             margin-bottom: 10px;
@@ -56,7 +58,7 @@
             border-radius: 5px;
         }
         .buttons {
-            margin: 50px 0;
+            margin: 20px 0;
         }
         .buttons button {
             padding: 10px 20px;
@@ -127,12 +129,12 @@
             <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red"></div>
         </form>
 
-        <div style="margin-top: 15px;">
+        <div>
             <a th:href="@{/citas/listar}" class="btn-primary">VOLVER AL LISTADO DE CITAS</a>
         </div>
     </div>
 
-    <footer style="display: flex; bottom: 0; width: 99%;">
+    <footer style="display: flex; bottom: 0;">
         <div class="footer-container" style="display: flex; justify-content: center;">
             <p>© 2025 Veterinaria Garritas | Todos los derechos reservados.</p>
         </div>

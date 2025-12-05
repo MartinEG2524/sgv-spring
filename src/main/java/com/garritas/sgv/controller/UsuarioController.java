@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/usuarios")
@@ -116,23 +117,25 @@ public class UsuarioController {
     @GetMapping("/perfil")
     public String perfilUsuario(@RequestParam("IdRol") Integer IdRol, @RequestParam("IdUsuario") Integer IdUsuario, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
-            User username = (User) authentication.getPrincipal();
-            String rol = username.getAuthorities().toArray()[0].toString();
-            model.addAttribute("rol", rol);
-
-            model.addAttribute("IdRol", IdRol);
-            model.addAttribute("IdUsuario", IdUsuario);
-
-            List<Usuario> usuario = usuarioService.buscarUsuario(IdRol, IdUsuario);
-            model.addAttribute("usuarios", usuario);
-            
-            Usuario usuarioPerfil = usuarioService.buscarPorId(IdUsuario.longValue()).orElse(null);
-            model.addAttribute("usuarios", usuarioPerfil);
-            return "perfil";
-        } else {
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "redirect:/login";
         }
+        
+        User username = (User) authentication.getPrincipal();
+        
+        String rol = username.getAuthorities().toArray()[0].toString();
+        model.addAttribute("rol", rol);
+
+        model.addAttribute("IdRol", IdRol);
+        model.addAttribute("IdUsuario", IdUsuario);
+
+        Optional<Usuario> usuarioOptional = usuarioService.buscarUsuario(IdRol, IdUsuario);
+
+        Usuario usuario = usuarioOptional.orElseThrow(() -> new RuntimeException("Usuario no encontrado."));
+
+        model.addAttribute("usuario", usuario);
+
+        return "usuarios/perfil";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

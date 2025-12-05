@@ -89,11 +89,6 @@ input[type="password"] {
     color: white;
 }
 
-.btn-cancel {
-    background-color: #bbb;
-    color: white;
-}
-
 .forgot-password {
     font-size: 14px;
 }

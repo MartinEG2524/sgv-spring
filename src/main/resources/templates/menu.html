@@ -71,34 +71,40 @@
                 <a href="servicios/listar">SERVICIOS</a>
                 <a href="mascotas/listar">MASCOTAS</a>
                 <a href="citas/listar">CITAS</a>
-                <a href="colas/listar">COLAS ATENCIÓN</a>
+                <a href="colas/listar">COLAS DE ATENCIÓN</a>
                 <a href="historiales/listar">HISTORIAL CLINICOS</a>
                 <a href="inventarios/listar">INVENTARIOS</a>
                 <a href="detalles/listar">DETALLES HISTORIAL INVENTARIO</a>
             </div>
 
             <div th:if="${rol == 'ROLE_VETERINARIO'}" class="mantenimientos-grid">
-                <a href="veterinarios/editar">EDITAR DATOS</a>
-                <a href="mascotas/registro">REGISTRAR DE MASCOTA</a>
+                <a href="citas/listar-veterinario">LISTADO DE CITAS</a>
                 <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
-                <a href="citas/listar">LISTADO DE CITAS</a>
+                <a href="historiales/registrar">REGISTRAR HISTORIAL CLINICO</a>
+                <a href="historiales/listar">HISTORIAL CLINICO</a>
+                <a href="colas/listar">COLAS DE ATENCIÓN</a>
             </div>
 
             <div th:if="${rol == 'ROLE_RECEPCIONISTA'}" class="mantenimientos-grid">
-                <a href="clientes/registrar">REGISTRAR CLIENTE</a>
                 <a href="citas/registrar">REGISTRAR CITA</a>
-                <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
                 <a href="citas/listar">LISTADO DE CITAS</a>
+                <a href="clientes/registrar">REGISTRAR CLIENTE</a>
+                <a href="clientes/listar">LISTADO CLIENTE</a>
+                <a href="mascotas/registrar">REGISTRAR MASCOTA</a>
+                <a href="mascotas/listar">LISTADO DE MASCOTAS</a>
+                <a href="servicio/registrar">REGISTRAR SERVICIO</a>
+                <a href="servicio/listar">LISTADO DE SERVICIOS</a>
+                <a href="historiales/listar">HISTORIAL CLINICO</a>
+                <a href="colas/registrar">REGISTRAR COLA DE ATENCIÓN</a>
+                <a href="colas/listar">COLAS DE ATENCIÓN</a>
+                <a href="inventarios/registrar">REGISTRAR INVENTARIO</a>
                 <a href="inventarios/listar">LISTADO DE INVENTARIO</a>
             </div>
 
             <div th:if="${rol == 'ROLE_CLIENTE'}" class="mantenimientos-grid">
                 <a href="citas/registrar">REGISTRAR CITA</a>
-                <a href="citas/listar-registro">VER CITAS</a>
-                <a href="mascotas/listar-registro">LISTADO MASCOTAS</a>
-                <a href="mascotas/listar-registro">LISTADO DE MASCOTAS</a>
-                <a href="mascotas/listar-registro">LISTADO DE MASCOTAS</a>
-                <a href="mascotas/listar-registro">LISTADO DE MASCOTAS</a>
+                <a th:href="@{/citas/listar-mascota}">VER CITAS</a>
+                <a href="mascotas/inicio">SERVICIO MASCOTAS</a>
             </div>
         </div>
         <br>

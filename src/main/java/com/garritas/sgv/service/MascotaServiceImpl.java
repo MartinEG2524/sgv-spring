@@ -30,6 +30,7 @@ public class MascotaServiceImpl implements MascotaService {
 
     @Override
     public Mascota guardar(Mascota mascota) {
+        mascota.setEstado("Activo");
         return mascotaRepository.save(mascota);
     }
 

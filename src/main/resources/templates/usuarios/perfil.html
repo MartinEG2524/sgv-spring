@@ -104,6 +104,11 @@
                 </tr>
             </tbody>
         </table>
+
+        <div style="text-align: center; margin-top: 25px;">
+            <a th:href="@{/usuarios/editar-perfil/{id}(id=${usuarios.idUsuario})}" class="btn-primary">EDITAR DATOS</a>
+            <a th:href="@{/menu}" class="btn-second">REGRESAR A MENÚ</a>
+        </div>
     </div>
     <div th:if="${rol == 'ROLE_VETERINARIO'}">
         <h2>PERFIL DEL VETERINARIO</h2>
@@ -122,31 +127,43 @@
                     <th>Sexo</th>
                     <th>Fecha Nacimiento</th>
                     <th>Celular</th>
-                    <th>Pais</th>
+                    <th>País</th>
                     <th>Provincia</th>
                     <th>Distrito</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="usuario : ${usuarios}">
+                <tr th:with="veterinario=${usuario.veterinario}">
                     <td th:text="${usuario.idUsuario}"></td>
                     <td th:text="${usuario.codigo}"></td>
                     <td th:text="${usuario.idCargo.nombre}"></td>
-                    <td th:text="${usuario.veterinario.idVeterinario}"></td>
-                    <td th:text="${usuario.veterinario.nombres}"></td>
-                    <td th:text="${usuario.veterinario.apellidos}"></td>
-                    <td th:text="${usuario.veterinario.dni}"></td>
-                    <td th:text="${usuario.veterinario.correo}"></td>
-                    <td th:text="${usuario.veterinario.especialidad}"></td>
-                    <td th:text="${usuario.veterinario.sexo}"></td>
-                    <td th:text="${usuario.veterinario.fechaNacimiento}"></td>
-                    <td th:text="${usuario.veterinario.celular}"></td>
-                    <td th:text="${usuario.veterinario.pais}"></td>
-                    <td th:text="${usuario.veterinario.provincia}"></td>
-                    <td th:text="${usuario.veterinario.distrito}"></td>
+                    <td th:text="${veterinario != null ? veterinario.idVeterinario : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.nombres : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.apellidos : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.dni : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.correo : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.especialidad : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.sexo : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.fechaNacimiento : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.celular : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.pais : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.provincia : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.distrito : 'Sin registrar'}"></td>
                 </tr>
             </tbody>
         </table>
+
+        <div style="text-align: center; margin-top: 25px;" th:with="veterinario=${usuario.veterinario}">
+            <th:block th:if="${veterinario == null}">
+                <a th:href="@{/veterinarios/registrar-datos}" class="btn-primary">REGISTRAR DATOS</a>
+            </th:block>
+
+            <th:block th:if="${veterinario != null}">
+                <a th:href="@{/veterinarios/editar-perfil/{id}(id=${veterinario.idVeterinario})}" class="btn-primary">EDITAR DATOS</a>
+            </th:block>
+
+            <a th:href="@{/menu}" class="btn-second">REGRESAR A MENÚ</a>
+        </div>
     </div>
     <div th:if="${rol == 'ROLE_RECEPCIONISTA'}">
         <h2>PERFIL DEL RECEPCIONISTA</h2>
@@ -156,7 +173,7 @@
                     <th>ID</th>
                     <th>Código</th>
                     <th>Cargo</th>
-                    <th>ID Veterinario</th>
+                    <th>ID Recepcionista</th>
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>DNI</th>
@@ -165,31 +182,49 @@
                     <th>Sexo</th>
                     <th>Fecha Nacimiento</th>
                     <th>Celular</th>
-                    <th>Pais</th>
+                    <th>País</th>
                     <th>Provincia</th>
                     <th>Distrito</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="usuario : ${usuarios}">
+                <tr th:with="veterinario=${usuario.veterinario}">
                     <td th:text="${usuario.idUsuario}"></td>
                     <td th:text="${usuario.codigo}"></td>
                     <td th:text="${usuario.idCargo.nombre}"></td>
-                    <td th:text="${usuario.veterinario.idVeterinario}"></td>
-                    <td th:text="${usuario.veterinario.nombres}"></td>
-                    <td th:text="${usuario.veterinario.apellidos}"></td>
-                    <td th:text="${usuario.veterinario.dni}"></td>
-                    <td th:text="${usuario.veterinario.correo}"></td>
-                    <td th:text="${usuario.veterinario.especialidad}"></td>
-                    <td th:text="${usuario.veterinario.sexo}"></td>
-                    <td th:text="${usuario.veterinario.fechaNacimiento}"></td>
-                    <td th:text="${usuario.veterinario.celular}"></td>
-                    <td th:text="${usuario.veterinario.pais}"></td>
-                    <td th:text="${usuario.veterinario.provincia}"></td>
-                    <td th:text="${usuario.veterinario.distrito}"></td>
+                    <td th:text="${veterinario != null ? veterinario.idVeterinario : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.nombres : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.apellidos : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.dni : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.correo : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.especialidad : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.sexo : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.fechaNacimiento : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.celular : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.pais : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.provincia : 'Sin registrar'}"></td>
+                    <td th:text="${veterinario != null ? veterinario.distrito : 'Sin registrar'}"></td>
                 </tr>
             </tbody>
         </table>
+
+        <div style="text-align: center; margin-top: 25px;" th:with="veterinario=${usuario.veterinario}">
+
+            <th:block th:if="${veterinario == null}">
+                <a th:href="@{/recepcionistas/registrar-datos}" class="btn-primary">
+                    REGISTRAR DATOS
+                </a>
+            </th:block>
+
+            <th:block th:if="${veterinario != null}">
+                <a th:href="@{/recepcionistas/editar-perfil/{id}(id=${veterinario.idVeterinario})}"
+                class="btn-primary">
+                EDITAR DATOS
+                </a>
+            </th:block>
+
+            <a th:href="@{/menu}" class="btn-second">REGRESAR A MENÚ</a>
+        </div>
     </div>
     <div th:if="${rol == 'ROLE_CLIENTE'}">
         <h2>PERFIL DEL CLIENTE</h2>
@@ -208,36 +243,48 @@
                     <th>Sexo</th>
                     <th>Fecha Nacimiento</th>
                     <th>Celular</th>
-                    <th>Pais</th>
+                    <th>País</th>
                     <th>Provincia</th>
                     <th>Distrito</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="usuario : ${usuarios}">
+                <tr th:with="cliente=${usuario.cliente}">
                     <td th:text="${usuario.idUsuario}"></td>
                     <td th:text="${usuario.codigo}"></td>
                     <td th:text="${usuario.idCargo.nombre}"></td>
-                    <td th:text="${usuario.cliente.idCliente}"></td>
-                    <td th:text="${usuario.cliente.nombres}"></td>
-                    <td th:text="${usuario.cliente.apellidos}"></td>
-                    <td th:text="${usuario.cliente.dni}"></td>
-                    <td th:text="${usuario.cliente.correo}"></td>
-                    <td th:text="${usuario.cliente.direccion}"></td>
-                    <td th:text="${usuario.cliente.sexo}"></td>
-                    <td th:text="${usuario.cliente.fechaNacimiento}"></td>
-                    <td th:text="${usuario.cliente.celular}"></td>
-                    <td th:text="${usuario.cliente.pais}"></td>
-                    <td th:text="${usuario.cliente.provincia}"></td>
-                    <td th:text="${usuario.cliente.distrito}"></td>
+                    <td th:text="${cliente != null ? cliente.idCliente : 'Sin registrar'}"></td>
+                    <td th:text="${cliente != null ? cliente.nombres : 'Sin registrar'}"></td>
+                    <td th:text="${cliente != null ? cliente.apellidos : 'Sin registrar'}"></td>
+                    <td th:text="${cliente != null ? cliente.dni : 'Sin registrar'}"></td>
+                    <td th:text="${cliente != null ? cliente.correo : 'Sin registrar'}"></td>
+                    <td th:text="${cliente != null ? cliente.direccion : 'Sin registrar'}"></td>
+                    <td th:text="${cliente != null ? cliente.sexo : 'Sin registrar'}"></td>
+                    <td th:text="${cliente != null ? cliente.fechaNacimiento : 'Sin registrar'}"></td>
+                    <td th:text="${cliente != null ? cliente.celular : 'Sin registrar'}"></td>
+                    <td th:text="${cliente != null ? cliente.pais : 'Sin registrar'}"></td>
+                    <td th:text="${cliente != null ? cliente.provincia : 'Sin registrar'}"></td>
+                    <td th:text="${cliente != null ? cliente.distrito : 'Sin registrar'}"></td>
                 </tr>
             </tbody>
         </table>
-    </div>
 
-    <div style="text-align: center; margin-top: 25px;">
-        <a th:href="@{/editar-perfil}" class="btn-primary">EDITAR DATOS</a>
-        <a th:href="@{/menu}" class="btn-second">REGRESAR A MENÚ</a>
+        <div style="text-align: center; margin-top: 25px;" th:with="cliente=${usuario.cliente}">
+            <th:block th:if="${cliente == null}">
+                <a th:href="@{/clientes/registrar-datos}" class="btn-primary">
+                    REGISTRAR DATOS
+                </a>
+            </th:block>
+
+            <th:block th:if="${cliente != null}">
+                <a th:href="@{/clientes/editar-perfil/{id}(id=${cliente.idCliente})}"
+                class="btn-primary">
+                    EDITAR DATOS
+                </a>
+            </th:block>
+
+            <a th:href="@{/menu}" class="btn-second">REGRESAR A MENÚ</a>
+        </div>
     </div>
 
     <script>

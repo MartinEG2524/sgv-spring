@@ -10,6 +10,6 @@ public interface ServicioService {
     Optional<Servicio> buscarPorId(Long id);
     Optional<Servicio> buscarPorDescripcion(String descripcion);
     Servicio guardar(Servicio servicio);
-    Servicio actualizar(Servicio mascota);
+    Servicio actualizar(Servicio servicio);
     void eliminar(Long id);
 }

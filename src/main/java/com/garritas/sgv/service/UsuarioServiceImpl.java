@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -72,66 +71,91 @@ public class UsuarioServiceImpl implements UsuarioService {
             String encryptedPassword = passwordEncoder.encode(nuevaContrasena);
             usuario.setContrasena(encryptedPassword);
             usuarioRepository.save(usuario);
-            log.info("Contraseña actualizada del usuario con código: " + codigo);
+            log.info("Contraseña actualizada del Usuario con Código: " + codigo);
             return true;
         }
 
-        log.error("No se encontró el usuario con el código: " + codigo);
+        log.error("No se encontró el Usuario con el Código: " + codigo);
         return false;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Usuario> buscarUsuario(Integer IdRol, Integer IdUsuario) {
+    public Optional<Usuario> buscarUsuario(Integer IdRol, Integer IdUsuario) {
         List<Object[]> resultados = usuarioRepository.sp_buscar_usuario(IdRol, IdUsuario);
-        List<Usuario> usuarios = new ArrayList<>();
-
-        for (Object[] row : resultados) {
-            Usuario usuario = new Usuario();
-            
-            usuario.setIdUsuario((Long) row[0]);
-            usuario.setCodigo((String) row[1]);
-
-            Cargo cargo = new Cargo();
-            cargo.setNombre((String) row[2]);
         
-            usuario.setIdCargo(cargo);
-            
-            if (IdRol == 2 || IdRol == 3) {
+        if (resultados == null || resultados.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Object[] row = resultados.get(0);
+
+        Usuario usuario = new Usuario(); 
+        usuario.setIdUsuario(((Number) row[0]).longValue());
+        usuario.setCodigo((String) row[1]);
+
+        Cargo cargo = new Cargo();
+        cargo.setNombre((String) row[2]);
+        usuario.setIdCargo(cargo);
+
+        if (IdRol != null && (IdRol == 2 || IdRol == 3)) {
+            if (row[3] != null) {
                 Veterinario veterinario = new Veterinario();
-                veterinario.setIdVeterinario((Long) row[3]);
+                veterinario.setIdVeterinario(((Number) row[3]).longValue());
                 veterinario.setNombres((String) row[4]);
                 veterinario.setApellidos((String) row[5]);
-                veterinario.setDni((Integer) row[6]);
+
+                if (row[6] != null) {
+                    veterinario.setDni(((Number) row[6]).intValue());
+                }
+
                 veterinario.setCorreo((String) row[7]);
                 veterinario.setEspecialidad((String) row[8]);
                 veterinario.setSexo((String) row[9]);
                 veterinario.setFechaNacimiento((Date) row[10]);
-                veterinario.setCelular((Integer) row[11]);
+
+                if (row[11] != null) {
+                    veterinario.setCelular(((Number) row[11]).intValue());
+                }
+
                 veterinario.setPais((String) row[12]);
                 veterinario.setProvincia((String) row[13]);
                 veterinario.setDistrito((String) row[14]);
+
                 usuario.setVeterinario(veterinario);
+            } else {
+                usuario.setVeterinario(null);
             }
-            else if (IdRol == 4) {
+        } else if (IdRol != null && IdRol == 4) {
+            if (row[3] != null) {
                 Cliente cliente = new Cliente();
-                cliente.setIdCliente((Long) row[3]);
+                cliente.setIdCliente(((Number) row[3]).longValue());
                 cliente.setNombres((String) row[4]);
                 cliente.setApellidos((String) row[5]);
-                cliente.setDni((Integer) row[6]);
+
+                if (row[6] != null) {
+                    cliente.setDni(((Number) row[6]).intValue());
+                }
+
                 cliente.setCorreo((String) row[7]);
                 cliente.setDireccion((String) row[8]);
                 cliente.setSexo((String) row[9]);
                 cliente.setFechaNacimiento((Date) row[10]);
-                cliente.setCelular((Integer) row[11]);
+
+                if (row[11] != null) {
+                    cliente.setCelular(((Number) row[11]).intValue());
+                }
+
                 cliente.setPais((String) row[12]);
                 cliente.setProvincia((String) row[13]);
                 cliente.setDistrito((String) row[14]);
+
                 usuario.setCliente(cliente);
+            } else {
+                usuario.setCliente(null);
             }
-            usuarios.add(usuario);
         }
 
-        return usuarios;
+        return Optional.of(usuario);
     }
 }

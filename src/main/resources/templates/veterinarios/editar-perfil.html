@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Editar Veterinario</title>
+    <title>EDITAR DATOS DEL VETERINARIO</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -100,7 +100,7 @@
     </header>
 
     <div class="container">
-        <h1>EDITAR VETERINARIO</h1>
+        <h1>EDITAR DATOS DEL VETERINARIO</h1>
         <p>Por favor, complete el formulario para editar los datos del Veterinario.</p>
 
         <form action="#" th:action="@{/veterinarios/editar/{id}(id=${veterinario.idVeterinario})}" th:object="${veterinario}" method="post">
@@ -134,6 +134,7 @@
                         <option value="">Seleccione...</option>
                         <option value="Masculino">Masculino</option>
                         <option value="Femenino">Femenino</option>
+                        <option value="Otro">Otro</option>
                     </select>
 
                     <label for="fechaNacimiento">Fecha de Nacimiento:</label>

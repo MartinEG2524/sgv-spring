@@ -51,14 +51,15 @@ public class ColaAtencionServiceImpl implements ColaAtencionService {
     }
 
     @Override
-    public ColaAtencion guardar(ColaAtencion item) {
-        if (item.getFechaIngreso() == null) {
-            item.setFechaIngreso(LocalDateTime.now());
+    public ColaAtencion guardar(ColaAtencion colaAtencion) {
+        if (colaAtencion.getFechaIngreso() == null) {
+            colaAtencion.setFechaIngreso(LocalDateTime.now());
         }
-        if (item.getAtendido() == null) {
-            item.setAtendido(false);
+        if (colaAtencion.getAtendido() == null) {
+            colaAtencion.setAtendido(false);
         }
-        return colaAtencionRepository.save(item);
+        colaAtencion.setEstado("Activo");
+        return colaAtencionRepository.save(colaAtencion);
     }
 
     @Override

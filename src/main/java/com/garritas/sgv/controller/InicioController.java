@@ -34,7 +34,7 @@ public class InicioController {
         if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/menu";
         }
-        // Si NO está logueado, mostrar la página de inicio normal
+        // Si NO está logueado, mostrar la página de inicio
         return "inicio";
     }
 
@@ -109,16 +109,18 @@ public class InicioController {
     public String Menu(Model model) {
         if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated() && !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            
             User username = (User) authentication.getPrincipal();
+
             String codigo = username.getUsername();
             String rol = username.getAuthorities().toArray()[0].toString();
+
             model.addAttribute("codigo", codigo);
             model.addAttribute("rol", rol);
 
             Optional<Usuario> usuarioOptional = usuarioService.buscarPorCodigo(codigo);
 
             Usuario usuario = usuarioOptional.get();
-
             Cargo cargo = usuario.getIdCargo();
 
             Long IdRol = cargo.getIdRol();
@@ -126,7 +128,6 @@ public class InicioController {
 
             model.addAttribute("IdRol", IdRol);
             model.addAttribute("IdUsuario", IdUsuario);
-
             return "menu";
         }
         return "login";

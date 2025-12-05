@@ -56,7 +56,7 @@ public class ServicioController {
 
     // Guardar un nuevo servicio, solo accesible para ADMIN
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping
+    @PostMapping("/registrar")
     public String guardarServicio(@ModelAttribute("servicio") Servicio servicio, RedirectAttributes ra) {
         if (servicioService.buscarPorDescripcion(servicio.getDescripcion()).isPresent()) {
             ra.addFlashAttribute("errorMessage", "La Descripción '" + servicio.getDescripcion() + "' ya está registrado.");

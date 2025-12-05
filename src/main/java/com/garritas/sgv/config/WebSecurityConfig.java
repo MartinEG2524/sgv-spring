@@ -43,19 +43,24 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests(authorizeRequests ->
-                authorizeRequests
-                    // Rutas públicas (Accesibles por todos los usuarios)
-                    .requestMatchers("/", "inicio", "login", "registrar", "restablecer", "error", "contacto", "servicios-info", "nosotros").permitAll()
-                    .requestMatchers("/usuarios/perfil").authenticated()
-                    .requestMatchers("/usuarios/**", "/cargos/**", "/citas/**").hasRole("ADMIN")  // Solo ADMIN puede acceder
-                    .requestMatchers("/veterinario/**").hasRole("VETERINARIO")  // Solo VETERINARIO puede acceder
-                    .requestMatchers("/recepcionista/**").hasRole("RECEPCIONISTA")  // Solo RECEPCIONISTA puede acceder
-                    .requestMatchers("/cliente/**").hasRole("CLIENTE")  // Solo CLIENTE puede acceder
-                    // Permitir acceso a archivos estáticos (CSS, JS, Imagenes)
-                    .requestMatchers("/static/**", "/CSS/**", "/Imagenes/**", "/JS/**").permitAll()
-                    .anyRequest().authenticated()  // El resto de las rutas requieren autenticación
+        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+            // Rutas públicas (Accesibles por todos los usuarios)
+            .requestMatchers("/", "/inicio", "/login", "/registrar", "/restablecer", "/error", "/contacto", "/servicios-info", "/nosotros").permitAll()
+            // Rutas que solo requieren estar autenticado (sin importar el Rol)
+            .requestMatchers("/menu", "usuarios/perfil").authenticated()
+            // ==== Solo ADMIN ====
+            .requestMatchers("/cargos/**", "/detalles/**", "/usuarios/**").hasRole("ADMIN")
+            // ==== Rutas Compartidas por varios Roles ====
+            .requestMatchers("/citas/**").hasAnyRole("ADMIN", "VETERINARIO", "RECEPCIONISTA", "CLIENTE")
+            .requestMatchers("/clientes/**").hasAnyRole("ADMIN", "RECEPCIONISTA", "CLIENTE")
+            .requestMatchers("/colas/**", "/inventarios/**").hasAnyRole("ADMIN", "VETERINARIO", "RECEPCIONISTA")
+            .requestMatchers("/historiales/**").hasAnyRole("ADMIN", "VETERINARIO", "RECEPCIONISTA", "CLIENTE")
+            .requestMatchers("/mascotas/**").hasAnyRole("ADMIN", "VETERINARIO", "RECEPCIONISTA", "CLIENTE")
+            .requestMatchers("/servicios/**").hasAnyRole("ADMIN", "VETERINARIO", "CLIENTE")
+            .requestMatchers("/veterinarios/**").hasAnyRole("ADMIN", "VETERINARIO")
+             // Recursos estáticos
+            .requestMatchers("/static/**", "/CSS/**", "/Imagenes/**", "/JS/**").permitAll()
+            .anyRequest().authenticated()
             )
             .formLogin(formLogin -> formLogin
                 .loginPage("/login")

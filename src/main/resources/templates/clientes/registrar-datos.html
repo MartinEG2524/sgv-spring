@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <title>Editar Cliente</title>
+    <meta charset="UTF-8">
+    <title>Registro de Clientes</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,15 +15,10 @@
             margin: 20px 0;
         }
         
-        h1, label, button {
-            text-transform: uppercase;
-        }
-
-        h1 {
+        h2 {
             text-align: center;
             color: #3e3e3e;
         }
-
         footer {
             background-color: #fff;
             border-top: 2px solid #333;
@@ -30,7 +26,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 20px;
         }
         .social {
             display: inline-block;
@@ -41,7 +37,7 @@
         }
         .container {
             text-align: center;
-            padding: 20px;
+            padding: 20px 0 100px 0;
         }
         .container img {
             width: 100px;
@@ -67,14 +63,15 @@
             font-weight: bold;
         }
         input[type="text"],
-        input[type="number"],
         input[type="email"],
+        input[type="number"],
         input[type="date"] {
             width: 250px;
             padding: 8px;
             margin-bottom: 10px;
             border: 1px solid #aaa;
             border-radius: 5px;
+            align-items: center;
             margin-left: 50px;
         }
         select {
@@ -86,7 +83,7 @@
             margin-left: 50px;
         }
         .buttons {
-            margin: 50px 0;
+            margin: 20px 0;
         }
         .buttons button {
             padding: 10px 20px;
@@ -97,13 +94,7 @@
             cursor: pointer;
         }
         .btn-login {
-            display:inline-block;
-            padding:10px 16px;
-            border-radius:8px;
-            border:1px solid #2c5d92;
-            background: #2c5d92;
-            font-weight:600;
-            margin-top: 20px;
+            background-color: #2c5d92;
             color: white;
         }
         .btn-primary{
@@ -135,49 +126,42 @@
     </header>
 
     <div class="container">
-        <h1>Editar Cliente</h1>
-        <p>Por favor, complete el formulario para editar los datos del Cliente.</p>
+        <h1>AGREGAR NUEVO CLIENTE</h1>
+        <p>Por favor, complete el formulario para crear un nuevo cliente.</p>
 
-        <form th:action="@{/clientes/editar/{id}(id=${cliente.idCliente})}" th:object="${cliente}" method="post">
+        <h4 style="color:#2c5d92;">DATOS DEL CLIENTE</h4>
+
+        <form id="registroForm" th:action="@{/clientes/registrar-datos}" th:object="${cliente}" method="post">
             <div class="form-grid">
                 <div>
-                    <label for="idUsuario">ID Usuario:</label>
-                    <input type="text" id="idUsuario" th:field="*{usuario.idUsuario}" required readonly /><br>
-                    
                     <label for="nombres">Nombres:</label>
-                    <input type="text" id="nombres" placeholder="Ingrese sus Nombres" th:field="*{nombres}" required /><br>
+                    <input type="text" id="nombres" placeholder="Ingrese sus Nombres" th:field="*{nombres}" required />
 
                     <label for="apellidos">Apellidos:</label>
-                    <input type="text" id="apellidos" placeholder="Ingrese sus Apellidos" th:field="*{apellidos}" required /><br>
+                    <input type="text" id="apellidos" placeholder="Ingrese sus Apellidos" th:field="*{apellidos}" required />
 
                     <label for="dni">DNI:</label>
-                    <input type="number" id="dni" placeholder="Ingrese su DNI" th:field="*{dni}" required /><br>
+                    <input type="text" id="dni" placeholder="Ingrese su DNI" th:field="*{dni}" required />
 
                     <label for="correo">Email:</label>
-                    <input type="email" id="correo" placeholder="Ingrese su correo" th:field="*{correo}" required /><br>
+                    <input type="email" id="correo" placeholder="Ingrese su correo" th:field="*{correo}" required />
 
                     <label for="direccion">Direccion:</label>
                     <input type="text" id="direccion" placeholder="Ingrese su Direccion" th:field="*{direccion}" required /><br>
 
-                    <label for="estado">Estado:</label>
-                    <select id="estado" th:field="*{estado}" required>
-                        <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
-                    </select>
-                </div>
-                <div>
                     <label for="sexo">Sexo:</label>
                     <select id="sexo" th:field="*{sexo}" required>
                         <option value="Masculino">Masculino</option>
                         <option value="Femenino">Femenino</option>
                     </select>
-
+                </div>
+                <div>
                     <label for="fechaNacimiento">Fecha Nacimiento:</label>
                     <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}" required /><br>
 
                     <label for="celular">Celular:</label>
-                    <input type="number" id="celular" placeholder="Ingrese su Celular" th:field="*{celular}" required /><br>
-
+                    <input type="number" id="celular" placeholder="Ingrese su Celular" th:field="*{celular}" required />
+                    
                     <label for="pais">Pais:</label>
                     <input type="text" id="pais" placeholder="Ingrese su Pais" th:field="*{pais}" required /><br>
 
@@ -186,14 +170,20 @@
 
                     <label for="distrito">Distrito:</label>
                     <input type="text" id="distrito" placeholder="Ingrese su Distrito" th:field="*{distrito}" required /><br>
+
+                    <input type="hidden" th:field="*{estado}" value="Activo" />
                 </div>
             </div>
-
-            <div>
-                <button type="submit" class="btn-login">Actualizar Cliente</button>
+            <div class="buttons">
+                <button type="submit" class="btn-login">GUARDAR CLIENTE</button>
             </div>
+            
+            <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red"></div>
         </form>
-        <a th:href="@{/clientes/listar}" class="btn-primary">Volver al listado de clientes</a>
+
+        <div>
+            <a th:href="@{/usuarios/listar}" class="btn-primary">Volver al listado de clientes</a>
+        </div>
     </div>
 
     <footer style="display: flex; position: fixed; bottom: 0; width: 99%;">
@@ -202,7 +192,7 @@
         </div>
         <div class="social-media" style="display: flex; justify-content: center; margin-right: 10px;">
             <a href="https://facebook.com" target="_blank"><img src="/Imagenes/facebook.png" style="margin-right: 10px;" width="50" height="50" alt="Facebook"></a>
-            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;" width="50" height="50" alt="Twitter"></a>
+            <a href="https://twitter.com" target="_blank"><img src="/Imagenes/twitter.png" style="margin-right: 10px;"width="50" height="50" alt="Twitter"></a>
             <a href="https://instagram.com" target="_blank"><img src="/Imagenes/instagram.png" width="50" height="50" alt="Instagram"></a>
         </div>
     </footer>

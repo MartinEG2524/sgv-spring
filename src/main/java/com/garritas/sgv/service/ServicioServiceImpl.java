@@ -35,6 +35,7 @@ public class ServicioServiceImpl implements ServicioService {
 
     @Override
     public Servicio guardar(Servicio servicio) {
+        servicio.setEstado("Activo");
         return servicioRepository.save(servicio);
     }
 

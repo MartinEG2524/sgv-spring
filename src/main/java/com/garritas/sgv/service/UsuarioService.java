@@ -12,5 +12,5 @@ public interface UsuarioService {
     Usuario actualizar(Usuario usuario);
     void eliminar(Long id);
     boolean actualizarContrasena(String codigo, String nuevaContrasena);
-    List<Usuario> buscarUsuario(Integer IdRol, Integer IdUsuario);
+    Optional<Usuario> buscarUsuario(Integer IdRol, Integer IdUsuario);
 }

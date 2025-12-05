@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -70,7 +71,7 @@ public class ClienteController {
     }
 
     // Vista para editar un cliente existente
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RECEPCIONISTA') or hasRole('ROLE_CLIENTE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RECEPCIONISTA')")
     @GetMapping("/editar/{id}")
     public String editarCliente(@PathVariable Long id, Model model) {
         Cliente cliente = clienteService.buscarPorId(id).orElse(null);
@@ -79,16 +80,16 @@ public class ClienteController {
     }
 
     // Guardar los cambios de un cliente editado
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RECEPCIONISTA') or hasRole('ROLE_CLIENTE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RECEPCIONISTA')")
     @PostMapping("/editar/{id}")
-    public String actualizarCliente(@PathVariable Long id, @ModelAttribute("cliente") Cliente cliente, @RequestParam("usuario.idUsuario") Long idUsuario, @RequestParam("estado") String estado) {
+    public String actualizarCliente(@PathVariable Long id, @ModelAttribute("cliente") Cliente cliente, @RequestParam("usuario.idUsuario") Long idUsuario, @RequestParam("sexo") String sexo, @RequestParam("estado") String estado) {
         Cliente clienteActualizado = clienteService.buscarPorId(id).orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado: " + id));
         clienteActualizado.setNombres(cliente.getNombres());
         clienteActualizado.setApellidos(cliente.getApellidos());
         clienteActualizado.setDni(cliente.getDni());
         clienteActualizado.setCorreo(cliente.getCorreo());
         clienteActualizado.setDireccion(cliente.getDireccion());
-        clienteActualizado.setSexo(cliente.getSexo());
+        clienteActualizado.setSexo(sexo);
         clienteActualizado.setFechaNacimiento(cliente.getFechaNacimiento());
         clienteActualizado.setCelular(cliente.getCelular());
         clienteActualizado.setPais(cliente.getPais());
@@ -98,7 +99,85 @@ public class ClienteController {
         Usuario usuario = usuarioService.buscarPorId(idUsuario).orElseThrow(() -> new IllegalArgumentException("Usuario no existe: " + idUsuario));
         clienteActualizado.setUsuario(usuario);
         clienteService.actualizar(clienteActualizado);
-        return "redirect:/clientes/listar";
+        return "redirect:/menu";
+    }
+
+    @PreAuthorize("hasRole('ROLE_CLIENTE')")
+    @GetMapping("/registrar-datos")
+    public String registrarDatosCliente(Model model, Authentication authentication) {
+
+        String username = authentication.getName();
+
+        Usuario usuario = usuarioService.buscarPorCodigo(username).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + username));
+
+        if (usuario.getCliente() != null) {
+            Long idCliente = usuario.getCliente().getIdCliente();
+            return "redirect:/clientes/editar-perfil/" + idCliente;
+        }
+
+        Cliente cliente = new Cliente();
+        cliente.setUsuario(usuario);
+        cliente.setEstado("Activo");
+        model.addAttribute("cliente", cliente);
+
+        return "clientes/registrar-datos"; 
+    }
+
+    @PreAuthorize("hasRole('ROLE_CLIENTE')")
+    @PostMapping("/registrar-datos")
+    public String guardarDatosCliente(@ModelAttribute("cliente") Cliente cliente, RedirectAttributes ra, Authentication authentication) {
+
+        String username = authentication.getName();
+
+        Usuario usuario = usuarioService.buscarPorCodigo(username).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + username));
+
+        if (usuario.getCliente() != null) {
+            ra.addFlashAttribute("errorMessage", "Ya tienes datos de cliente registrados.");
+            return "redirect:/clientes/editar-perfil/" + usuario.getCliente().getIdCliente();
+        }
+
+        if (clienteService.buscarPorDni(cliente.getDni()).isPresent()) {
+            ra.addFlashAttribute("errorMessage", "El DNI '" + cliente.getDni() + "' ya está registrado.");
+            return "redirect:/clientes/registrar-datos";
+        }
+
+        cliente.setUsuario(usuario);
+        cliente.setEstado("Activo");
+        clienteService.guardar(cliente);
+
+        return "redirect:/usuarios/perfil?IdRol=" + usuario.getIdCargo().getIdRol() + "&IdUsuario=" + usuario.getIdUsuario();
+    }
+
+    // Vista para editar un cliente existente
+    @PreAuthorize("hasRole('ROLE_CLIENTE')")
+    @GetMapping("/editar-perfil/{id}")
+    public String editarDatosCliente(@PathVariable Long id, Model model) {
+        Cliente cliente = clienteService.buscarPorId(id).orElse(null);
+        model.addAttribute("cliente", cliente);
+        return "clientes/editar-perfil";
+    }
+
+    // Guardar los cambios de un cliente editado
+    @PreAuthorize("hasRole('ROLE_CLIENTE')")
+    @PostMapping("/editar-perfil/{id}")
+    public String actualizarDatosCliente(@PathVariable Long id, @ModelAttribute("cliente") Cliente cliente, @RequestParam("idUsuario") Long idUsuario, @RequestParam("sexo") String sexo, @RequestParam("estado") String estado) {
+        Cliente clienteActualizado = clienteService.buscarPorId(id).orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado: " + id));
+        clienteActualizado.setNombres(cliente.getNombres());
+        clienteActualizado.setApellidos(cliente.getApellidos());
+        clienteActualizado.setDni(cliente.getDni());
+        clienteActualizado.setCorreo(cliente.getCorreo());
+        clienteActualizado.setDireccion(cliente.getDireccion());
+        clienteActualizado.setSexo(sexo);
+        clienteActualizado.setFechaNacimiento(cliente.getFechaNacimiento());
+        clienteActualizado.setCelular(cliente.getCelular());
+        clienteActualizado.setPais(cliente.getPais());
+        clienteActualizado.setProvincia(cliente.getProvincia());
+        clienteActualizado.setDistrito(cliente.getDistrito());
+        clienteActualizado.setEstado(cliente.getEstado());
+        Usuario usuario = usuarioService.buscarPorId(idUsuario).orElseThrow(() -> new IllegalArgumentException("Usuario no existe: " + idUsuario));
+        clienteActualizado.setUsuario(usuario);
+        clienteService.actualizar(clienteActualizado);
+        return "redirect:/menu";
     }
 
     // Eliminar un cliente, solo accesible para ADMIN
